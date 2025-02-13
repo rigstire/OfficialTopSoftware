@@ -11,19 +11,18 @@ def contact_view(request):
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             phone = form.cleaned_data["phone"]
-            services = form.cleaned_data.get("services", "Not provided")  # Avoid KeyError if not included
             message = form.cleaned_data["message"]
 
             # Send an email to notify the owner
             send_mail(
                 subject=f"New Contact Message from {name}",
-                message=f"Name: {name}\nEmail: {email}\nPhone: {phone}\nService: {services}\n\nMessage:\n{message}",
+                message=f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\nMessage:\n{message}",
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[settings.EMAIL_HOST_USER],
                 fail_silently=False,
             )
 
-            return redirect("contact_success")  # Redirect to success page after submission
+            return redirect("contact")  # Redirect to success page after submission
 
     else:
         form = ContactForm()
