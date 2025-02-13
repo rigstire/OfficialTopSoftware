@@ -1,15 +1,31 @@
 from django import forms
 
 class ContactForm(forms.Form):
-    name = forms.CharField(max_length=255, required=True)
-    email = forms.EmailField(required=True)
-    phone = forms.CharField(max_length=20, required=True)
+    name = forms.CharField(
+        max_length=255, 
+        required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'Your Name', 'class': 'cs-input'})
+    )
+    email = forms.EmailField(
+        required=True, 
+        widget=forms.EmailInput(attrs={'placeholder': 'Your Email', 'class': 'cs-input'})
+    )
+    phone = forms.CharField(
+        max_length=20, 
+        required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'Your Phone', 'class': 'cs-input'})
+    )
     services = forms.ChoiceField(
         choices=[
+            ("", "Select a Service"),  # 🔹 Added empty option
             ("New Construction", "New Construction"),
             ("Remodels", "Remodels"),
             ("Cabinets", "Cabinets"),
         ],
         required=True,
+        widget=forms.Select(attrs={'class': 'cs-input'})
     )
-    message = forms.CharField(widget=forms.Textarea, required=True)
+    message = forms.CharField(
+        required=True, 
+        widget=forms.Textarea(attrs={'placeholder': 'Write your message...', 'class': 'cs-input cs-textarea'})
+    )
