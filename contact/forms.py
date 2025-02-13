@@ -15,16 +15,7 @@ class ContactForm(forms.Form):
         required=True, 
         widget=forms.TextInput(attrs={'placeholder': 'Your Phone', 'class': 'cs-input'})
     )
-    services = forms.ChoiceField(
-        choices=[
-            ("", "Select a Service"),  # 🔹 Added empty option
-            ("New Construction", "New Construction"),
-            ("Remodels", "Remodels"),
-            ("Cabinets", "Cabinets"),
-        ],
-        required=True,
-        widget=forms.Select(attrs={'class': 'cs-input'})
-    )
+
     message = forms.CharField(
         required=True, 
         widget=forms.Textarea(attrs={'placeholder': 'Write your message...', 'class': 'cs-input cs-textarea'})
