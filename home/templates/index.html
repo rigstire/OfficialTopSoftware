@@ -1,81 +1,188 @@
 <!-- ============================================ -->
-<!--                     Hero                     -->
+<!--               TopSoftware Home               -->
 <!-- ============================================ -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero Section</title>
-    
-    {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TopSoftware - Innovative Digital Solutions</title>
+  
+  {% load static %}
+  <meta name="description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
 
-<!-- Global Styles -->
-<link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
+  <!-- External Styles & Scripts -->
+  <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'navbar.css' %}">
+  <script src="{% static 'navbar.js' %}"></script>
 
-<!-- Home Page Styles -->
-<link rel="stylesheet" href="{% static 'style.css' %}">
-<link rel="stylesheet" href="{% static 'hero.css' %}">
-<link rel="stylesheet" href="{% static 'navbar.css' %}">
-<script src="{% static 'navbar.js' %}"></script> 
-    {% include 'navbar.html' %}
-    <!-- Include the Hero Section -->
-    {% include 'hero.html' %}
+  <!-- Inline Custom Styles -->
+  <style>
+    /* Color Variables */
+    :root {
+      --primary-color: #2196f3;   /* Light Blue */
+      --secondary-color: #1976d2; /* Deeper Blue */
+      --dark-blue: #0d47a1;       /* Dark Blue */
+      --button-hover: #1565c0;
+      --white: #ffffff;
+    }
+    /* Global Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e3f2fd; /* Light blue background */
+      color: var(--white);
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    section {
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--white);
+      padding: 15px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: var(--button-hover);
+    }
 
-<section id="hero-1946">
-    <div class="cs-container">
-        <div class="cs-content">
-            <h2 class="cs-title">Building Your Future Accommodation</h2>
-            <div class="cs-flex">
-                <p class="cs-text">We successfully cope with tasks of varying complexity, provide long-term guarantees and regularly master new technologies.</p>
-                <a href="" class="cs-button-solid">Read More</a>
-            </div>
-        </div>
-        <picture class="cs-picture">
-            <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Landscapes/construction-site.png">
-            <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Landscapes/construction-site.png">
-            <img decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Landscapes/construction-site.png" alt="construction site" width="1280" height="510">
-        </picture>
-        <ul class="cs-card-group">
-            <li class="cs-item">
-                <picture class="cs-icon-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/tool.svg" decoding="async" alt="icon" width="40" height="40" aria-hidden="true">
-                </picture>
-                <!-- Text Grouped For Flexbox-->
-                <div class="cs-text-group">
-                    <h3 class="cs-h3">Construction</h3>
-                    <p class="cs-item-text">Designing and Building The Most Beautiful Custom Homes.</p>
-                </div>
-            </li>
-            <li class="cs-item">
-                <picture class="cs-icon-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/hard-hat.svg" decoding="async" alt="icon" width="40" height="40" aria-hidden="true">
-                </picture>
-                <!-- Text Grouped For Flexbox-->
-                <div class="cs-text-group">
-                    <h3 class="cs-h3">Project Development</h3>
-                    <p class="cs-item-text">Designing and Building The Most Beautiful Custom Homes.</p>
-                </div>
-            </li>
-            <li class="cs-item">
-                <picture class="cs-icon-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/double-bed.svg" decoding="async" alt="icon" width="40" height="40" aria-hidden="true">
-                </picture>
-                <!-- Text Grouped For Flexbox-->
-                <div class="cs-text-group">
-                    <h3 class="cs-h3">Interior Design</h3>
-                    <p class="cs-item-text">Designing and Building The Most Beautiful Custom Homes.</p>
-                </div>
-            </li>
-            <li class="cs-item">
-                <picture class="cs-icon-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/building.svg" decoding="async" alt="icon" width="40" height="40" aria-hidden="true">
-                </picture>
-                <!-- Text Grouped For Flexbox-->
-                <div class="cs-text-group">
-                    <h3 class="cs-h3">Architecture</h3>
-                    <p class="cs-item-text">Designing and Building The Most Beautiful Custom Homes.</p>
-                </div>
-            </li>
-        </ul>
+    /* Section Backgrounds */
+    #about {
+      background: linear-gradient(135deg, var(--secondary-color), var(--dark-blue));
+    }
+    #services {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+    #testimonials {
+      background: linear-gradient(135deg, var(--dark-blue), var(--secondary-color));
+    }
+    #contact {
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
+    }
+    footer {
+      background: var(--dark-blue);
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Service Cards */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .service-card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    /* Testimonials */
+    .testimonial {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 700px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  {% include 'navbar.html' %}
+
+  <!-- Hero Section -->
+  {% include 'hero.html' %}
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <h2>Who We Are</h2>
+      <p>
+        At <strong>TopSoftware</strong>, we combine over a decade of experience with cutting-edge digital innovation.
+        Our team delivers high-performance websites, mobile applications, and scalable SaaS platforms that empower businesses.
+      </p>
     </div>
-</section>
+  </section>
+
+  <!-- What We Do Section -->
+  <section id="services">
+    <div class="container">
+      <h2>What We Do</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <h3>Web Development</h3>
+          <p>Responsive, SEO-friendly websites designed to engage your audience.</p>
+        </div>
+        <div class="service-card">
+          <h3>Mobile App Development</h3>
+          <p>High-performance apps that keep your business connected on the go.</p>
+        </div>
+        <div class="service-card">
+          <h3>SaaS Platforms</h3>
+          <p>Cloud solutions that scale seamlessly with your business growth.</p>
+        </div>
+        <div class="service-card">
+          <h3>AI Chatbots</h3>
+          <p>Smart chatbots that elevate customer engagement and support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <div class="container">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial">
+        <p>"TopSoftware transformed our online presence with a sleek website and a robust app solution. Highly recommended!"</p>
+        <p>- John Doe, CEO of Startup X</p>
+      </div>
+      <div class="testimonial">
+        <p>"Their expertise in digital solutions helped us scale our operations. The results speak for themselves."</p>
+        <p>- Sarah Smith, Product Manager at TechCorp</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>
+        Have a project in mind? Let’s work together to bring your vision to life.
+      </p>
+      <a href="mailto:contact@topsoftware.com" class="btn-primary">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 TopSoftware. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
