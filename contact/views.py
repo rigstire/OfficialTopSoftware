@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 
+
 def contact_view(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -10,7 +11,7 @@ def contact_view(request):
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             phone = form.cleaned_data["phone"]
-            services = form.cleaned_data["services"]
+            services = form.cleaned_data.get("services", "Not provided")  # Avoid KeyError if not included
             message = form.cleaned_data["message"]
 
             # Send an email to notify the owner
@@ -22,9 +23,9 @@ def contact_view(request):
                 fail_silently=False,
             )
 
-            return redirect("contact_success")  # Redirect after submission
+            return redirect("contact_success")  # Redirect to success page after submission
 
     else:
         form = ContactForm()
 
-    return render(request, "templates/contact.html", {"form": form})
+    return render(request, "contact.html", {"form": form})
