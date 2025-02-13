@@ -1,71 +1,79 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'contact.css' %}">
+<link rel="stylesheet" href="{% static 'navbar.css' %}">
+<script src="{% static 'navbar.js' %}"></script> 
+<link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
+    {% include 'navbar.html' %}
 <!-- ============================================ -->
 <!--                   Contact                    -->
 <!-- ============================================ -->
 
-<section id="contact-2320">
+<section id="contact-1150">
     <div class="cs-container">
         <div class="cs-content">
             <span class="cs-topper">Contact Us</span>
-            <h2 class="cs-title">Get In Touch With Clarkes Construction</h2>
-            <!--Form-->
-            <form class="cs-form" id="cs-form-323-2320" name="Contact Form" method="post" action="{% url 'contact' %}">
-                {% csrf_token %}
-                <label class="cs-label">
-                    Name
-                    <input class="cs-input" required type="text" name="name" placeholder="Name">
-                </label>
-                <label class="cs-label cs-email">
-                    Email
-                    <input class="cs-input" required type="email" name="email" placeholder="Email">
-                </label>
-                <label class="cs-label cs-phone">
-                    Phone
-                    <input class="cs-input" required type="tel" name="phone" placeholder="Phone">
-                </label>
-                <label class="cs-label cs-services">
-                    Services
-                    <select class="cs-input" name="services">
-                        <option value="" disabled selected>Select a Service</option>
-                        <option value="New Construction">New Construction</option>
-                        <option value="Remodels">Remodels</option>
-                        <option value="Cabinets">Cabinets</option>
-                    </select>
-                </label>
-                <label class="cs-label">
-                    Message
-                    <textarea class="cs-input cs-textarea" required name="message" placeholder="Write message..."></textarea>
-                </label>
-                <button class="cs-button-solid cs-submit" type="submit">Send Message</button>
-            </form>
-            
+            <h2 class="cs-title">We Love to Hear from Our Happy Customers</h2>
         </div>
-        <!--Map Image, pin is made in the Figma then export as one image-->
-        <div class="cs-map">
-            <div class="cs-iframe-wrapper">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d172153.33373691145!2d-122.33979794999999!3d47.608715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490102c93e83355%3A0x102565466944d59a!2sSeattle%2C%20WA!5e0!3m2!1sen!2sus!4v1739169879796!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="cs-box">
-                <img class="cs-icon" decoding="async" loading="lazy" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/yellow-pin.svg" alt="icon" width="40" height="40" aria-hidden="true">
-                <div class="cs-flex">
-                    <span class="cs-header">Location</span>
-                    <span class="cs-address">38 Bridge Street, Andover, England, SP10 1BW
-                    </span>
-                </div>
-            </div>
+        <div class="cs-contact-group">
+            <picture class="cs-picture">
+                <!--Mobile Image-->
+                <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg">
+                <!--Tablet and above Image-->
+                <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg">
+                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg" alt="people" width="630" height="300">
+            </picture>
+            <p class="cs-contact-text">
+                There are many variations of passages of available but the majority have suffered alteration in some form, by injected randomized words even slightly believable.
+            </p>
+            <ul class="cs-ul">
+                <li class="cs-li">
+                    <picture class="cs-icon-wrapper">
+                        <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-phone.svg" alt="phone icon" class="cs-icon" width="40" height="40" decoding="async">
+                    </picture>
+                    <div class="cs-flex-group">
+                        <span class="cs-header">Phone</span>
+                        <a href="tel:+1 (888) 4565 789" class="cs-link">+1 (888) 4565 789</a>
+                    </div>
+                </li>
+                <li class="cs-li">
+                    <picture class="cs-icon-wrapper">
+                        <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-pin.svg" alt="address icon" class="cs-icon" width="40" height="40" decoding="async">
+                    </picture>
+                    <div class="cs-flex-group">
+                        <span class="cs-header">Address</span>
+                        <a href="" class="cs-link">2553 Woodbridge Lane, Boston Ware 120</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="cs-container2">
-        <picture class="cs-background">
-            <!--Mobile Image-->
-            <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/house.jpg">
-            <!--Tablet and above Image-->
-            <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/house.jpg">
-            <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/house.jpg" alt="house" width="1280" height="243">
-        </picture>
-        <div class="cs-hours">
-            <div class="cs-topper">Working Hours</div>
-            <span class="cs-hours-info">Monday - Saturday: 10:00 - 20:00 
-                Sunday: Closed</span>
-        </div>
+
+        <!-- Django Contact Form -->
+        <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
+            {% csrf_token %}  <!-- 🔹 CSRF Protection -->
+
+            <label class="cs-label">
+                Name
+                <input class="cs-input" required type="text" name="name" placeholder="Your Name">
+            </label>
+            <label class="cs-label cs-email">
+                Email
+                <input class="cs-input" required type="email" name="email" placeholder="Your Email">
+            </label>
+            <label class="cs-label cs-phone">
+                Phone
+                <input class="cs-input" required type="text" name="phone" placeholder="Your Phone">
+            </label>
+            <label class="cs-label">
+                Message
+                <textarea class="cs-input cs-textarea" required name="message" placeholder="Write your message..."></textarea>
+            </label>
+
+            <button class="cs-button-solid cs-submit" type="submit">Make an Appointment</button>
+        </form>
+
+        <!-- Bounce Graphic -->
+        <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg" alt="bounce" width="208" height="124">
+        <!-- Coin Graphic -->
+        <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg" alt="bounce" width="205" height="161">
     </div>
 </section>
