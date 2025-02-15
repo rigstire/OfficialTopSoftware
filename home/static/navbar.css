@@ -1,5 +1,5 @@
-/* ==========================================================================
-   Global Variables & Base Styles
+/* ==========================================================================  
+   Global Variables & Base Styles  
    ========================================================================== */
    :root {
     --primary-color: #2196f3;    /* Light Blue */
@@ -10,12 +10,12 @@
     --headerColor: var(--white);
   }
   
-  /* ==========================================================================
-     Base Navbar Styles (Glassmorphism / Sleek)
+  /* ==========================================================================  
+     Base Navbar Styles (Glassmorphism / Sleek)  
      ========================================================================== */
   #cs-navigation {
     position: fixed;
-    top: 1rem;
+    top: 0.5rem; /* Reduced from 1rem */
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
@@ -33,12 +33,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem; /* Reduced padding */
   }
   
   /* Logo */
   .cs-logo img {
-    height: 40px;
+    height: 30px; /* Reduced height from 40px */
     object-fit: contain;
   }
   
@@ -141,8 +141,8 @@
     margin-left: 1rem;
   }
   
-  /* ==========================================================================
-     MOBILE STYLES (max-width: 1023px)
+  /* ==========================================================================  
+     MOBILE STYLES (max-width: 1023px)  
      ========================================================================== */
   @media only screen and (max-width: 1023px) {
     .cs-container {
@@ -164,13 +164,13 @@
     }
   }
   
-  /* ==========================================================================
-     DESKTOP STYLES (min-width: 1024px)
+  /* ==========================================================================  
+     DESKTOP STYLES (min-width: 1024px)  
      ========================================================================== */
   @media only screen and (min-width: 1024px) {
     #cs-navigation {
-      top: 1.5rem;
-      padding: 0.75rem 2rem;
+      top: 0.75rem; /* Reduced from 1.5rem */
+      padding: 0.5rem 1.5rem; /* Reduced padding */
       background: linear-gradient(135deg, rgba(13,71,161,0.5), rgba(25,118,210,0.5));
       border-radius: 1rem;
     }
