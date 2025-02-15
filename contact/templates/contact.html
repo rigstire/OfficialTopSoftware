@@ -1,18 +1,32 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'contact.css' %}">
 <link rel="stylesheet" href="{% static 'navbar.css' %}">
-<script src="{% static 'navbar.js' %}"></script> 
+<script src="{% static 'navbar.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
-    {% include 'navbar.html' %}
+{% include 'navbar.html' %}
+
+<!-- Inline styles to update text colors for better visibility on the blue background -->
+<style>
+  /* Ensure headers, links, and labels appear in white */
+  #contact-1150 .cs-topper,
+  #contact-1150 .cs-title,
+  #contact-1150 .cs-contact-text,
+  #contact-1150 .cs-header,
+  #contact-1150 .cs-link,
+  #contact-1150 label {
+      color: var(--white);
+  }
+</style>
+
 <!-- ============================================ -->
-<!--                   Contact                    -->
+<!--                Contact TopSoftware           -->
 <!-- ============================================ -->
 
-<section id="contact-1150">
+<section id="contact-1150" style="background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Contact Us</span>
-            <h2 class="cs-title">We Love to Hear from Our Happy Customers</h2>
+            <span class="cs-topper">Contact TopSoftware</span>
+            <h2 class="cs-title">We Love to Bring Your Software Ideas to Life</h2>
         </div>
         <div class="cs-contact-group">
             <picture class="cs-picture">
@@ -20,10 +34,10 @@
                 <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg">
                 <!--Tablet and above Image-->
                 <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg">
-                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg" alt="people" width="630" height="300">
+                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg" alt="Team at TopSoftware" width="630" height="300">
             </picture>
             <p class="cs-contact-text">
-                There are many variations of passages of available but the majority have suffered alteration in some form, by injected randomized words even slightly believable.
+                At TopSoftware, we specialize in developing innovative apps, websites, and custom software solutions that meet your business needs. Let’s work together to transform your vision into reality.
             </p>
             <ul class="cs-ul">
                 <li class="cs-li">
@@ -32,16 +46,16 @@
                     </picture>
                     <div class="cs-flex-group">
                         <span class="cs-header">Phone</span>
-                        <a href="tel:+1 (888) 4565 789" class="cs-link">+1 (888) 4565 789</a>
+                        <a href="tel:7606259806" class="cs-link">7606259806</a>
                     </div>
                 </li>
                 <li class="cs-li">
                     <picture class="cs-icon-wrapper">
-                        <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-pin.svg" alt="address icon" class="cs-icon" width="40" height="40" decoding="async">
+                        <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-mail.svg" alt="email icon" class="cs-icon" width="40" height="40" decoding="async">
                     </picture>
                     <div class="cs-flex-group">
-                        <span class="cs-header">Address</span>
-                        <a href="" class="cs-link">2553 Woodbridge Lane, Boston Ware 120</a>
+                        <span class="cs-header">Email</span>
+                        <a href="mailto:officialtopsoftware@gmail.com" class="cs-link">officialtopsoftware@gmail.com</a>
                     </div>
                 </li>
             </ul>
@@ -49,7 +63,7 @@
 
         <!-- Django Contact Form -->
         <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
-            {% csrf_token %}  <!-- 🔹 CSRF Protection -->
+            {% csrf_token %}  <!-- CSRF Protection -->
 
             <label class="cs-label">
                 Name
@@ -67,13 +81,17 @@
                 Message
                 <textarea class="cs-input cs-textarea" required name="message" placeholder="Write your message..."></textarea>
             </label>
+            <label class="cs-label">
+                Preferred Consultation Time
+                <input class="cs-input" type="datetime-local" name="consultation_time">
+            </label>
 
-            <button class="cs-button-solid cs-submit" type="submit">Make an Appointment</button>
+            <button class="cs-button-solid cs-submit" type="submit">Send Your Inquiry</button>
         </form>
 
         <!-- Bounce Graphic -->
         <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg" alt="bounce" width="208" height="124">
         <!-- Coin Graphic -->
-        <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg" alt="bounce" width="205" height="161">
+        <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg" alt="coin" width="205" height="161">
     </div>
 </section>
