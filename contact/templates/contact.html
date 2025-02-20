@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
 {% include 'navbar.html' %}
 
-<!-- Inline styles to update text colors for better visibility on the blue background -->
+<!-- Inline styles to update text colors for better visibility on the dark background -->
 <style>
   /* Ensure headers, links, and labels appear in white */
   #contact-1150 .cs-topper,
@@ -22,19 +22,26 @@
 <!--                Contact TopSoftware           -->
 <!-- ============================================ -->
 
-<section id="contact-1150" style="background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));">
+<section id="contact-1150" style="background: #000; padding-top: 180px;">
     <div class="cs-container">
         <div class="cs-content">
             <span class="cs-topper">Contact TopSoftware</span>
             <h2 class="cs-title">We Love to Bring Your Software Ideas to Life</h2>
         </div>
         <div class="cs-contact-group">
+            <!-- Replace the old image with your new static image -->
             <picture class="cs-picture">
-                <!--Mobile Image-->
-                <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg">
-                <!--Tablet and above Image-->
-                <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg">
-                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/group.jpg" alt="Team at TopSoftware" width="630" height="300">
+                <!-- Mobile Image -->
+                <source media="(max-width: 600px)" srcset="{% static 'contact/contactphoto.webp' %}">
+                <!-- Tablet and Above Image -->
+                <source media="(min-width: 601px)" srcset="{% static 'contact/contactphoto.webp' %}">
+                <img 
+                    loading="lazy" 
+                    decoding="async" 
+                    src="{% static 'contact/contactphoto.webp' %}" 
+                    alt="Team at TopSoftware" 
+                    width="630" 
+                    height="300">
             </picture>
             <p class="cs-contact-text">
                 At TopSoftware, we specialize in developing innovative apps, websites, and custom software solutions that meet your business needs. Let’s work together to transform your vision into reality.
@@ -63,8 +70,7 @@
 
         <!-- Django Contact Form -->
         <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
-            {% csrf_token %}  <!-- CSRF Protection -->
-
+            {% csrf_token %}
             <label class="cs-label">
                 Name
                 <input class="cs-input" required type="text" name="name" placeholder="Your Name">
