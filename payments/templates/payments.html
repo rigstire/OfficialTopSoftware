@@ -1,0 +1,204 @@
+{% load static %}
+<script src="{% static 'navbar.js' %}"></script> 
+<link rel="stylesheet" href="{% static 'navbar.css' %}">
+<link rel="stylesheet" href="{% static 'payments.css' %}">
+{% include 'navbar.html' %}
+
+<!-- ✅ Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+
+<!-- ✅ Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- ✅ jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade Your Plan</title>
+    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+</head>
+<body>
+
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+    <div class="card p-5">
+        <div>
+            <h4 class="heading">Upgrade your plan</h4>
+            <p class="text">Please make the payment to start enjoying all the features of our premium plan.</p>
+        </div>
+
+        <!-- Product 1: Premium Subscription ($250) -->
+        <div class="pricing p-3 rounded mt-4 d-flex justify-content-between">
+            <div class="images d-flex flex-row align-items-center">
+                <img src="https://i.imgur.com/S17BrTx.png" class="rounded" width="60">
+                <div class="d-flex flex-column ml-4">
+                    <span class="business">1-3 PAGES</span>
+                    <span class="plan">CHANGE PLAN</span>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center">
+                <sup class="dollar font-weight-bold">$</sup>
+                <span class="amount ml-1 mr-1">250</span>
+                <span class="year font-weight-bold">/ each</span>
+            </div>
+        </div>
+
+        <!-- Quantity Selection for Premium Subscription -->
+        <div class="mt-3">
+            <label for="quantity-premium" class="font-weight-bold">Select Quantity:</label>
+            <input type="number" id="quantity-premium" class="form-control" value="0" min="0" max="10" onchange="updateTotal()">
+        </div>
+
+        <!-- Product 2: Basic Subscription ($210) -->
+        <div class="pricing p-3 rounded mt-4 d-flex justify-content-between">
+            <div class="images d-flex flex-row align-items-center">
+                <img src="https://i.imgur.com/S17BrTx.png" class="rounded" width="60">
+                <div class="d-flex flex-column ml-4">
+                    <span class="business">4-7 PAGES</span>
+                    <span class="plan">CHANGE PLAN</span>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center">
+                <sup class="dollar font-weight-bold">$</sup>
+                <span class="amount ml-1 mr-1">210</span>
+                <span class="year font-weight-bold">/ each</span>
+            </div>
+        </div>
+
+        <!-- Quantity Selection for Basic Subscription -->
+        <div class="mt-3">
+            <label for="quantity-basic" class="font-weight-bold">Select Quantity:</label>
+            <input type="number" id="quantity-basic" class="form-control" value="0" min="0" max="10" onchange="updateTotal()">
+        </div>
+
+        <!-- Product 3: Starter Subscription ($180) -->
+        <div class="pricing p-3 rounded mt-4 d-flex justify-content-between">
+            <div class="images d-flex flex-row align-items-center">
+                <img src="https://i.imgur.com/S17BrTx.png" class="rounded" width="60">
+                <div class="d-flex flex-column ml-4">
+                    <span class="business">7+ PAGES</span>
+                    <span class="plan">CHANGE PLAN</span>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center">
+                <sup class="dollar font-weight-bold">$</sup>
+                <span class="amount ml-1 mr-1">180</span>
+                <span class="year font-weight-bold">/ each</span>
+            </div>
+        </div>
+
+        <!-- Quantity Selection for Starter Subscription -->
+        <div class="mt-3">
+            <label for="quantity-starter" class="font-weight-bold">Select Quantity:</label>
+            <input type="number" id="quantity-starter" class="form-control" value="0" min="0" max="10" onchange="updateTotal()">
+        </div>
+
+        <!-- Total Amount -->
+        <div class="mt-3">
+            <h5>Total Amount: <span id="total-price">$0.00</span></h5>
+        </div>
+
+        <!-- ✅ Square Payment Form -->
+        <div id="payment-form" class="mt-4">
+            <label>Card Number</label>
+            <div id="card-container"></div>  <!-- ✅ FIXED: Square Payment Field -->
+        </div>
+
+        <button id="pay-button" class="btn btn-primary btn-block payment-button">Proceed to Payment <i class="fa fa-long-arrow-right"></i></button>
+    </div>
+</div>
+
+<!-- ✅ Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const applicationId = "sq0idp-d7q5R7FhiIQyCwy6y5eU9Q";  
+const locationId = "L539FECXHJ9E1";  
+const premiumPrice = 25000;  
+const basicPrice = 21000;  
+const starterPrice = 18000;  
+let totalAmount = 0;
+
+// ✅ Ensure scripts run after DOM loads
+document.addEventListener("DOMContentLoaded", function() {
+    initializeSquare();
+});
+
+// ✅ Update total price when quantity changes
+function updateTotal() {
+    let quantityPremium = parseInt(document.getElementById("quantity-premium").value) || 0;
+    let quantityBasic = parseInt(document.getElementById("quantity-basic").value) || 0;
+    let quantityStarter = parseInt(document.getElementById("quantity-starter").value) || 0;
+
+    totalAmount = (quantityPremium * premiumPrice) + (quantityBasic * basicPrice) + (quantityStarter * starterPrice);
+    document.getElementById("total-price").innerText = `$${(totalAmount / 100).toFixed(2)}`;
+}
+
+// ✅ Initialize Square Payment Form
+async function initializeSquare() {
+    try {
+        const payments = Square.payments(applicationId, locationId);
+        const card = await payments.card();
+        await card.attach('#card-container');
+
+        console.log("✅ Square Payment Form Loaded Successfully!");
+
+        document.getElementById("pay-button").addEventListener("click", async () => {
+            if (totalAmount === 0) {
+                alert("❌ Please select at least one item.");
+                return;
+            }
+
+            const result = await card.tokenize();
+            if (result.status === "OK") {
+                processPayment(result.token);
+            } else {
+                console.error("❌ Payment tokenization failed:", result);
+                alert("Payment failed. Please try again.");
+            }
+        });
+
+    } catch (e) {
+        console.error("❌ Error initializing Square:", e);
+        alert("Failed to load payment form. Check the console for details.");
+    }
+}
+
+// ✅ Send Payment Data to Django Backend
+async function processPayment(nonce) {
+    const response = await fetch("/payments/process-payment/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken()
+        },
+        body: JSON.stringify({ nonce: nonce, amount: totalAmount })
+    });
+
+    const data = await response.json();
+    if (data.status === "success") {
+        alert("✅ Payment Successful! Payment ID: " + data.payment_id);
+    } else {
+        alert("❌ Payment failed: " + data.message);
+    }
+}
+
+// ✅ Get CSRF Token for Django
+function getCSRFToken() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("csrftoken=")) {
+            return cookie.substring("csrftoken=".length, cookie.length);
+        }
+    }
+    return "";
+}
+
+</script>
+
+</body>
+</html>
