@@ -2,12 +2,17 @@
 <---          Contact           -->
 <--- -------------------------- -*/
 
+/* Base styles for the contact section */
+#contact-984 {
+    background: #000 !important;  /* Force black background */
+    position: relative;
+    z-index: 1;
+    /* Add extra top padding so the title is pushed down below the fixed navbar */
+    padding-top: 120px !important;
+}
+
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
-    #contact-984 {
-        position: relative;
-        z-index: 1;
-    }
     #contact-984 .cs-container {
         width: 100%;
         max-width: 80rem;
@@ -19,26 +24,20 @@
         gap: 3rem;
     }
     #contact-984 .cs-content {
-        /* set text aling to left if content needs to be left aligned */
         text-align: center;
         width: 100%;
         display: flex;
         flex-direction: column;
-        /* centers content horizontally, set to flex-start to left align */
         align-items: center;
     }
-
     #contact-984 .cs-title {
         margin: 0;
     }
     #contact-984 .cs-right {
         width: 100%;
-        /* changes to 630px at desktop */
         max-width: 36.5rem;
-        /* moved section padding to the content so the picture can be full width */
         padding: var(--sectionPadding);
         padding-top: 0;
-        /* prevents padding and border from affecting height and width */
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -74,7 +73,6 @@
         color: var(--headerColor);
         background-color: #f7f7f7;
         border: none;
-        /* prevents padding from adding to height and width */
         box-sizing: border-box;
         transition: border-color 0.3s;
     }
@@ -96,7 +94,6 @@
     }
     #contact-984 .cs-button-solid {
         font-size: 1rem;
-        /* 46px - 56px */
         line-height: clamp(2.875rem, 5.5vw, 3.5rem);
         text-decoration: none;
         font-weight: 700;
@@ -109,7 +106,6 @@
         display: inline-block;
         position: relative;
         z-index: 1;
-        /* prevents padding from adding to the width */
         box-sizing: border-box;
     }
     #contact-984 .cs-button-solid:before {
@@ -139,7 +135,6 @@
         display: block;
         position: relative;
         width: 100%;
-        /* 360px - 600px */
         height: clamp(22.5rem, 100vw, 37.5rem);
     }
     #contact-984 .cs-picture img {
@@ -151,10 +146,11 @@
         object-fit: cover;
     }
 }
+
 /* Tablet - 768px */
 @media only screen and (min-width: 48rem) {
     #contact-984 {
-        padding: var(--sectionPadding);
+        padding: calc(var(--sectionPadding) + 120px) !important;
         position: relative;
     }
     #contact-984 .cs-container {
@@ -176,7 +172,6 @@
         height: 100%;
         width: 44%;
         right: 50%;
-        /* 70px - 88px */
         margin-right: clamp(4.375rem, 7vw, 5.5rem);
     }
     #contact-984 .cs-right {
@@ -185,5 +180,3 @@
         padding: 0;
     }
 }
-
-                                

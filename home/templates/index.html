@@ -1,6 +1,4 @@
-<!-- ============================================ -->
-<!--               TopSoftware Home               -->
-<!-- ============================================ -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,6 +8,9 @@
   {% load static %}
   <meta name="description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
 
+  <!-- Google Font: Montserrat -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
+
   <!-- External Styles & Scripts -->
   <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
   <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -18,22 +19,23 @@
 
   <!-- Inline Custom Styles -->
   <style>
-    /* Color Variables */
     :root {
-      --primary-color: #2196f3;   /* Light Blue */
-      --secondary-color: #1976d2; /* Deeper Blue */
-      --dark-blue: #0d47a1;       /* Dark Blue */
+      --primary-color: #2196f3;
+      --secondary-color: #1976d2;
+      --dark-blue: #0d47a1;
       --button-hover: #1565c0;
       --white: #ffffff;
     }
-    /* Global Styling */
+
+    /* Global Styles */
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #e3f2fd; /* Light blue background */
+      background-color: #000;
       color: var(--white);
+      font-family: 'Montserrat', Arial, sans-serif;
     }
+
     .container {
       max-width: 960px;
       margin: 0 auto;
@@ -46,12 +48,14 @@
     h2 {
       font-size: 2.5rem;
       margin-bottom: 20px;
+      font-weight: 600;
     }
     p {
       font-size: 1.1rem;
       line-height: 1.6;
+      font-weight: 300;
     }
-    .btn-primary {
+    a.btn-primary {
       background: var(--primary-color);
       color: var(--white);
       padding: 15px 30px;
@@ -59,31 +63,39 @@
       text-decoration: none;
       text-transform: uppercase;
       transition: background 0.3s ease;
+      font-weight: 600;
     }
-    .btn-primary:hover {
+    a.btn-primary:hover {
       background: var(--button-hover);
     }
 
-    /* Section Backgrounds */
-    #about {
-      background: linear-gradient(135deg, var(--secondary-color), var(--dark-blue));
-    }
-    #services {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    }
-    #testimonials {
-      background: linear-gradient(135deg, var(--dark-blue), var(--secondary-color));
-    }
-    #contact {
-      background: linear-gradient(135deg, var(--primary-color), var(--dark-blue));
-    }
-    footer {
-      background: var(--dark-blue);
-      padding: 20px;
-      text-align: center;
+    /* Override unwanted borders */
+    #questions, #questions *,
+    #reviews-1088, #reviews-1088 * {
+      border: none !important;
+      outline: none !important;
     }
 
-    /* Service Cards */
+    /* About Section */
+    #about {
+      background: #000;
+      color: #fff;
+    }
+    #about h2,
+    #about p {
+      color: #fff;
+    }
+
+    /* What We Do Section */
+    #services {
+      background: #000;
+      color: #fff;
+    }
+    #services h2,
+    #services p,
+    #services h3 {
+      color: #fff;
+    }
     .service-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -94,34 +106,310 @@
       background: rgba(255, 255, 255, 0.15);
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
-    /* Testimonials */
-    .testimonial {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 20px;
+
+    /* QUESTIONS SECTION */
+    #questions {
+      background: #000;
+      color: #fff;
+      padding: 0;
+    }
+    .question-block {
+      display: flex;
+      min-height: 80vh;
+      margin: 120px 0;
+    }
+    .question-block:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    .qb-image,
+    .qb-content {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .qb-image {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .qb-content {
+      flex-direction: column;
+      text-align: left;
+      color: #fff;
+    }
+    .company-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      opacity: 0.8;
+      text-transform: uppercase;
+    }
+    .qb-content h3 {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .qb-content h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .qb-content p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin-bottom: 20px;
+      max-width: 500px;
+      font-weight: 300;
+    }
+    /* The two CTA links now use Django's {% url 'portfolio' %} */
+    .qb-link {
+      display: inline-block;
+      padding: 12px 20px;
+      background: none;
+      border: 1px solid #fff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.3s ease, color 0.3s ease;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+    .qb-link:hover {
+      background: #fff;
+      color: #000;
+    }
+    @media (max-width: 992px) {
+      .qb-content h2 {
+        font-size: 1.8rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .question-block {
+        flex-direction: column;
+        min-height: auto;
+        margin: 60px 0;
+      }
+      .qb-image, .qb-content {
+        width: 100%;
+      }
+      .qb-content {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .qb-content p {
+        text-align: center;
+      }
+    }
+
+    /* REVIEWS SECTION */
+    #reviews-1088 {
+      background-color: #000;
+      color: #fff;
+      padding: 60px 20px;
+    }
+    #reviews-1088 .cs-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: block;
+      text-align: center;
+    }
+    #reviews-1088 .cs-content {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    #reviews-1088 .cs-card-group {
+      display: block !important;
+      text-align: center;
+    }
+    #reviews-1088 .cs-item {
+      background: #111;
       border-radius: 8px;
+      padding: 20px;
       margin: 20px auto;
-      max-width: 700px;
-      font-style: italic;
+      max-width: 500px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    #reviews-1088 .cs-item img.cs-image {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    #reviews-1088 .cs-item img.cs-icon {
+      width: 52px;
+      height: 36px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    #reviews-1088 .cs-item-text {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: 300;
+    }
+    #reviews-1088 .cs-flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+    #reviews-1088 .cs-flex .cs-name {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    #reviews-1088 .cs-flex .cs-desc {
+      font-size: 0.9rem;
+      color: #aaa;
+      font-weight: 300;
+    }
+
+    /* CONTACT SECTION */
+    #contact-984 {
+      background: #000;
+      color: #fff;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 1;
+    }
+    #contact-984 .cs-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      align-items: center;
+      text-align: center;
+    }
+    #contact-984 .cs-content {
+      width: 100%;
+    }
+    #contact-984 .cs-title {
+      font-size: 2.5rem;
+      margin: 0;
+      font-weight: 600;
+    }
+    #contact-984 .cs-form-container {
+      width: 100%;
+      max-width: 36.5rem;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    #contact-984 .cs-form {
+      width: 100%;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    #contact-984 .cs-label {
+      font-size: 1rem;
+      width: 100%;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #contact-984 .cs-input {
+      font-size: 1rem;
+      width: 100%;
+      height: 3.5rem;
+      padding-left: 1.5rem;
+      color: #fff;
+      background-color: #222;
+      border: none;
+      box-sizing: border-box;
+      outline: none;
+    }
+    #contact-984 .cs-input::placeholder {
+      color: #767676;
+      opacity: 0.8;
+    }
+    #contact-984 .cs-textarea {
+      min-height: 7.5rem;
+      padding-top: 1.5rem;
+      margin-bottom: 1.75rem;
+      font-family: inherit;
+      width: 100%;
+    }
+    #contact-984 .cs-button-solid {
+      font-size: 1rem;
+      line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
+      margin: 0;
+      color: #fff;
+      min-width: 9.375rem;
+      padding: 0 2rem;
+      background-color: var(--primary-color);
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+      border: none;
+    }
+    #contact-984 .cs-button-solid:before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      background: #000;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transition: width 0.3s;
+    }
+    #contact-984 .cs-button-solid:hover:before {
+      width: 100%;
+    }
+    #contact-984 .cs-submit {
+      min-width: 13.375rem;
+      border: none;
+      border-radius: 0;
+    }
+    #contact-984 .cs-submit:hover {
+      cursor: pointer;
+    }
+
+    /* Remove focus outlines */
+    :focus,
+    :active {
+      outline: none !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+    ::-moz-focus-inner {
+      border: 0 !important;
     }
   </style>
 </head>
 <body>
-
-  <!-- Sticky Navbar -->
   {% include 'navbar.html' %}
-
-  <!-- Hero Section -->
   {% include 'hero.html' %}
 
   <!-- About Section -->
   <section id="about">
     <div class="container">
-      <h2>Who We Are</h2>
+      <h2>We Are TopSoftware</h2>
       <p>
-        At <strong>TopSoftware</strong>, we combine over a decade of experience with cutting-edge digital innovation.
-        Our team delivers high-performance websites, mobile applications, and scalable SaaS platforms that empower businesses.
+        We design and develop websites, apps and digital experiences that help our clients grow, innovate, and transform.
+        We listen, learn and understand before we build. We identify your goals together, then use our expertise to find that sweet spot of realistic and impactful.
       </p>
     </div>
   </section>
@@ -151,39 +439,135 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section id="testimonials">
-    <div class="container">
-      <h2>What Our Clients Say</h2>
-      <div class="testimonial">
-        <p>"TopSoftware transformed our online presence with a sleek website and a robust app solution. Highly recommended!"</p>
-        <p>- John Doe, CEO of Startup X</p>
+  <!-- QUESTIONS SECTION -->
+  <section id="questions">
+    <!-- 1st Question Block -->
+    <div class="question-block">
+      <div class="qb-image" style="background-image: url('{% static 'art.jpeg' %}');"></div>
+      <div class="qb-content">
+        <span class="company-name">VISUAL ART STUDIO</span>
+        <h3>ASKED US:</h3>
+        <h2>"We need to innovate. What now?"</h2>
+        <p>
+          Our favorite question. When you know what you want, but not what you want,
+          we go all-in to uncover the strategies that will get your business where you want it to go.
+        </p>
+        <!-- Now using Django's URL tag for portfolio -->
+        <a href="{% url 'portfolio' %}" class="qb-link">
+          Here’s how we helped a legacy business digitally transform its operations
+        </a>
       </div>
-      <div class="testimonial">
-        <p>"Their expertise in digital solutions helped us scale our operations. The results speak for themselves."</p>
-        <p>- Sarah Smith, Product Manager at TechCorp</p>
+    </div>
+    <!-- 2nd Question Block -->
+    <div class="question-block">
+      <div class="qb-image" style="background-image: url('{% static 'surfguy.jpeg' %}');"></div>
+      <div class="qb-content">
+        <span class="company-name">JACK SURF SHOP</span>
+        <h3>WANTED TO KNOW:</h3>
+        <h2>"Can you enhance our web presence?"</h2>
+        <p>
+          When it comes to digital experiences, we can build pretty much anything.
+          And if there’s a better solution, we’ll tell you. We always start with:
+          Why? and use the answer to drive real growth and meaningful transformation.
+        </p>
+        <!-- Also linking to the portfolio page via Django URL -->
+        <a href="{% url 'portfolio' %}" class="qb-link">
+          See what we designed for a global non-profit
+        </a>
+      </div>
+    </div>
+    <!-- 3rd Question Block -->
+    <div class="question-block">
+      <div class="qb-image" style="background-image: url('{% static 'make.jpeg' %}');"></div>
+      <div class="qb-content">
+        <span class="company-name">BARK</span>
+        <h3>WONDERED:</h3>
+        <h2>"How long will this take?"</h2>
+        <p>
+          The truth is, it depends. We typically host a few discovery workshops,
+          followed by a series of sprints from proof of concept to production-ready.
+          We’re agile, so you will be too.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="container">
-      <h2>Contact Us</h2>
-      <p>
-        Have a project in mind? Let’s work together to bring your vision to life.
-      </p>
-      <a href="mailto:contact@topsoftware.com" class="btn-primary">Get in Touch</a>
+  <!-- ADVANCED REVIEWS SECTION -->
+  <section id="reviews-1088">
+    <div class="cs-container">
+      <div class="cs-content">
+        <h2 class="cs-title">What Our Customers Are Saying</h2>
+      </div>
+      <ul class="cs-card-group">
+        <!-- First Review for Bark -->
+        <li class="cs-item">
+          <img class="cs-image" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/review1.png" alt="profile" width="112" height="112" decoding="async" loading="lazy">
+          <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/quotes-2.svg" alt="icon" width="52" height="36" decoding="async" loading="lazy">
+          <p class="cs-item-text">
+            TopSoftware delivered exceptional results on our website redesign. Their professionalism and creativity exceeded our expectations.
+          </p>
+          <div class="cs-flex">
+            <span class="cs-name">Bark</span>
+            <span class="cs-desc">Owner</span>
+          </div>
+        </li>
+        <!-- Second Review for Labgen -->
+        <li class="cs-item">
+          <img class="cs-image" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/review2.png" alt="profile" width="112" height="112" decoding="async" loading="lazy">
+          <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/quotes-2.svg" alt="icon" width="52" height="36" decoding="async" loading="lazy">
+          <p class="cs-item-text">
+            Their innovative approach and attention to detail transformed our digital presence. We highly recommend TopSoftware for any project.
+          </p>
+          <div class="cs-flex">
+            <span class="cs-name">Labgen</span>
+            <span class="cs-desc">CEO</span>
+          </div>
+        </li>
+        <!-- Third Review for Visual Arts -->
+        <li class="cs-item">
+          <img class="cs-image" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/reviews3.png" alt="profile" width="112" height="112" decoding="async" loading="lazy">
+          <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/quotes-2.svg" alt="icon" width="52" height="36" decoding="async" loading="lazy">
+          <p class="cs-item-text">
+            The team’s expertise and dedication were evident from the start. Their work has had a significant impact on our business growth.
+          </p>
+          <div class="cs-flex">
+            <span class="cs-name">Visual Arts</span>
+            <span class="cs-desc">Creative Director</span>
+          </div>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- CONTACT SECTION -->
+  <section id="contact-984">
+    <div class="cs-container">
+      <div class="cs-content">
+        <h2 class="cs-title">Contact Us</h2>
+        <p>Have a project in mind? Let’s work together to bring your vision to life.</p>
+      </div>
+      <div class="cs-form-container">
+        <form class="cs-form">
+          <label class="cs-label">Name
+            <input type="text" class="cs-input" placeholder="Your Name">
+          </label>
+          <label class="cs-label">Email
+            <input type="email" class="cs-input" placeholder="Your Email">
+          </label>
+          <label class="cs-label">Message
+            <textarea class="cs-textarea" placeholder="Your Message"></textarea>
+          </label>
+          <button type="submit" class="cs-button-solid cs-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <p>&copy; 2025 TopSoftware. All rights reserved.</p>
     </div>
   </footer>
-
 </body>
 </html>
-
