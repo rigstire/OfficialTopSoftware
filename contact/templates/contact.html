@@ -1,103 +1,130 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'contact.css' %}">
-<link rel="stylesheet" href="{% static 'navbar.css' %}">
-<script src="{% static 'navbar.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
-{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | TopSoftware</title>
+  <meta name="description" content="Contact TopSoftware for innovative digital solutions, web development, mobile apps, and AI chatbots." />
 
-<!-- Inline styles to update text colors for better visibility on the dark background -->
-<style>
-  /* Ensure headers, links, and labels appear in white */
-  #contact-1150 .cs-topper,
-  #contact-1150 .cs-title,
-  #contact-1150 .cs-contact-text,
-  #contact-1150 .cs-header,
-  #contact-1150 .cs-link,
-  #contact-1150 label {
-      color: var(--white);
-  }
-</style>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" />
 
-<!-- ============================================ -->
-<!--                Contact TopSoftware           -->
-<!-- ============================================ -->
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="{% static 'css/corestyles.css' %}" />
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
 
-<section id="contact-1150" style="background: #000; padding-top: 180px;">
+  <!-- Contact-Specific Styles -->
+  <link rel="stylesheet" href="{% static 'contact.css' %}" />
+
+  <!-- Load Navbar Assets LAST so they override earlier styles -->
+  <link rel="stylesheet" href="{% static 'navbar.css' %}" />
+  <script src="{% static 'navbar.js' %}"></script>
+
+  <!-- Extra override to force navbar styling to match Portfolio -->
+  <style>
+    /* Ensure the navbar uses the same background and text styling as on Portfolio */
+    #cs-navigation {
+      background-color: #000 !important;
+    }
+    #cs-navigation a.cs-li-link {
+      color: #fff !important;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #cs-navigation .cs-toggle,
+    #cs-navigation .cs-box,
+    #cs-navigation .cs-line {
+      background-color: transparent !important;
+    }
+  </style>
+
+  <!-- Inline global overrides for background and text color -->
+  <style>
+    body {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    /* Ensure all text in the contact section stays white */
+    #contact-1150 .cs-topper,
+    #contact-1150 .cs-title,
+    #contact-1150 .cs-contact-text,
+    #contact-1150 .cs-header,
+    #contact-1150 .cs-link,
+    #contact-1150 label {
+      color: #000 !important;
+    }
+  </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  <!-- Contact Section -->
+  <section id="contact-1150" style="padding-top: 180px;">
     <div class="cs-container">
-        <div class="cs-content">
-            <span class="cs-topper">Contact TopSoftware</span>
-            <h2 class="cs-title">We Love to Bring Your Software Ideas to Life</h2>
-        </div>
-        <div class="cs-contact-group">
-            <!-- Replace the old image with your new static image -->
-            <picture class="cs-picture">
-                <!-- Mobile Image -->
-                <source media="(max-width: 600px)" srcset="{% static 'contact/contactphoto.webp' %}">
-                <!-- Tablet and Above Image -->
-                <source media="(min-width: 601px)" srcset="{% static 'contact/contactphoto.webp' %}">
-                <img 
-                    loading="lazy" 
-                    decoding="async" 
-                    src="{% static 'contact/contactphoto.webp' %}" 
-                    alt="Team at TopSoftware" 
-                    width="630" 
-                    height="300">
+      <div class="cs-content">
+        <span class="cs-topper">Contact TopSoftware</span>
+        <h2 class="cs-title">We Love to Bring Your Software Ideas to Life</h2>
+      </div>
+      <div class="cs-contact-group">
+        <!-- Contact Image -->
+        <picture class="cs-picture">
+          <source media="(max-width: 600px)" srcset="{% static 'make.jpeg' %}">
+          <source media="(min-width: 601px)" srcset="{% static 'make.jpeg' %}">
+          <img loading="lazy" decoding="async" src="{% static 'make.jpeg' %}" alt="Team at TopSoftware" width="630" height="300" />
+        </picture>
+        <p class="cs-contact-text">
+          At TopSoftware, we specialize in developing innovative apps, websites, and custom software solutions that meet your business needs. Let’s work together to transform your vision into reality.
+        </p>
+        <ul class="cs-ul">
+          <li class="cs-li">
+            <picture class="cs-icon-wrapper">
+              <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-phone.svg" alt="phone icon" class="cs-icon" width="40" height="40" decoding="async">
             </picture>
-            <p class="cs-contact-text">
-                At TopSoftware, we specialize in developing innovative apps, websites, and custom software solutions that meet your business needs. Let’s work together to transform your vision into reality.
-            </p>
-            <ul class="cs-ul">
-                <li class="cs-li">
-                    <picture class="cs-icon-wrapper">
-                        <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-phone.svg" alt="phone icon" class="cs-icon" width="40" height="40" decoding="async">
-                    </picture>
-                    <div class="cs-flex-group">
-                        <span class="cs-header">Phone</span>
-                        <a href="tel:7606259806" class="cs-link">7606259806</a>
-                    </div>
-                </li>
-                <li class="cs-li">
-                    <picture class="cs-icon-wrapper">
-                        <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-mail.svg" alt="email icon" class="cs-icon" width="40" height="40" decoding="async">
-                    </picture>
-                    <div class="cs-flex-group">
-                        <span class="cs-header">Email</span>
-                        <a href="mailto:officialtopsoftware@gmail.com" class="cs-link">officialtopsoftware@gmail.com</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+            <div class="cs-flex-group">
+              <span class="cs-header">Phone</span>
+              <a href="tel:7606259806" class="cs-link">760-625-9806</a>
+            </div>
+          </li>
+          <li class="cs-li">
+            
+            <div class="cs-flex-group">
+              <span class="cs-header">Email</span>
+              <a href="mailto:officialtopsoftware@gmail.com" class="cs-link">officialtopsoftware@gmail.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
 
-        <!-- Django Contact Form -->
-        <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
-            {% csrf_token %}
-            <label class="cs-label">
-                Name
-                <input class="cs-input" required type="text" name="name" placeholder="Your Name">
-            </label>
-            <label class="cs-label cs-email">
-                Email
-                <input class="cs-input" required type="email" name="email" placeholder="Your Email">
-            </label>
-            <label class="cs-label cs-phone">
-                Phone
-                <input class="cs-input" required type="text" name="phone" placeholder="Your Phone">
-            </label>
-            <label class="cs-label">
-                Message
-                <textarea class="cs-input cs-textarea" required name="message" placeholder="Write your message..."></textarea>
-            </label>
-            <label class="cs-label">
-                Preferred Consultation Time
-                <input class="cs-input" type="datetime-local" name="consultation_time">
-            </label>
+      <!-- Django Contact Form -->
+      <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <label class="cs-label">
+          Name
+          <input class="cs-input" required type="text" name="name" placeholder="Your Name">
+        </label>
+        <label class="cs-label cs-email">
+          Email
+          <input class="cs-input" required type="email" name="email" placeholder="Your Email">
+        </label>
+        <label class="cs-label cs-phone">
+          Phone
+          <input class="cs-input" required type="text" name="phone" placeholder="Your Phone">
+        </label>
+        <label class="cs-label">
+          Message
+          <textarea class="cs-input cs-textarea" required name="message" placeholder="Write your message..."></textarea>
+        </label>
+        <label class="cs-label">
+          Preferred Consultation Time
+          <input class="cs-input" type="datetime-local" name="consultation_time">
+        </label>
+        <button class="cs-button-solid cs-submit" type="submit">Send Your Inquiry</button>
+      </form>
 
-            <button class="cs-button-solid cs-submit" type="submit">Send Your Inquiry</button>
-        </form>
-
-        <!-- Bounce Graphic -->
-        <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg" alt="bounce" width="208" height="124">
-        <!-- Coin Graphic -->
-        <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg" alt="coin" width="205" height="161">
+      <!-- Decorative Graphics -->
+      <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg" alt="bounce" width="208" height="124">
+      <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg" alt="coin" width="205" height="161">
     </div>
-</section>
+  </section>
+</body>
+</html>
