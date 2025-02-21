@@ -3,6 +3,18 @@
 <--- -------------------------- -*/
 
 /* Mobile - 360px */
+#cs-navigation {
+    background-color: #000 !important;
+  }
+  #cs-navigation a.cs-li-link {
+    color: #fff !important;
+    font-family: 'Montserrat', sans-serif;
+  }
+  #cs-navigation .cs-toggle,
+  #cs-navigation .cs-box,
+  #cs-navigation .cs-line {
+    background-color: transparent !important;
+  }
 @media only screen and (min-width: 0rem) {
     #contact-1150 {
         padding: var(--sectionPadding);
@@ -268,4 +280,3 @@
     }
 }
 
-                                
