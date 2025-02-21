@@ -21,39 +21,10 @@
   <link rel="stylesheet" href="{% static 'navbar.css' %}" />
   <script src="{% static 'navbar.js' %}"></script>
 
-  <!-- Extra override to force navbar styling to match Portfolio -->
-  <style>
-    /* Ensure the navbar uses the same background and text styling as on Portfolio */
-    #cs-navigation {
-      background-color: #000 !important;
-    }
-    #cs-navigation a.cs-li-link {
-      color: #fff !important;
-      font-family: 'Montserrat', sans-serif;
-    }
-    #cs-navigation .cs-toggle,
-    #cs-navigation .cs-box,
-    #cs-navigation .cs-line {
-      background-color: transparent !important;
-    }
-  </style>
+
+
 
   <!-- Inline global overrides for background and text color -->
-  <style>
-    body {
-      background-color: #000 !important;
-      color: #fff !important;
-    }
-    /* Ensure all text in the contact section stays white */
-    #contact-1150 .cs-topper,
-    #contact-1150 .cs-title,
-    #contact-1150 .cs-contact-text,
-    #contact-1150 .cs-header,
-    #contact-1150 .cs-link,
-    #contact-1150 label {
-      color: #000 !important;
-    }
-  </style>
 </head>
 <body>
   {% include 'navbar.html' %}
