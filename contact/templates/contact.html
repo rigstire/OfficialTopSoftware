@@ -25,6 +25,21 @@
 
 
   <!-- Inline global overrides for background and text color -->
+  <style>
+    body {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    /* Ensure all text in the contact section stays white */
+    #contact-1150 .cs-topper,
+    #contact-1150 .cs-title,
+    #contact-1150 .cs-contact-text,
+    #contact-1150 .cs-header,
+    #contact-1150 .cs-link,
+    #contact-1150 label {
+      color: #000 !important;
+    }
+  </style>
 </head>
 <body>
   {% include 'navbar.html' %}
