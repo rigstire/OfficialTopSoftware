@@ -1,121 +1,184 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
-<link rel="stylesheet" href="{% static 'pricing.css' %}">
-<link rel="stylesheet" href="{% static 'navbar.css' %}">
-<link rel="stylesheet" href="{% static 'steps.css' %}">
-<script src="{% static 'navbar.js' %}"></script> 
-{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing | TopSoftware</title>
+  <meta name="description" content="TopSoftware Pricing - Transparent and flexible rates for web development, AI, and custom software solutions.">
 
-<section id="pricing-1087" style="background-color: #000; color: #fff;">
-  <div class="cs-container">
-    <div class="cs-content">
-      <!-- Changed topper text to white -->
-      <span class="cs-topper" style="color: #fff;">Pricing</span>
-      <h2 class="cs-title" style="color: #fff;">Simple &amp; Transparent Pricing</h2>
-      <p class="cs-text" style="color: #fff;">
-        At TopSoftware, our pricing for website development is based on the number of pages. For 1-3 pages, the rate is $250 per page; for 4-7 pages, it's $175 per page; and for 7+ pages, it's only $150 per page. For AI integration and custom software solutions, please schedule a consultation.
-      </p>
+  <!-- Google Fonts: Montserrat -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- Pricing-Specific Styles -->
+  <link rel="stylesheet" href="{% static 'pricing.css' %}">
+
+  <!-- Load Navbar Assets LAST so they override earlier styles -->
+  <link rel="stylesheet" href="{% static 'navbar.css' %}">
+  <script src="{% static 'navbar.js' %}"></script>
+
+  <!-- Extra override for navbar styling -->
+  <style>
+    #cs-navigation {
+      background-color: #000 !important;
+    }
+    #cs-navigation a.cs-li-link {
+      color: #fff !important;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #cs-navigation .cs-toggle,
+    #cs-navigation .cs-box,
+    #cs-navigation .cs-line {
+      background-color: transparent !important;
+    }
+  </style>
+
+  <!-- Force Black Background and White Text on Entire Page -->
+  <style>
+    html, body {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    /* Ensure the pricing section and its inner container are black */
+    #pricing-1087,
+    #pricing-1087 .cs-container {
+      background-color: #000 !important;
+    }
+    /* Override text color for all pricing elements to white */
+    #pricing-1087 .cs-topper,
+    #pricing-1087 .cs-title,
+    #pricing-1087 .cs-text,
+    #pricing-1087 .cs-package,
+    #pricing-1087 .cs-price,
+    #pricing-1087 .cs-item-p,
+    #pricing-1087 .cs-link {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  <section id="pricing-1087" style="background-color: #000 !important; color: #fff;">
+    <div class="cs-container" style="background-color: #000 !important;">
+      <div class="cs-content">
+        <span class="cs-topper">Pricing</span>
+        <h2 class="cs-title">Simple &amp; Transparent Pricing</h2>
+        <p class="cs-text">
+          At TopSoftware, our pricing for website development is based on the number of pages.
+          For 1-3 pages, the rate is $250 per page; for 4-7 pages, it's $175 per page;
+          and for 7+ pages, it's only $150 per page.
+          For AI integration and custom software solutions, please schedule a consultation.
+        </p>
+      </div>
+
+      <ul class="cs-card-group">
+        <!-- First Card: 1-3 Pages -->
+        <li class="cs-item" style="background-color: #000; color: #fff; border: 1px solid #fff;">
+          <span class="cs-package">1-3 Pages</span>
+          <span class="cs-price" style="display: block;">$250 / page</span>
+          <p class="cs-item-p">
+            Ideal for small business websites, portfolios, and landing pages.
+          </p>
+          <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
+          <ul class="cs-ul">
+            <li class="cs-li">
+              Responsive Design
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+            <li class="cs-li">
+              Basic SEO Optimization
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+            <li class="cs-li">
+              Mobile Friendly Layout
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Second Card: 4-7 Pages (Popular) -->
+        <li class="cs-item cs-popular" style="background-color: #000; color: #fff; border: 1px solid #fff;">
+          <span class="cs-package">4-7 Pages</span>
+          <span class="cs-price" style="display: block;">$175 / page</span>
+          <p class="cs-item-p">
+            Perfect for growing businesses that need an expanded online presence.
+          </p>
+          <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
+          <ul class="cs-ul">
+            <li class="cs-li">
+              Custom Design &amp; Layout
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+            <li class="cs-li">
+              Advanced SEO Strategies
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+            <li class="cs-li">
+              Integrated Content Management
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Third Card: 7+ Pages -->
+        <li class="cs-item" style="background-color: #000; color: #fff; border: 1px solid #fff;">
+          <span class="cs-package">7+ Pages</span>
+          <span class="cs-price" style="display: block;">$150 / page</span>
+          <p class="cs-item-p">
+            Best for large, feature-rich websites with custom functionalities.
+          </p>
+          <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
+          <ul class="cs-ul">
+            <li class="cs-li">
+              Fully Custom Design
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+            <li class="cs-li">
+              E-commerce &amp; API Integration
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+            <li class="cs-li">
+              Priority Support &amp; Maintenance
+              <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
+                   src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
+                   alt="checkmark" width="18" height="18">
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
-    <ul class="cs-card-group">
-      <!-- First Card: 1-3 Pages -->
-      <li class="cs-item" style="background-color: #000; color: #fff; border: 1px solid #fff;">
-        <span class="cs-package" style="color: #fff;">1-3 Pages</span>
-        <span class="cs-price" style="display: block !important; color: #fff;">$250 / page</span>
-        <p class="cs-item-p" style="color: #fff;">
-          Ideal for small business websites, portfolios, and landing pages.
-        </p>
-        <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
-        <ul class="cs-ul">
-          <li class="cs-li" style="color: #fff;">
-            Responsive Design
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-          <li class="cs-li" style="color: #fff;">
-            Basic SEO Optimization
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-          <li class="cs-li" style="color: #fff;">
-            Mobile Friendly Layout
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-        </ul>
-      </li>
-      
-      <!-- Second Card: 4-7 Pages (Popular) -->
-      <li class="cs-item cs-popular" style="background-color: #000; color: #fff; border: 1px solid #fff;">
-        <span class="cs-package" style="color: #fff;">4-7 Pages</span>
-        <span class="cs-price" style="display: block !important; color: #fff;">$175 / page</span>
-        <p class="cs-item-p" style="color: #fff;">
-          Perfect for growing businesses that need an expanded online presence.
-        </p>
-        <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
-        <ul class="cs-ul">
-          <li class="cs-li" style="color: #fff;">
-            Custom Design &amp; Layout
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-          <li class="cs-li" style="color: #fff;">
-            Advanced SEO Strategies
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-          <li class="cs-li" style="color: #fff;">
-            Integrated Content Management
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-        </ul>
-      </li>
-      
-      <!-- Third Card: 7+ Pages -->
-      <li class="cs-item" style="background-color: #000; color: #fff; border: 1px solid #fff;">
-        <span class="cs-package" style="color: #fff;">7+ Pages</span>
-        <span class="cs-price" style="display: block !important; color: #fff;">$150 / page</span>
-        <p class="cs-item-p" style="color: #fff;">
-          Best for large, feature-rich websites with custom functionalities.
-        </p>
-        <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
-        <ul class="cs-ul">
-          <li class="cs-li" style="color: #fff;">
-            Fully Custom Design
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-          <li class="cs-li" style="color: #fff;">
-            E-commerce &amp; API Integration
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-          <li class="cs-li" style="color: #fff;">
-            Priority Support &amp; Maintenance
-            <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async"
-                 src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-check.svg"
-                 alt="checkmark" width="18" height="18">
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <!-- Left chevron -->
-  <img class="cs-floater cs-floater1" aria-hidden="true" loading="lazy" decoding="async"
-       src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/left-chevron.svg"
-       alt="left chevron" width="121" height="272">
-  <!-- Right chevron -->
-  <img class="cs-floater cs-floater2" aria-hidden="true" loading="lazy" decoding="async"
-       src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/right-chevron.svg"
-       alt="right chevron" width="121" height="272">
-</section>
 
-{% include 'steps.html' %}
+    <!-- Left chevron -->
+    <img class="cs-floater cs-floater1" aria-hidden="true" loading="lazy" decoding="async"
+         src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/left-chevron.svg"
+         alt="left chevron" width="121" height="272">
+    <!-- Right chevron -->
+    <img class="cs-floater cs-floater2" aria-hidden="true" loading="lazy" decoding="async"
+         src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/right-chevron.svg"
+         alt="right chevron" width="121" height="272">
+  </section>
+
+  {% include 'steps.html' %}
+</body>
+</html>
