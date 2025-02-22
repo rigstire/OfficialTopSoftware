@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.shortcuts import redirect
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,16 @@ ALLOWED_HOSTS = ['topsoftware.tech', 'www.topsoftware.tech','localhost',
                   '127.0.0.1',
                   'topsoftware-cc76302c7c51.herokuapp.com']
 
+from django.shortcuts import redirect
+
+class EnforceDomainMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.get_host() == "topsoftware-cc76302c7c51.herokuapp.com":
+            return redirect("https://topsoftware.tech" + request.get_full_path(), permanent=True)
+        return self.get_response(request)
 
 # Application definition
 
@@ -63,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "config.middleware.EnforceDomainMiddleware"
 ]
 
 ROOT_URLCONF = 'config.urls'
