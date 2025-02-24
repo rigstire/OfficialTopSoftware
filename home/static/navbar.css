@@ -26,7 +26,6 @@
     border-radius: 0 !important;
     transform: none !important;
     z-index: 10000;
-    /* Remove or reduce any padding if you want it flush with the top */
     padding: 0.5rem 1rem !important;
     transition: none !important;
   }
@@ -36,7 +35,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 !important;  /* Remove extra container padding if desired */
+    padding: 0 !important;
   }
   
   /* LOGO */
@@ -64,11 +63,13 @@
     height: 2.5rem;
     cursor: pointer;
   }
+  
   .cs-box {
     position: relative;
     width: 100%;
     height: 0.2rem;
   }
+  
   .cs-line {
     background: var(--white) !important;
     height: 2px;
@@ -77,11 +78,12 @@
     left: 0;
     transition: transform 0.3s, opacity 0.3s;
   }
+  
   .cs-line1 { top: 0; }
   .cs-line2 { top: 50%; transform: translateY(-50%); }
   .cs-line3 { bottom: 0; }
   
-  /* NAV LINKS WRAPPER (NO BACKGROUND, NO BLUR) */
+  /* NAV LINKS WRAPPER (No Background, No Blur) */
   .cs-ul-wrapper {
     position: absolute;
     top: 100%;
@@ -96,6 +98,7 @@
     transform-origin: top;
     transition: transform 0.3s ease;
   }
+  
   .cs-ul-wrapper.open {
     transform: scaleY(1);
   }
@@ -109,21 +112,24 @@
     flex-direction: column;
     gap: 1rem;
   }
+  
   .cs-li {
     text-align: center;
   }
+  
   .cs-li-link {
     color: var(--headerColor) !important;
     text-decoration: none !important;
     font-size: 1.25rem;
     transition: color 0.3s;
   }
+  
   .cs-li-link:hover,
   .cs-li-link.cs-active {
     color: var(--primary-color) !important;
   }
   
-  /* CONTACT BUTTON */
+  /* CONTACT BUTTON (if needed) */
   .cs-nav-button {
     padding: 0.5rem 1rem !important;
     background: transparent !important;
@@ -133,6 +139,7 @@
     text-decoration: none !important;
     transition: background 0.3s, color 0.3s;
   }
+  
   .cs-nav-button:hover {
     background: var(--primary-color) !important;
     color: var(--dark-blue) !important;
@@ -189,5 +196,3 @@
       display: none !important;
     }
   }
-  
-  
