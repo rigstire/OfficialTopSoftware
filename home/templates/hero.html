@@ -16,7 +16,7 @@
   <div class="hero-container">
     <h1 class="hero-title">TopSoftware</h1>
     <p class="hero-subtitle">Building Digital Dreams</p>
-    <!-- "Build now" button now navigates to the Contact section -->
+    <!-- "Build now" button navigates to the Contact section -->
     <a href="#contact-984" class="btn-hero">Build now</a>
   </div>
 </section>
@@ -56,6 +56,7 @@
     left: 0;
     width: 100%;
     height: 100%;
+    /* If you’d like a gradient, replace 'transparent' with a gradient value */
     background: transparent;
     z-index: -1;
   }
@@ -87,6 +88,20 @@
   }
   .btn-hero:hover {
     background: #333 !important;
+  }
+
+  /* Mobile Responsive Adjustments */
+  @media only screen and (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+    .btn-hero {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
   }
 
   /* Remove focus outlines */

@@ -70,7 +70,7 @@
     }
 
     /* Override unwanted borders */
-    #questions, #questions *,
+    #questions, #questions * ,
     #reviews-1088, #reviews-1088 * {
       border: none !important;
       outline: none !important;
@@ -172,7 +172,6 @@
       max-width: 500px;
       font-weight: 300;
     }
-    /* The two CTA links now use Django's {% url 'portfolio' %} */
     .qb-link {
       display: inline-block;
       padding: 12px 20px;
@@ -452,7 +451,6 @@
           Our favorite question. When you know what you want, but not what you want,
           we go all-in to uncover the strategies that will get your business where you want it to go.
         </p>
-        <!-- Now using Django's URL tag for portfolio -->
         <a href="{% url 'portfolio' %}" class="qb-link">
           Here’s how we helped a legacy business digitally transform its operations
         </a>
@@ -470,7 +468,6 @@
           And if there’s a better solution, we’ll tell you. We always start with:
           Why? and use the answer to drive real growth and meaningful transformation.
         </p>
-        <!-- Also linking to the portfolio page via Django URL -->
         <a href="{% url 'portfolio' %}" class="qb-link">
           See what we designed for a global non-profit
         </a>
