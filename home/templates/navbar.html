@@ -1,9 +1,10 @@
 {% load static %}
-<!-- ============================================ -->
 <header id="cs-navigation">
   <div class="cs-container">
     <!-- Nav Logo (flush left) -->
-    
+    <!--<a href="/" class="cs-logo">
+      <img src="{% static '/simplelogo.web' %}" alt="Logo">
+    </a>-->
     <!-- Navigation List (center/right) -->
     <nav class="cs-nav" role="navigation">
       <!-- Mobile Nav Toggle (hidden on desktop via CSS) -->
@@ -31,12 +32,11 @@
           </li>
           <li class="cs-li">
             <a href="{% url 'payments' %}" class="cs-li-link">Payment</a>
-
           </li>
         </ul>
       </div>
     </nav>
-    <!-- Nav Button (remains on the right) 
-    <a href="/contact" class="cs-button-solid cs-nav-button">Contact Us</a>-->
+    <!-- Optional Nav Button -->
+    <!-- <a href="{% url 'contact' %}" class="cs-nav-button">Contact Us</a> -->
   </div>
 </header>
