@@ -1,34 +1,30 @@
-// add classes for mobile navigation toggling
-var CSbody = document.querySelector('body');
-const CSnavbarMenu = document.querySelector('#cs-navigation');
-const CShamburgerMenu = document.querySelector('#cs-navigation .cs-toggle');
-
-CShamburgerMenu.addEventListener('click', function () {
-	CShamburgerMenu.classList.toggle('cs-active');
-	CSnavbarMenu.classList.toggle('cs-active');
-	CSbody.classList.toggle('cs-open');
-	// run the function to check the aria-expanded value
-	ariaExpanded();
-});
-
-// checks the value of aria expanded on the cs-ul and changes it accordingly whether it is expanded or not
-function ariaExpanded() {
+document.addEventListener("DOMContentLoaded", function () {
+	const csBody = document.querySelector('body');
+	const csNavbar = document.querySelector('#cs-navigation');
+	const csToggle = document.querySelector('#cs-navigation .cs-toggle');
+	const menuWrapper = document.querySelector('.cs-ul-wrapper');
 	const csUL = document.querySelector('#cs-expanded');
-	const csExpanded = csUL.getAttribute('aria-expanded');
-
-	if (csExpanded === 'false') {
-		csUL.setAttribute('aria-expanded', 'true');
-	} else {
-		csUL.setAttribute('aria-expanded', 'false');
-	}
-}
-
-// mobile nav toggle code
-const dropDowns = Array.from(document.querySelectorAll('#cs-navigation .cs-dropdown'));
-for (const item of dropDowns) {
-	const onClick = () => {
+  
+	csToggle.addEventListener('click', function () {
+	  // Toggle the mobile menu visibility by adding/removing the "open" class
+	  menuWrapper.classList.toggle('open');
+  
+	  // Optionally toggle other classes (for styling or scrolling behavior)
+	  csToggle.classList.toggle('cs-active');
+	  csNavbar.classList.toggle('cs-active');
+	  csBody.classList.toggle('cs-open');
+  
+	  // Update the aria-expanded attribute for accessibility
+	  const expanded = csUL.getAttribute('aria-expanded');
+	  csUL.setAttribute('aria-expanded', expanded === 'false' ? 'true' : 'false');
+	});
+  
+	// Optional: Code for dropdown functionality (if you have dropdowns in your navbar)
+	const dropDowns = Array.from(document.querySelectorAll('#cs-navigation .cs-dropdown'));
+	dropDowns.forEach(item => {
+	  item.addEventListener('click', () => {
 		item.classList.toggle('cs-active');
-	};
-	item.addEventListener('click', onClick);
-}
-                                
+	  });
+	});
+  });
+  
