@@ -3,12 +3,22 @@
   <div class="navbar-container">
     <a href="/" class="navbar-brand">TopSoftware</a>
     <!-- Desktop Navigation -->
-    <ul class="desktop-nav">
-      <li><a href="/">Home</a></li>
-      <li><a href="/portfolio/">Portfolio</a></li>
-      <li><a href="/pricing/">Pricing</a></li>
-      <li><a href="/payment/">Payment</a></li>
-      <li><a href="/contact/">Contact</a></li>
+    <ul class="desktop-nav navbar-menu">
+      <li class="cs-li">
+        <a href="/" class="cs-li-link cs-active">Home</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'contact' %}" class="cs-li-link">Contact</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'pricing' %}" class="cs-li-link">Pricing</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'portfolio' %}" class="cs-li-link">Portfolio</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'payments' %}" class="cs-li-link">Payment</a>
+      </li>
     </ul>
     <!-- Hamburger Icon for Mobile -->
     <div class="mobile-menu-icon" id="mobile-menu-icon">&#9776;</div>
@@ -16,51 +26,55 @@
   <!-- Mobile Navigation Overlay -->
   <div class="mobile-nav" id="mobile-nav">
     <ul class="mobile-nav-menu">
-      <li><a href="/">Home</a></li>
-      <li><a href="/portfolio/">Portfolio</a></li>
-      <li><a href="/pricing/">Pricing</a></li>
-      <li><a href="/payment/">Payment</a></li>
-      <li><a href="/contact/">Contact</a></li>
+      <li class="cs-li">
+        <a href="/" class="cs-li-link cs-active">Home</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'contact' %}" class="cs-li-link">Contact</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'pricing' %}" class="cs-li-link">Pricing</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'portfolio' %}" class="cs-li-link">Portfolio</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'payments' %}" class="cs-li-link">Payment</a>
+      </li>
     </ul>
   </div>
 </nav>
 <style>
-  /* Base Styles */
+  /* Base Navbar Styles */
   .navbar {
     background-color: #000;
-    color: #fff;
     padding: 10px 20px;
     position: relative;
     z-index: 1000;
   }
   .navbar-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
+    max-width: 960px;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .navbar-brand {
-    font-size: 1.8rem;
     color: #fff;
     text-decoration: none;
+    font-size: 1.5rem;
   }
-  /* Desktop Menu */
-  .desktop-nav {
+  /* Desktop Navigation */
+  .navbar-menu {
     list-style: none;
     display: flex;
     gap: 20px;
     margin: 0;
     padding: 0;
   }
-  .desktop-nav li a {
+  .navbar-menu li a {
     color: #fff;
     text-decoration: none;
-    padding: 8px 12px;
-    transition: background 0.3s ease;
-  }
-  .desktop-nav li a:hover {
-    background-color: #333;
   }
   /* Mobile Menu Icon */
   .mobile-menu-icon {
@@ -68,7 +82,7 @@
     cursor: pointer;
     display: none;
   }
-  /* Mobile Navigation Overlay (hidden by default) */
+  /* Mobile Navigation Overlay */
   .mobile-nav {
     display: none;
   }
@@ -99,7 +113,7 @@
     text-decoration: none;
     font-size: 1.5rem;
   }
-  /* Responsive Adjustments */
+  /* Responsive: Hide desktop nav on small screens */
   @media (max-width: 768px) {
     .desktop-nav {
       display: none;
@@ -118,7 +132,7 @@
       mobileNav.classList.toggle('active');
     });
 
-    // Close the mobile menu when a link is clicked
+    // Close mobile menu when any link is clicked
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu li a');
     mobileNavLinks.forEach(function(link) {
       link.addEventListener('click', function() {
