@@ -58,17 +58,15 @@
     #pricing-1087 .cs-link {
       color: #fff !important;
     }
-    /* --- New Chevrons Styling --- */
-    /* Make the pricing section a positioned container */
+    /* --- Chevrons Styling --- */
     #pricing-1087 {
       position: relative;
       padding-bottom: 60px; /* Extra bottom padding to accommodate chevrons */
     }
-    /* Position chevron images absolutely at the bottom corners and reduce their size */
     .cs-floater {
       position: absolute;
       bottom: 10px;
-      width: 80px;  /* Reduced width */
+      width: 80px;  /* Default width for desktop */
       height: auto;
       z-index: 1;
     }
@@ -77,6 +75,17 @@
     }
     .cs-floater.cs-floater2 {
       right: 10px;
+    }
+    /* Mobile adjustments for chevrons */
+    @media (max-width: 768px) {
+      /* Hide left chevron on mobile so it doesn’t block content */
+      .cs-floater.cs-floater1 {
+        display: none;
+      }
+      /* Reduce size of the right chevron */
+      .cs-floater.cs-floater2 {
+        width: 60px;
+      }
     }
   </style>
 </head>
