@@ -1,37 +1,27 @@
 {% load static %}
-<!-- ============================================ -->
-<!--                    Hero                      -->
-<!-- ============================================ -->
 <section id="hero-section">
   <!-- Background Video -->
   <video autoplay muted loop class="background-video">
     <source src="{% static 'night.mp4' %}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-
-  <!-- Gradient Overlay -->
+  <!-- Gradient Overlay (if needed, you can replace 'transparent' with a gradient) -->
   <div class="video-overlay"></div>
-
   <!-- Centered Hero Content -->
   <div class="hero-container">
     <h1 class="hero-title">TopSoftware</h1>
     <p class="hero-subtitle">Building Digital Dreams</p>
-    <!-- "Build now" button navigates to the Contact section -->
     <a href="#contact-984" class="btn-hero">Build now</a>
   </div>
 </section>
-
 <style>
-  /* Color Variables */
   :root {
-    --primary-color: #2196f3;   /* Light Blue */
-    --secondary-color: #1976d2; /* Deeper Blue */
-    --dark-blue: #0d47a1;       /* Dark Blue */
-    --button-hover: #1565c0;    /* Button Hover */
+    --primary-color: #2196f3;
+    --secondary-color: #1976d2;
+    --dark-blue: #0d47a1;
+    --button-hover: #1565c0;
     --white: #ffffff;
   }
-
-  /* Hero Section */
   #hero-section {
     position: relative;
     width: 100%;
@@ -56,7 +46,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* If you’d like a gradient, replace 'transparent' with a gradient value */
     background: transparent;
     z-index: -1;
   }
@@ -76,10 +65,9 @@
     font-size: 1.8rem;
     margin-bottom: 20px;
   }
-  /* Button */
   .btn-hero {
-    background: #000 !important;
-    color: #fff !important;
+    background: #000;
+    color: #fff;
     padding: 15px 30px;
     border-radius: 5px;
     text-decoration: none;
@@ -87,10 +75,8 @@
     transition: background 0.3s ease;
   }
   .btn-hero:hover {
-    background: #333 !important;
+    background: #333;
   }
-
-  /* Mobile Responsive Adjustments */
   @media only screen and (max-width: 768px) {
     .hero-title {
       font-size: 2.5rem;
@@ -103,8 +89,6 @@
       font-size: 0.9rem;
     }
   }
-
-  /* Remove focus outlines */
   :focus,
   :active {
     outline: none !important;
