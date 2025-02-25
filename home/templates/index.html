@@ -111,10 +111,12 @@
       justify-content: center;
       padding: 40px;
     }
+    /* Force a consistent image size */
     .qb-image {
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      min-height: 300px;  /* Consistent height for desktop */
     }
     .qb-content {
       flex-direction: column;
@@ -181,7 +183,7 @@
         padding: 20px;
       }
       .qb-image {
-        height: 200px;  /* Uniform height for all question images on mobile */
+        height: 200px;  /* Fixed height on mobile */
       }
       .qb-content {
         margin-top: 20px;
@@ -426,9 +428,7 @@
         <p>
           Our favorite question. When you know what you want but not exactly how to get there, we dive in to uncover the perfect strategy.
         </p>
-        <a href="{% url 'portfolio' %}" class="qb-link">
-          Here’s how we helped a legacy business digitally transform its operations
-        </a>
+        <a href="{% url 'portfolio' %}" class="qb-link">Here’s how we helped a legacy business digitally transform its operations</a>
       </div>
     </div>
     <!-- 2nd Question Block (Surfguy) -->
@@ -441,9 +441,7 @@
         <p>
           When it comes to digital experiences, we can build pretty much anything – starting with a strong, innovative online presence.
         </p>
-        <a href="{% url 'portfolio' %}" class="qb-link">
-          See what we designed for a global non-profit
-        </a>
+        <a href="{% url 'portfolio' %}" class="qb-link">See what we designed for a global non-profit</a>
       </div>
     </div>
     <!-- 3rd Question Block -->
