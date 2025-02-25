@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="{% static 'navbar.css' %}">
   <script src="{% static 'navbar.js' %}"></script>
 
-  <!-- Extra override for navbar styling (same as portfolio) -->
+  <!-- Extra override for navbar styling -->
   <style>
     #cs-navigation {
       background-color: #000 !important;
@@ -158,6 +158,12 @@
         <input type="number" id="quantity-starter" class="form-control" value="0" min="0" max="10" onchange="updateTotal()">
       </div>
 
+      <!-- Custom Amount Option -->
+      <div class="mt-3">
+        <label for="custom-amount" class="fw-bold">Or enter a custom amount (in $):</label>
+        <input type="number" id="custom-amount" class="form-control" placeholder="0.00" min="0" step="0.01" onchange="updateTotal()">
+      </div>
+
       <!-- Total Amount -->
       <div class="mt-3">
         <h5>Total Amount: <span id="total-price">$0.00</span></h5>
@@ -195,8 +201,17 @@
       let quantityPremium = parseInt(document.getElementById("quantity-premium").value) || 0;
       let quantityBasic = parseInt(document.getElementById("quantity-basic").value) || 0;
       let quantityStarter = parseInt(document.getElementById("quantity-starter").value) || 0;
-
-      totalAmount = (quantityPremium * premiumPrice) + (quantityBasic * basicPrice) + (quantityStarter * starterPrice);
+      let customAmountInput = parseFloat(document.getElementById("custom-amount").value) || 0;
+      
+      let computedTotal = (quantityPremium * premiumPrice) + (quantityBasic * basicPrice) + (quantityStarter * starterPrice);
+      
+      // If a custom amount is entered (greater than 0), override the computed total.
+      if(customAmountInput > 0) {
+        totalAmount = Math.round(customAmountInput * 100); // Convert dollars to cents.
+      } else {
+        totalAmount = computedTotal;
+      }
+      
       document.getElementById("total-price").innerText = `$${(totalAmount / 100).toFixed(2)}`;
     }
 
@@ -208,7 +223,7 @@
 
         document.getElementById("pay-button").addEventListener("click", async () => {
           if (totalAmount === 0) {
-            alert("Please select at least one item.");
+            alert("Please select at least one item or enter a custom amount.");
             return;
           }
 
