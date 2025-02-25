@@ -169,6 +169,7 @@
       background: #fff;
       color: #000;
     }
+    /* Mobile adjustments for Questions Section */
     @media (max-width: 768px) {
       .question-block {
         flex-direction: column;
@@ -180,7 +181,7 @@
         padding: 20px;
       }
       .qb-image {
-        height: 200px;
+        height: 200px;  /* Uniform height for all question images on mobile */
       }
       .qb-content {
         margin-top: 20px;
@@ -423,9 +424,9 @@
         <h3>ASKED US:</h3>
         <h2>"We need to innovate. What now?"</h2>
         <p>
-          Our favorite question. When you know what you want, but not exactly how to get there, we dive in to uncover the perfect strategy.
+          Our favorite question. When you know what you want but not exactly how to get there, we dive in to uncover the perfect strategy.
         </p>
-        <a href="/portfolio/" class="qb-link">
+        <a href="{% url 'portfolio' %}" class="qb-link">
           Here’s how we helped a legacy business digitally transform its operations
         </a>
       </div>
@@ -440,7 +441,7 @@
         <p>
           When it comes to digital experiences, we can build pretty much anything – starting with a strong, innovative online presence.
         </p>
-        <a href="/portfolio/" class="qb-link">
+        <a href="{% url 'portfolio' %}" class="qb-link">
           See what we designed for a global non-profit
         </a>
       </div>
