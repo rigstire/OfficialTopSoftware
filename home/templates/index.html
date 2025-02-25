@@ -6,6 +6,20 @@
   <title>TopSoftware - Innovative Digital Solutions</title>
   {% load static %}
   <meta name="description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="TopSoftware - Innovative Digital Solutions">
+  <meta property="og:description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
+  <meta property="og:image" content="https://topsoftware.tech/path/to/preview-image.jpg">
+  <meta property="og:url" content="https://topsoftware.tech/">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TopSoftware - Innovative Digital Solutions">
+  <meta name="twitter:description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
+  <meta name="twitter:image" content="https://topsoftware.tech/path/to/preview-image.jpg">
+  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
   <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
   <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -116,7 +130,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      min-height: 300px;  /* Consistent height for desktop */
+      min-height: 300px;
     }
     .qb-content {
       flex-direction: column;
@@ -171,7 +185,6 @@
       background: #fff;
       color: #000;
     }
-    /* Mobile adjustments for Questions Section */
     @media (max-width: 768px) {
       .question-block {
         flex-direction: column;
@@ -183,7 +196,7 @@
         padding: 20px;
       }
       .qb-image {
-        height: 200px;  /* Fixed height on mobile */
+        height: 200px;
       }
       .qb-content {
         margin-top: 20px;
