@@ -3,35 +3,40 @@
   <div class="navbar-container">
     <a href="/" class="navbar-brand">TopSoftware</a>
     <ul class="navbar-menu">
-      <li><a href="/">Home</a></li>
-      <li><a href="/portfolio/">Portfolio</a></li>
-      <li><a href="/pricing/">Pricing</a></li>
-      <li><a href="/payment/">Payment</a></li>
-      <li><a href="/contact/">Contact</a></li>
+      <li class="cs-li">
+        <a href="/" class="cs-li-link cs-active">Home</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'contact' %}" class="cs-li-link">Contact</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'pricing' %}" class="cs-li-link">Pricing</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'portfolio' %}" class="cs-li-link">Portfolio</a>
+      </li>
+      <li class="cs-li">
+        <a href="{% url 'payments' %}" class="cs-li-link">Payment</a>
+      </li>
     </ul>
-    <button class="navbar-toggle" id="navbar-toggle">&#9776;</button>
   </div>
 </nav>
 <style>
-  /* Navbar Base Styles */
   .navbar {
     background-color: #000;
-    color: #fff;
     padding: 10px 20px;
-    position: relative;
-    z-index: 1000;
   }
   .navbar-container {
-    max-width: 1200px;
+    max-width: 960px;
     margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
   }
   .navbar-brand {
-    font-size: 1.8rem;
     color: #fff;
     text-decoration: none;
+    font-size: 1.5rem;
   }
   .navbar-menu {
     list-style: none;
@@ -43,46 +48,11 @@
   .navbar-menu li a {
     color: #fff;
     text-decoration: none;
-    padding: 8px 12px;
-    transition: background 0.3s ease;
   }
-  .navbar-menu li a:hover {
-    background-color: #333;
-  }
-  .navbar-toggle {
-    display: none;
-    font-size: 1.8rem;
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-  }
-  /* Mobile Styles */
   @media (max-width: 768px) {
     .navbar-menu {
-      display: none;
       flex-direction: column;
-      width: 100%;
-      background-color: #000;
-      position: absolute;
-      top: 100%;
-      left: 0;
-    }
-    .navbar-menu.active {
-      display: flex;
-    }
-    .navbar-toggle {
-      display: block;
+      gap: 10px;
     }
   }
 </style>
-<script>
-  // Mobile menu toggle
-  document.addEventListener('DOMContentLoaded', function() {
-    const toggle = document.getElementById('navbar-toggle');
-    const menu = document.querySelector('.navbar-menu');
-    toggle.addEventListener('click', function() {
-      menu.classList.toggle('active');
-    });
-  });
-</script>
