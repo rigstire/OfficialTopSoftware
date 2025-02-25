@@ -1,20 +1,25 @@
 {% load static %}
 <section id="hero-section">
   <!-- Background Video -->
-  <video autoplay muted loop class="background-video">
+  <video autoplay muted loop playsinline class="background-video">
     <source src="{% static 'night.mp4' %}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-  <!-- Gradient Overlay (if needed, you can replace 'transparent' with a gradient) -->
+
+  <!-- Gradient Overlay -->
   <div class="video-overlay"></div>
+
   <!-- Centered Hero Content -->
   <div class="hero-container">
     <h1 class="hero-title">TopSoftware</h1>
     <p class="hero-subtitle">Building Digital Dreams</p>
+    <!-- "Build now" button navigates to the Contact section -->
     <a href="#contact-984" class="btn-hero">Build now</a>
   </div>
 </section>
+
 <style>
+  /* Color Variables */
   :root {
     --primary-color: #2196f3;
     --secondary-color: #1976d2;
@@ -22,6 +27,8 @@
     --button-hover: #1565c0;
     --white: #ffffff;
   }
+
+  /* Hero Section */
   #hero-section {
     position: relative;
     width: 100%;
@@ -46,7 +53,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
+    background: transparent;  /* You can replace this with a gradient if desired */
     z-index: -1;
   }
   .hero-container {
@@ -65,6 +72,7 @@
     font-size: 1.8rem;
     margin-bottom: 20px;
   }
+  /* Button */
   .btn-hero {
     background: #000;
     color: #fff;
@@ -77,6 +85,8 @@
   .btn-hero:hover {
     background: #333;
   }
+
+  /* Mobile Responsive Adjustments */
   @media only screen and (max-width: 768px) {
     .hero-title {
       font-size: 2.5rem;
@@ -89,6 +99,8 @@
       font-size: 0.9rem;
     }
   }
+
+  /* Remove focus outlines */
   :focus,
   :active {
     outline: none !important;
