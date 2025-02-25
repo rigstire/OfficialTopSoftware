@@ -70,7 +70,7 @@
     }
 
     /* Override unwanted borders */
-    #questions, #questions * ,
+    #questions, #questions *,
     #reviews-1088, #reviews-1088 * {
       border: none !important;
       outline: none !important;
@@ -189,11 +189,7 @@
       background: #fff;
       color: #000;
     }
-    @media (max-width: 992px) {
-      .qb-content h2 {
-        font-size: 1.8rem;
-      }
-    }
+    /* Mobile adjustments for Questions Section */
     @media (max-width: 768px) {
       .question-block {
         flex-direction: column;
@@ -202,6 +198,11 @@
       }
       .qb-image, .qb-content {
         width: 100%;
+        padding: 20px;
+      }
+      /* Fixed height for image container on mobile */
+      .qb-image {
+        height: 200px; /* Adjust this value as needed */
       }
       .qb-content {
         margin-top: 20px;
