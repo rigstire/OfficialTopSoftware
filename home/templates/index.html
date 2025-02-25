@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -189,11 +189,7 @@
       background: #fff;
       color: #000;
     }
-    @media (max-width: 992px) {
-      .qb-content h2 {
-        font-size: 1.8rem;
-      }
-    }
+    /* Mobile adjustments for Questions Section */
     @media (max-width: 768px) {
       .question-block {
         flex-direction: column;
@@ -202,6 +198,10 @@
       }
       .qb-image, .qb-content {
         width: 100%;
+        padding: 20px;
+      }
+      .qb-image {
+        height: 200px;
       }
       .qb-content {
         margin-top: 20px;
@@ -451,7 +451,7 @@
           Our favorite question. When you know what you want, but not what you want,
           we go all-in to uncover the strategies that will get your business where you want it to go.
         </p>
-        <a href="{% url 'portfolio' %}" class="qb-link">
+        <a href="/portfolio/" class="qb-link">
           Here’s how we helped a legacy business digitally transform its operations
         </a>
       </div>
@@ -468,7 +468,7 @@
           And if there’s a better solution, we’ll tell you. We always start with:
           Why? and use the answer to drive real growth and meaningful transformation.
         </p>
-        <a href="{% url 'portfolio' %}" class="qb-link">
+        <a href="/portfolio/" class="qb-link">
           See what we designed for a global non-profit
         </a>
       </div>
@@ -489,7 +489,7 @@
     </div>
   </section>
 
-  <!-- ADVANCED REVIEWS SECTION -->
+  <!-- REVIEWS SECTION -->
   <section id="reviews-1088">
     <div class="cs-container">
       <div class="cs-content">
@@ -568,3 +568,4 @@
   </footer>
 </body>
 </html>
+
