@@ -79,10 +79,10 @@
     /* Mobile adjustments for chevrons */
     @media (max-width: 768px) {
       .cs-floater.cs-floater1 {
-        display: none; /* Hide left chevron on mobile */
+        display: none !important; /* Force hide left chevron on mobile */
       }
       .cs-floater.cs-floater2 {
-        width: 40px; /* Reduce the right chevron size further */
+        width: 40px !important; /* Further reduce the right chevron size */
       }
     }
   </style>
@@ -195,7 +195,7 @@
         </li>
       </ul>
     </div>
-
+  
     <!-- Adjusted Chevrons Positioned at Bottom Corners -->
     <img class="cs-floater cs-floater1" aria-hidden="true" loading="lazy" decoding="async"
          src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/left-chevron.svg"
@@ -204,7 +204,7 @@
          src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/right-chevron.svg"
          alt="right chevron">
   </section>
-
+  
   {% include 'steps.html' %}
 </body>
 </html>
