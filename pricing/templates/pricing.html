@@ -58,6 +58,26 @@
     #pricing-1087 .cs-link {
       color: #fff !important;
     }
+    /* --- New Chevrons Styling --- */
+    /* Make the pricing section a positioned container */
+    #pricing-1087 {
+      position: relative;
+      padding-bottom: 60px; /* Extra bottom padding to accommodate chevrons */
+    }
+    /* Position chevron images absolutely at the bottom corners and reduce their size */
+    .cs-floater {
+      position: absolute;
+      bottom: 10px;
+      width: 80px;  /* Reduced width */
+      height: auto;
+      z-index: 1;
+    }
+    .cs-floater.cs-floater1 {
+      left: 10px;
+    }
+    .cs-floater.cs-floater2 {
+      right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -84,7 +104,7 @@
           <p class="cs-item-p">
             Ideal for small business websites, portfolios, and landing pages.
           </p>
-          <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
+          <a href="{% url 'contact' %}" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
           <ul class="cs-ul">
             <li class="cs-li">
               Responsive Design
@@ -114,7 +134,7 @@
           <p class="cs-item-p">
             Perfect for growing businesses that need an expanded online presence.
           </p>
-          <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
+          <a href="{% url 'contact' %}" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
           <ul class="cs-ul">
             <li class="cs-li">
               Custom Design &amp; Layout
@@ -144,7 +164,7 @@
           <p class="cs-item-p">
             Best for large, feature-rich websites with custom functionalities.
           </p>
-          <a href="" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
+          <a href="{% url 'contact' %}" class="cs-button-solid cs-price-button" style="background-color: #fff; color: #000;">Schedule Consultation</a>
           <ul class="cs-ul">
             <li class="cs-li">
               Fully Custom Design
@@ -169,14 +189,13 @@
       </ul>
     </div>
 
-    <!-- Left chevron -->
+    <!-- Adjusted Chevrons Positioned at Bottom Corners -->
     <img class="cs-floater cs-floater1" aria-hidden="true" loading="lazy" decoding="async"
          src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/left-chevron.svg"
-         alt="left chevron" width="121" height="272">
-    <!-- Right chevron -->
+         alt="left chevron">
     <img class="cs-floater cs-floater2" aria-hidden="true" loading="lazy" decoding="async"
          src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/right-chevron.svg"
-         alt="right chevron" width="121" height="272">
+         alt="right chevron">
   </section>
 
   {% include 'steps.html' %}
