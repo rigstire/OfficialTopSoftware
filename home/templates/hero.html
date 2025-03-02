@@ -1,10 +1,7 @@
 {% load static %}
-<!-- ============================================ -->
-<!--                    Hero                      -->
-<!-- ============================================ -->
 <section id="hero-section">
   <!-- Background Video -->
-  <video autoplay muted loop class="background-video">
+  <video autoplay muted loop playsinline class="background-video">
     <source src="{% static 'night.mp4' %}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -24,10 +21,10 @@
 <style>
   /* Color Variables */
   :root {
-    --primary-color: #2196f3;   /* Light Blue */
-    --secondary-color: #1976d2; /* Deeper Blue */
-    --dark-blue: #0d47a1;       /* Dark Blue */
-    --button-hover: #1565c0;    /* Button Hover */
+    --primary-color: #2196f3;
+    --secondary-color: #1976d2;
+    --dark-blue: #0d47a1;
+    --button-hover: #1565c0;
     --white: #ffffff;
   }
 
@@ -56,8 +53,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* If you’d like a gradient, replace 'transparent' with a gradient value */
-    background: transparent;
+    background: transparent;  /* You can replace this with a gradient if desired */
     z-index: -1;
   }
   .hero-container {
@@ -78,8 +74,8 @@
   }
   /* Button */
   .btn-hero {
-    background: #000 !important;
-    color: #fff !important;
+    background: #000;
+    color: #fff;
     padding: 15px 30px;
     border-radius: 5px;
     text-decoration: none;
@@ -87,7 +83,7 @@
     transition: background 0.3s ease;
   }
   .btn-hero:hover {
-    background: #333 !important;
+    background: #333;
   }
 
   /* Mobile Responsive Adjustments */

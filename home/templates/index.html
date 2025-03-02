@@ -2,22 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TopSoftware - Innovative Digital Solutions</title>
-  
   {% load static %}
   <meta name="description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
-
-  <!-- Google Font: Montserrat -->
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="TopSoftware - Innovative Digital Solutions">
+  <meta property="og:description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
+  <meta property="og:image" content="https://topsoftware.tech/home/static/logo.png">
+  <meta property="og:url" content="https://topsoftware.tech/">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TopSoftware - Innovative Digital Solutions">
+  <meta name="twitter:description" content="TopSoftware delivers innovative digital solutions including web development, mobile apps, SaaS platforms, and AI chatbots.">
+  <meta name="twitter:image" content="https://topsoftware.tech/path/to/preview-image.jpg">
+  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
-
-  <!-- External Styles & Scripts -->
   <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <link rel="stylesheet" href="{% static 'navbar.css' %}">
   <script src="{% static 'navbar.js' %}"></script>
-
-  <!-- Inline Custom Styles -->
   <style>
     :root {
       --primary-color: #2196f3;
@@ -26,8 +33,6 @@
       --button-hover: #1565c0;
       --white: #ffffff;
     }
-
-    /* Global Styles */
     body {
       margin: 0;
       padding: 0;
@@ -35,7 +40,6 @@
       color: var(--white);
       font-family: 'Montserrat', Arial, sans-serif;
     }
-
     .container {
       max-width: 960px;
       margin: 0 auto;
@@ -68,14 +72,6 @@
     a.btn-primary:hover {
       background: var(--button-hover);
     }
-
-    /* Override unwanted borders */
-    #questions, #questions *,
-    #reviews-1088, #reviews-1088 * {
-      border: none !important;
-      outline: none !important;
-    }
-
     /* About Section */
     #about {
       background: #000;
@@ -85,7 +81,6 @@
     #about p {
       color: #fff;
     }
-
     /* What We Do Section */
     #services {
       background: #000;
@@ -108,7 +103,6 @@
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
-
     /* QUESTIONS SECTION */
     #questions {
       background: #000;
@@ -131,10 +125,12 @@
       justify-content: center;
       padding: 40px;
     }
+    /* Force a consistent image size */
     .qb-image {
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      min-height: 300px;
     }
     .qb-content {
       flex-direction: column;
@@ -172,7 +168,6 @@
       max-width: 500px;
       font-weight: 300;
     }
-    /* The two CTA links now use Django's {% url 'portfolio' %} */
     .qb-link {
       display: inline-block;
       padding: 12px 20px;
@@ -190,11 +185,6 @@
       background: #fff;
       color: #000;
     }
-    @media (max-width: 992px) {
-      .qb-content h2 {
-        font-size: 1.8rem;
-      }
-    }
     @media (max-width: 768px) {
       .question-block {
         flex-direction: column;
@@ -203,6 +193,10 @@
       }
       .qb-image, .qb-content {
         width: 100%;
+        padding: 20px;
+      }
+      .qb-image {
+        height: 200px;
       }
       .qb-content {
         margin-top: 20px;
@@ -212,7 +206,6 @@
         text-align: center;
       }
     }
-
     /* REVIEWS SECTION */
     #reviews-1088 {
       background-color: #000;
@@ -276,7 +269,6 @@
       color: #aaa;
       font-weight: 300;
     }
-
     /* CONTACT SECTION */
     #contact-984 {
       background: #000;
@@ -386,34 +378,32 @@
     #contact-984 .cs-submit:hover {
       cursor: pointer;
     }
-
-    /* Remove focus outlines */
-    :focus,
-    :active {
-      outline: none !important;
-      box-shadow: none !important;
-      border: none !important;
+    footer {
+      background: #111;
+      padding: 20px;
+      text-align: center;
     }
-    ::-moz-focus-inner {
-      border: 0 !important;
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
   {% include 'navbar.html' %}
   {% include 'hero.html' %}
-
+  
   <!-- About Section -->
   <section id="about">
     <div class="container">
       <h2>We Are TopSoftware</h2>
       <p>
-        We design and develop websites, apps and digital experiences that help our clients grow, innovate, and transform.
-        We listen, learn and understand before we build. We identify your goals together, then use our expertise to find that sweet spot of realistic and impactful.
+        We design and develop websites, apps, and digital experiences that help our clients grow, innovate, and transform.
+        We listen, learn, and understand before we build – then we find that perfect balance of creativity and strategy.
       </p>
     </div>
   </section>
-
+  
   <!-- What We Do Section -->
   <section id="services">
     <div class="container">
@@ -438,7 +428,7 @@
       </div>
     </div>
   </section>
-
+  
   <!-- QUESTIONS SECTION -->
   <section id="questions">
     <!-- 1st Question Block -->
@@ -449,16 +439,12 @@
         <h3>ASKED US:</h3>
         <h2>"We need to innovate. What now?"</h2>
         <p>
-          Our favorite question. When you know what you want, but not what you want,
-          we go all-in to uncover the strategies that will get your business where you want it to go.
+          Our favorite question. When you know what you want but not exactly how to get there, we dive in to uncover the perfect strategy.
         </p>
-        <!-- Now using Django's URL tag for portfolio -->
-        <a href="{% url 'portfolio' %}" class="qb-link">
-          Here’s how we helped a legacy business digitally transform its operations
-        </a>
+        <a href="{% url 'portfolio' %}" class="qb-link">Here’s how we helped a legacy business digitally transform its operations</a>
       </div>
     </div>
-    <!-- 2nd Question Block -->
+    <!-- 2nd Question Block (Surfguy) -->
     <div class="question-block">
       <div class="qb-image" style="background-image: url('{% static 'surfguy.jpeg' %}');"></div>
       <div class="qb-content">
@@ -466,14 +452,9 @@
         <h3>WANTED TO KNOW:</h3>
         <h2>"Can you enhance our web presence?"</h2>
         <p>
-          When it comes to digital experiences, we can build pretty much anything.
-          And if there’s a better solution, we’ll tell you. We always start with:
-          Why? and use the answer to drive real growth and meaningful transformation.
+          When it comes to digital experiences, we can build pretty much anything – starting with a strong, innovative online presence.
         </p>
-        <!-- Also linking to the portfolio page via Django URL -->
-        <a href="{% url 'portfolio' %}" class="qb-link">
-          See what we designed for a global non-profit
-        </a>
+        <a href="{% url 'portfolio' %}" class="qb-link">See what we designed for a global non-profit</a>
       </div>
     </div>
     <!-- 3rd Question Block -->
@@ -484,22 +465,19 @@
         <h3>WONDERED:</h3>
         <h2>"How long will this take?"</h2>
         <p>
-          The truth is, it depends. We typically host a few discovery workshops,
-          followed by a series of sprints from proof of concept to production-ready.
-          We’re agile, so you will be too.
+          The truth is, every project is different. We begin with discovery workshops and move through agile sprints to deliver results.
         </p>
       </div>
     </div>
   </section>
-
-  <!-- ADVANCED REVIEWS SECTION -->
+  
+  <!-- REVIEWS SECTION -->
   <section id="reviews-1088">
     <div class="cs-container">
       <div class="cs-content">
         <h2 class="cs-title">What Our Customers Are Saying</h2>
       </div>
       <ul class="cs-card-group">
-        <!-- First Review for Bark -->
         <li class="cs-item">
           <img class="cs-image" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/review1.png" alt="profile" width="112" height="112" decoding="async" loading="lazy">
           <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/quotes-2.svg" alt="icon" width="52" height="36" decoding="async" loading="lazy">
@@ -511,7 +489,6 @@
             <span class="cs-desc">Owner</span>
           </div>
         </li>
-        <!-- Second Review for Labgen -->
         <li class="cs-item">
           <img class="cs-image" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/review2.png" alt="profile" width="112" height="112" decoding="async" loading="lazy">
           <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/quotes-2.svg" alt="icon" width="52" height="36" decoding="async" loading="lazy">
@@ -523,7 +500,6 @@
             <span class="cs-desc">CEO</span>
           </div>
         </li>
-        <!-- Third Review for Visual Arts -->
         <li class="cs-item">
           <img class="cs-image" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/reviews3.png" alt="profile" width="112" height="112" decoding="async" loading="lazy">
           <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/quotes-2.svg" alt="icon" width="52" height="36" decoding="async" loading="lazy">
@@ -538,7 +514,7 @@
       </ul>
     </div>
   </section>
-
+  
   <!-- CONTACT SECTION -->
   <section id="contact-984">
     <div class="cs-container">
@@ -562,7 +538,7 @@
       </div>
     </div>
   </section>
-
+  
   <!-- FOOTER -->
   <footer>
     <div class="container">
