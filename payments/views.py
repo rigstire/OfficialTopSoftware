@@ -6,9 +6,11 @@ import json
 from django.shortcuts import render
 
 # Initialize Square client
-client = Client(access_token=settings.SQUARE_ACCESS_TOKEN, environment="production")
+
 
 def process_payment(request):
+    client = Client(access_token=settings.SQUARE_ACCESS_TOKEN, environment="production")
+    
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -19,7 +21,7 @@ def process_payment(request):
 
             body = {
                 "idempotency_key": str(uuid.uuid4()),  # Prevent duplicate payments
-                "source_id": data.get("nonce"),  # Payment token from frontend
+                "source_id": data.get("sourceId"),  # Payment token from frontend
                 "amount_money": {
                     "amount": amount_in_cents,  # Amount in cents
                     "currency": "USD"
