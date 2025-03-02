@@ -68,6 +68,10 @@ MIDDLEWARE = [
     "config.middleware.EnforceDomainMiddleware"
 ]
 
+CSRF_TRUSTED_ORIGINS = ["https://www.topsoftware.tech"]
+CSRF_COOKIE_SECURE = True
+
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
