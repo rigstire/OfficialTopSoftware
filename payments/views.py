@@ -4,6 +4,7 @@ from django.conf import settings
 from django.http import JsonResponse
 import uuid
 import json
+from django.shortcuts import render
 
 logger = logging.getLogger(__name__)
 
@@ -52,3 +53,6 @@ def process_payment(request):
             return JsonResponse({"status": "error", "message": "Invalid JSON data"}, status=400)
 
     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
+
+def payment_view(request):
+    return render(request, "payments.html")
