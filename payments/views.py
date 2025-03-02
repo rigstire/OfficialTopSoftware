@@ -6,7 +6,7 @@ import json
 from django.shortcuts import render
 
 # Initialize Square client
-client = Client(access_token=settings.SQUARE_ACCESS_TOKEN, environment="sandbox")
+client = Client(access_token=settings.SQUARE_ACCESS_TOKEN, environment="production")
 
 def process_payment(request):
     if request.method == "POST":
