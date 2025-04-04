@@ -21,19 +21,44 @@
   <link rel="stylesheet" href="{% static 'navbar.css' %}">
   <script src="{% static 'navbar.js' %}"></script>
 
-  <!-- Extra override for navbar styling -->
+  <!-- Extra override for navbar styling (updated) -->
   <style>
-    #cs-navigation {
+    nav.navbar {
       background-color: #000 !important;
+      padding: 10px 20px !important;
+      position: relative !important;
+      z-index: 1000 !important;
+      font-family: 'Montserrat', sans-serif !important;
     }
-    #cs-navigation a.cs-li-link {
+    nav.navbar .navbar-container {
+      max-width: 960px !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    nav.navbar .navbar-brand {
       color: #fff !important;
-      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem !important;
+      text-decoration: none !important;
+      font-weight: 400 !important;  /* Changed from 600 to 400 */
     }
-    #cs-navigation .cs-toggle,
-    #cs-navigation .cs-box,
-    #cs-navigation .cs-line {
-      background-color: transparent !important;
+    nav.navbar .navbar-menu {
+      list-style: none !important;
+      display: flex !important;
+      gap: 20px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    nav.navbar .navbar-menu li a {
+      color: #fff !important;
+      text-decoration: none !important;
+      font-size: 1rem !important;
+      font-weight: 400 !important;
+    }
+    .mobile-menu-icon {
+      font-size: 1.8rem !important;
+      cursor: pointer !important;
     }
   </style>
 
@@ -79,10 +104,10 @@
     /* Mobile adjustments for chevrons */
     @media (max-width: 768px) {
       .cs-floater.cs-floater1 {
-        display: none !important; /* Force hide left chevron on mobile */
+        display: none !important;
       }
       .cs-floater.cs-floater2 {
-        width: 40px !important; /* Further reduce the right chevron size */
+        width: 40px !important;
       }
     }
   </style>
