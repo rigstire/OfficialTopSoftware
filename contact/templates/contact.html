@@ -17,32 +17,61 @@
   <!-- Contact-Specific Styles -->
   <link rel="stylesheet" href="{% static 'contact.css' %}" />
 
-  <!-- Load Navbar Assets LAST so they override earlier styles -->
+  <!-- Shared Navbar Styles & Scripts -->
   <link rel="stylesheet" href="{% static 'navbar.css' %}" />
   <script src="{% static 'navbar.js' %}"></script>
 
-
-
-
-  <!-- Inline global overrides for background and text color -->
+  <!-- Force Navbar Styling Overrides -->
   <style>
-    body {
+    nav.navbar {
+      background-color: #000 !important;
+      padding: 10px 20px !important;
+      position: relative !important;
+      z-index: 1000 !important;
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    .navbar-container {
+      max-width: 960px !important;
+      margin: 0 auto !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    .navbar-brand {
+      color: #fff !important;
+      font-size: 1.5rem !important;
+      text-decoration: none !important;
+      font-weight: 400 !important; /* Changed from 600 to 400 */
+    }
+    .navbar-menu {
+      list-style: none !important;
+      display: flex !important;
+      gap: 20px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .navbar-menu li a {
+      color: #fff !important;
+      text-decoration: none !important;
+      font-size: 1rem !important;
+      font-weight: 400 !important;
+    }
+    .mobile-menu-icon {
+      font-size: 1.8rem !important;
+      cursor: pointer !important;
+    }
+  </style>
+
+  <!-- Global Overrides for Contact page (non-navbar) -->
+  <style>
+    html, body {
       background-color: #000 !important;
       color: #fff !important;
-    }
-    /* Ensure all text in the contact section stays white */
-    #contact-1150 .cs-topper,
-    #contact-1150 .cs-title,
-    #contact-1150 .cs-contact-text,
-    #contact-1150 .cs-header,
-    #contact-1150 .cs-link,
-    #contact-1150 label {
-      color: #000 !important;
     }
   </style>
 </head>
 <body>
-  {% include 'navbar.html' %}
+  {% include "navbar.html" %}
 
   <!-- Contact Section -->
   <section id="contact-1150" style="padding-top: 180px;">
@@ -72,7 +101,6 @@
             </div>
           </li>
           <li class="cs-li">
-            
             <div class="cs-flex-group">
               <span class="cs-header">Email</span>
               <a href="mailto:officialtopsoftware@gmail.com" class="cs-link">officialtopsoftware@gmail.com</a>
@@ -108,8 +136,12 @@
       </form>
 
       <!-- Decorative Graphics -->
-      <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg" alt="bounce" width="208" height="124">
-      <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg" alt="coin" width="205" height="161">
+      <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async"
+           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg"
+           alt="bounce" width="208" height="124">
+      <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async"
+           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg"
+           alt="coin" width="205" height="161">
     </div>
   </section>
 </body>

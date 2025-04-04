@@ -14,10 +14,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,11 +26,13 @@ SECRET_KEY = 'django-insecure--*)3pd+&c*76gnikyo^(rnz!ivf&iy!k1z4w$l(4!$ekc0*p$8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['topsoftware.tech', 'www.topsoftware.tech','localhost',
-                  '127.0.0.1',
-                  'topsoftware-cc76302c7c51.herokuapp.com']
-
-
+ALLOWED_HOSTS = [
+    'topsoftware.tech', 
+    'www.topsoftware.tech',
+    'localhost',
+    '127.0.0.1',
+    'topsoftware-cc76302c7c51.herokuapp.com'
+]
 
 # Application definition
 
@@ -44,14 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    #local apps
+    # Local apps
     'contact',
     'home',
     'pricing',
     'portfolio',
     'payments',
 
-    #installed
+    # Installed third-party apps
     'corsheaders',
 ]
 
@@ -71,13 +71,19 @@ MIDDLEWARE = [
 CSRF_TRUSTED_ORIGINS = ["https://www.topsoftware.tech"]
 CSRF_COOKIE_SECURE = True
 
-
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'navigationmain'),
+            os.path.join(BASE_DIR, 'home', 'templates'),
+            os.path.join(BASE_DIR, 'contact', 'templates'),
+            os.path.join(BASE_DIR, 'pricing', 'templates'),
+            os.path.join(BASE_DIR, 'portfolio', 'templates'),
+            os.path.join(BASE_DIR, 'payments', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,17 +145,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'home/static'),
-    os.path.join(BASE_DIR, 'contact/static'),
-    os.path.join(BASE_DIR, 'pricing/static'),
-    os.path.join(BASE_DIR, 'portfolio/static'),
-    os.path.join(BASE_DIR, 'payments/static')
-            # Global static files (like corestyles.css)
+    os.path.join(BASE_DIR, 'home', 'static'),
+    os.path.join(BASE_DIR, 'contact', 'static'),
+    os.path.join(BASE_DIR, 'pricing', 'static'),
+    os.path.join(BASE_DIR, 'portfolio', 'static'),
+    os.path.join(BASE_DIR, 'payments', 'static'),
 ]
 
-# Ensure Django collects all static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -157,22 +161,19 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Use your email provider's SMTP server
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER="officialtopsoftware@gmail.com"
-EMAIL_HOST_PASSWORD="isht ceob tftj uzuh"
+EMAIL_HOST_USER = "officialtopsoftware@gmail.com"
+EMAIL_HOST_PASSWORD = "isht ceob tftj uzuh"
 SQUARE_ACCESS_TOKEN = "EAAAl5rNL2yvmYbEBB4dcacPlul-sDuifgoNAEUPTsJH6bBmpUOVNgpGWJuTfoWn"
 SQUARE_LOCATION_ID = "L539FECXHJ9E1"
 
-# ✅ Allow frontend to access Django backend
-CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (for development only)
-CORS_ALLOW_CREDENTIALS = True  # Allow sending credentials (cookies, auth tokens)
+# CORS Settings
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ["GET", "POST", "OPTIONS", "PUT", "DELETE"]
-
-# ✅ If you want to allow only localhost and 127.0.0.1:
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
-
