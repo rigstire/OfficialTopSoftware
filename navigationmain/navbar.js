@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	  return;
 	}
   
+	// Toggle the mobile navigation overlay when the hamburger icon is clicked
 	mobileMenuIcon.addEventListener("click", function() {
 	  mobileNav.classList.toggle("active");
 	});
