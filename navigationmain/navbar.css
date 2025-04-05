@@ -6,10 +6,10 @@
   z-index: 1000;
 }
 
-/* Updated container: full width with side padding */
+/* Navbar Container: full width with side padding */
 .navbar-container {
   width: 100%;         /* Use full width */
-  padding: 0 20px;     /* Maintain 20px padding on both sides */
+  padding: 0 20px;     /* 20px padding on both sides */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -78,7 +78,7 @@
   font-size: 1.5rem;
 }
 
-/* Responsive: Hide desktop nav on small screens */
+/* Responsive: Hide desktop nav on small screens and show mobile icon */
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
