@@ -120,23 +120,31 @@
 
   <!-- ✅ Stripe.js -->
   <!-- ✅ Stripe.js -->
+<!-- ✅ Stripe.js -->
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-  // ✅ Replace with your actual publishable key from Stripe dashboard
-  const stripe = Stripe("pk_test_XXXXXXXXXXXXXXXXXXXX");
+  const stripe = Stripe("pk_live_51R8nzUFmdWMt7ncCWok620uUkYIRDOYJkjYgZ1IPm7JPY4qUwMPeFVWp1ZSFQ680yxZpo6x3HGUh03a0TURSpGzMOOGSKfsXIf"); // Replace with your real publishable key
 
   let elements, card;
+  let totalAmount = 0;
+
   const premiumPrice = 25000;
   const basicPrice = 21000;
   const starterPrice = 18000;
   const starterPackPrice = 5500;
-  let totalAmount = 0;
 
   document.addEventListener("DOMContentLoaded", async function () {
+    // Safely bind onchange events for quantity inputs
+    ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack", "custom-amount"]
+      .forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.addEventListener("change", updateTotal);
+      });
+
     updateTotal();
 
-    // ✅ Mount Stripe card element
+    // Initialize Stripe Elements
     elements = stripe.elements();
     card = elements.create("card", {
       style: {
@@ -170,7 +178,7 @@
         return;
       }
 
-      const additionalDetails = document.getElementById("additional-details").value;
+      const additionalDetails = document.getElementById("additional-details")?.value || "";
 
       const response = await fetch("/payments/process-payment/", {
         method: "POST",
@@ -196,27 +204,32 @@
   });
 
   function updateTotal() {
-    const quantityPremium = parseInt(document.getElementById("quantity-premium").value) || 0;
-    const quantityBasic = parseInt(document.getElementById("quantity-basic").value) || 0;
-    const quantityStarter = parseInt(document.getElementById("quantity-starter").value) || 0;
-    const quantityStarterPack = parseInt(document.getElementById("quantity-starterpack").value) || 0;
-    const customAmountInput = parseFloat(document.getElementById("custom-amount")?.value || 0) || 0;
+    const qPremium = parseInt(document.getElementById("quantity-premium")?.value || 0);
+    const qBasic = parseInt(document.getElementById("quantity-basic")?.value || 0);
+    const qStarter = parseInt(document.getElementById("quantity-starter")?.value || 0);
+    const qStarterPack = parseInt(document.getElementById("quantity-starterpack")?.value || 0);
+    const custom = parseFloat(document.getElementById("custom-amount")?.value || 0);
 
-    const computedTotal = (quantityPremium * premiumPrice) +
-                          (quantityBasic * basicPrice) +
-                          (quantityStarter * starterPrice) +
-                          (quantityStarterPack * starterPackPrice);
+    const computed = (qPremium * premiumPrice) + 
+                     (qBasic * basicPrice) + 
+                     (qStarter * starterPrice) + 
+                     (qStarterPack * starterPackPrice);
 
-    totalAmount = customAmountInput > 0 ? Math.round(customAmountInput * 100) : computedTotal;
-    document.getElementById("total-price").innerText = `$${(totalAmount / 100).toFixed(2)}`;
+    totalAmount = custom > 0 ? Math.round(custom * 100) : computed;
+
+    const totalDisplay = document.getElementById("total-price");
+    if (totalDisplay) {
+      totalDisplay.innerText = `$${(totalAmount / 100).toFixed(2)}`;
+    }
   }
 
   function getCSRFToken() {
     return document.cookie.split('; ')
-      .find(row => row.startsWith('csrftoken='))
+      .find(row => row.trim().startsWith('csrftoken='))
       ?.split('=')[1] || '';
   }
 </script>
+
 
 </body>
 </html>
