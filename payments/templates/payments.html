@@ -119,89 +119,104 @@
   </section>
 
   <!-- ✅ Stripe.js -->
-  <script src="https://js.stripe.com/v3/"></script>
+  <!-- ✅ Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
 
-  <script>
-    const stripe = Stripe("pk_live_51R8nzUFmdWMt7ncCWok620uUkYIRDOYJkjYgZ1IPm7JPY4qUwMPeFVWp1ZSFQ680yxZpo6x3HGUh03a0TURSpGzMOOGSKfsXIf"); // Replace with your Stripe publishable key
-    let stripeElements, cardElement;
-    const premiumPrice = 25000;
-    const basicPrice = 21000;
-    const starterPrice = 18000;
-    const starterPackPrice = 5500;
-    let totalAmount = 0;
+<script>
+  // ✅ Replace with your actual publishable key from Stripe dashboard
+  const stripe = Stripe("pk_test_XXXXXXXXXXXXXXXXXXXX");
 
-    document.addEventListener("DOMContentLoaded", function () {
-      updateTotal();
-      initializeStripe();
+  let elements, card;
+  const premiumPrice = 25000;
+  const basicPrice = 21000;
+  const starterPrice = 18000;
+  const starterPackPrice = 5500;
+  let totalAmount = 0;
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    updateTotal();
+
+    // ✅ Mount Stripe card element
+    elements = stripe.elements();
+    card = elements.create("card", {
+      style: {
+        base: {
+          fontSize: "16px",
+          color: "#32325d",
+          "::placeholder": { color: "#aab7c4" }
+        },
+        invalid: {
+          color: "#fa755a",
+          iconColor: "#fa755a"
+        }
+      }
     });
 
-    function updateTotal() {
-      let quantityPremium = parseInt(document.getElementById("quantity-premium").value) || 0;
-      let quantityBasic = parseInt(document.getElementById("quantity-basic").value) || 0;
-      let quantityStarter = parseInt(document.getElementById("quantity-starter").value) || 0;
-      let quantityStarterPack = parseInt(document.getElementById("quantity-starterpack").value) || 0;
-      let customAmountInput = parseFloat(document.getElementById("custom-amount")?.value || 0) || 0;
+    card.mount("#card-container");
 
-      let computedTotal = (quantityPremium * premiumPrice) +
+    document.getElementById("pay-button").addEventListener("click", async () => {
+      if (totalAmount === 0) {
+        alert("Please select at least one item or enter a custom amount.");
+        return;
+      }
+
+      const { paymentMethod, error } = await stripe.createPaymentMethod({
+        type: "card",
+        card: card,
+      });
+
+      if (error) {
+        alert("Payment failed: " + error.message);
+        return;
+      }
+
+      const additionalDetails = document.getElementById("additional-details").value;
+
+      const response = await fetch("/payments/process-payment/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCSRFToken()
+        },
+        body: JSON.stringify({
+          payment_method_id: paymentMethod.id,
+          amount: totalAmount,
+          additionalDetails: additionalDetails
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        alert("Payment successful! Payment ID: " + result.payment_intent_id);
+      } else {
+        alert("Payment failed: " + result.message);
+      }
+    });
+  });
+
+  function updateTotal() {
+    const quantityPremium = parseInt(document.getElementById("quantity-premium").value) || 0;
+    const quantityBasic = parseInt(document.getElementById("quantity-basic").value) || 0;
+    const quantityStarter = parseInt(document.getElementById("quantity-starter").value) || 0;
+    const quantityStarterPack = parseInt(document.getElementById("quantity-starterpack").value) || 0;
+    const customAmountInput = parseFloat(document.getElementById("custom-amount")?.value || 0) || 0;
+
+    const computedTotal = (quantityPremium * premiumPrice) +
                           (quantityBasic * basicPrice) +
                           (quantityStarter * starterPrice) +
                           (quantityStarterPack * starterPackPrice);
 
-      totalAmount = customAmountInput > 0 ? Math.round(customAmountInput * 100) : computedTotal;
-      document.getElementById("total-price").innerText = `$${(totalAmount / 100).toFixed(2)}`;
-    }
+    totalAmount = customAmountInput > 0 ? Math.round(customAmountInput * 100) : computedTotal;
+    document.getElementById("total-price").innerText = `$${(totalAmount / 100).toFixed(2)}`;
+  }
 
-    function initializeStripe() {
-      stripeElements = stripe.elements();
-      cardElement = stripeElements.create('card');
-      cardElement.mount('#card-container');
+  function getCSRFToken() {
+    return document.cookie.split('; ')
+      .find(row => row.startsWith('csrftoken='))
+      ?.split('=')[1] || '';
+  }
+</script>
 
-      document.getElementById("pay-button").addEventListener("click", async () => {
-        if (totalAmount === 0) {
-          alert("Please select at least one item or enter a custom amount.");
-          return;
-        }
-
-        const { paymentMethod, error } = await stripe.createPaymentMethod({
-          type: 'card',
-          card: cardElement,
-        });
-
-        if (error) {
-          console.error("Stripe Payment Error:", error);
-          alert("Payment failed: " + error.message);
-          return;
-        }
-
-        const additionalDetails = document.getElementById("additional-details").value;
-
-        const response = await fetch("/payments/process-payment/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCSRFToken()
-          },
-          body: JSON.stringify({
-            payment_method_id: paymentMethod.id,
-            amount: totalAmount,
-            additionalDetails: additionalDetails
-          })
-        });
-
-        const data = await response.json();
-        if (data.status === "success") {
-          alert("Payment Successful! Payment Intent ID: " + data.payment_intent_id);
-        } else {
-          alert("Payment failed: " + data.message);
-        }
-      });
-    }
-
-    function getCSRFToken() {
-      return document.cookie.split('; ')
-          .find(row => row.startsWith('csrftoken='))
-          ?.split('=')[1] || '';
-    }
-  </script>
 </body>
 </html>
