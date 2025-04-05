@@ -1,58 +1,46 @@
 import logging
-from square.client import Client
+import stripe
 from django.conf import settings
 from django.http import JsonResponse
-import uuid
 import json
-from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 logger = logging.getLogger(__name__)
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+@csrf_exempt  # Only use this if CSRF is an issue during development/testing
 def process_payment(request):
     if request.method == "POST":
         try:
-            client = Client(access_token=settings.SQUARE_ACCESS_TOKEN, environment="production")
             data = json.loads(request.body)
 
-            # Log request data
-            logger.info(f"Received Payment Request: {data}")
+            logger.info(f"Received Stripe Payment Request: {data}")
 
-            # Validate amount and sourceId
-            if "amount" not in data or "sourceId" not in data:
-                return JsonResponse({"status": "error", "message": "Missing amount or sourceId"}, status=400)
+            if "amount" not in data or "payment_method_id" not in data:
+                return JsonResponse({"status": "error", "message": "Missing amount or payment_method_id"}, status=400)
 
-            amount_in_cents = int(data["amount"])  # Amount should be in cents
-            source_id = data["sourceId"]  # Payment token from Square frontend
+            amount_in_cents = int(data["amount"])
+            payment_method_id = data["payment_method_id"]
 
             if amount_in_cents <= 0:
                 return JsonResponse({"status": "error", "message": "Invalid amount"}, status=400)
 
-            payment_body = {
-                "idempotency_key": str(uuid.uuid4()),  # Prevent duplicate payments
-                "source_id": source_id,  # Payment token from frontend
-                "amount_money": {
-                    "amount": amount_in_cents,  # Amount in cents
-                    "currency": "USD"
-                }
-            }
+            # Create a PaymentIntent
+            intent = stripe.PaymentIntent.create(
+                amount=amount_in_cents,
+                currency='usd',
+                payment_method=payment_method_id,
+                confirmation_method='manual',
+                confirm=True
+            )
 
-            # Log the payment request body
-            logger.info(f"Payment Request to Square: {payment_body}")
+            return JsonResponse({"status": "success", "payment_intent_id": intent.id})
 
-            response = client.payments.create_payment(payment_body)
-
-            if response.is_success():
-                return JsonResponse({"status": "success", "payment_id": response.body["payment"]["id"]})
-            else:
-                # Log the full error details from Square API
-                error_details = response.errors if response.errors else "Unknown error"
-                logger.error(f"Square API Error: {error_details}")
-                return JsonResponse({"status": "error", "message": error_details}, status=400)
-
-        except json.JSONDecodeError:
-            return JsonResponse({"status": "error", "message": "Invalid JSON data"}, status=400)
+        except stripe.error.CardError as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+        except Exception as e:
+            logger.error(f"Stripe Payment Error: {str(e)}")
+            return JsonResponse({"status": "error", "message": "Payment processing failed"}, status=500)
 
     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
-
-def payment_view(request):
-    return render(request, "payments.html")
