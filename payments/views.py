@@ -44,3 +44,6 @@ def process_payment(request):
             return JsonResponse({"status": "error", "message": "Payment processing failed"}, status=500)
 
     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
+
+def payment_view(request):
+    return render(request, "payments.html")
