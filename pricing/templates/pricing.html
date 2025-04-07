@@ -60,9 +60,10 @@
       font-size: 1.8rem !important;
       cursor: pointer !important;
     }
-    /* Added media query to hide the desktop navbar on mobile devices */
+    /* Added media query to hide the desktop navigation on mobile devices.
+       This targets the <ul> with class "desktop-nav" within the navbar. */
     @media (max-width: 768px) {
-      .desktop-nav {
+      nav.navbar ul.desktop-nav {
         display: none !important;
       }
     }
