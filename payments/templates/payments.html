@@ -18,7 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="{% static 'navbar.css' %}">
   <script src="{% static 'navbar.js' %}"></script>
-
+  
   <style>
     /* Navbar Styling */
     nav.navbar {
@@ -64,9 +64,9 @@
       font-size: 1.8rem !important;
       cursor: pointer !important;
     }
-    /* Hide desktop navbar on mobile devices */
+    /* Hide desktop navigation on mobile devices using a specific selector */
     @media (max-width: 768px) {
-      .desktop-nav {
+      nav.navbar ul.desktop-nav {
         display: none !important;
       }
     }
@@ -113,7 +113,7 @@
     <div class="container mt-5 mb-5 d-flex justify-content-center">
       <div class="card p-5">
         <div>
-          <h4 class="heading">Upgrade Your Plan</h4>
+          <h4 class="heading">Buy your website</h4>
           <p class="text">Please make the payment to get your website or app started.</p>
         </div>
 
@@ -181,12 +181,12 @@
     const stripe = Stripe("pk_live_51R8nzUFmdWMt7ncCWok620uUkYIRDOYJkjYgZ1IPm7JPY4qUwMPeFVWp1ZSFQ680yxZpo6x3HGUh03a0TURSpGzMOOGSKfsXIf"); // Replace with your real key
     let elements, card;
     let totalAmount = 0;
-
+  
     const premiumPrice = 25000;
     const basicPrice = 21000;
     const starterPrice = 18000;
     const starterPackPrice = 5500;
-
+  
     document.addEventListener("DOMContentLoaded", async function () {
       // Attach onchange events
       ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack", "custom-amount"]
@@ -194,9 +194,9 @@
           const el = document.getElementById(id);
           if (el) el.addEventListener("change", updateTotal);
         });
-
+  
       updateTotal();
-
+  
       elements = stripe.elements();
       card = elements.create("card", {
         style: {
@@ -212,25 +212,25 @@
         }
       });
       card.mount("#card-container");
-
+  
       document.getElementById("pay-button").addEventListener("click", async () => {
         if (totalAmount === 0) {
           alert("Please select a plan or enter a custom amount.");
           return;
         }
-
+  
         const { paymentMethod, error } = await stripe.createPaymentMethod({
           type: "card",
           card: card,
         });
-
+  
         if (error) {
           alert("Payment failed: " + error.message);
           return;
         }
-
+  
         const additionalDetails = document.getElementById("additional-details")?.value || "";
-
+  
         const response = await fetch("/payments/process-payment/", {
           method: "POST",
           headers: {
@@ -243,9 +243,9 @@
             additionalDetails: additionalDetails
           })
         });
-
+  
         const result = await response.json();
-
+  
         if (result.status === "success") {
           alert("Payment successful! Payment ID: " + result.payment_intent_id);
         } else {
@@ -253,19 +253,19 @@
         }
       });
     });
-
+  
     function toggleCustomAmount() {
       const isCustom = document.getElementById("custom-toggle").checked;
       document.getElementById("custom-amount-section").style.display = isCustom ? "block" : "none";
-
+  
       ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.disabled = isCustom;
       });
-
+  
       updateTotal();
     }
-
+  
     function updateTotal() {
       const isCustom = document.getElementById("custom-toggle")?.checked;
       if (isCustom) {
@@ -276,19 +276,19 @@
         const qBasic = parseInt(document.getElementById("quantity-basic")?.value || 0);
         const qStarter = parseInt(document.getElementById("quantity-starter")?.value || 0);
         const qStarterPack = parseInt(document.getElementById("quantity-starterpack")?.value || 0);
-
+  
         totalAmount = (qPremium * premiumPrice) +
                       (qBasic * basicPrice) +
                       (qStarter * starterPrice) +
                       (qStarterPack * starterPackPrice);
       }
-
+  
       const totalDisplay = document.getElementById("total-price");
       if (totalDisplay) {
         totalDisplay.innerText = `$${(totalAmount / 100).toFixed(2)}`;
       }
     }
-
+  
     function getCSRFToken() {
       return document.cookie.split('; ')
         .find(row => row.trim().startsWith('csrftoken='))
