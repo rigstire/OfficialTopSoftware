@@ -29,11 +29,11 @@
       font-size: 96px;         /* Large size */
       font-style: italic;       /* Italic styling */
       text-transform: uppercase;
-      margin: 60px 0 60px;      /* Reduced margins for room */
+      margin: 60px 0 60px;
       letter-spacing: 1px;
       color: #fff;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-      font-weight: 400;         /* Medium weight */
+      font-weight: 400;
     }
     @media (max-width: 1024px) {
       .hero h1 {
@@ -113,9 +113,9 @@
       }
     }
     
-    /* Navbar Waffle Override: Hide desktop navigation on mobile devices */
+    /* Mobile Navbar Override: Hide all desktop navigation elements */
     @media (max-width: 768px) {
-      nav.navbar ul.desktop-nav {
+      .desktop-nav {
         display: none !important;
       }
     }
@@ -150,7 +150,7 @@
       </div>
     </section>
 
-    <!-- Project: SAO Financial Intelligence Tool (Updated Image) -->
+    <!-- Project: SAO Financial Intelligence Tool -->
     <section class="project-section">
       <div class="project-image">
         <img src="{% static 'finance.webp' %}" alt="SAO Financial Intelligence Tool">
@@ -164,7 +164,7 @@
       </div>
     </section>
 
-    <!-- Project: Visual art studios (Updated from Artstudio Mission Viejo) -->
+    <!-- Project: Visual art studios -->
     <section class="project-section">
       <div class="project-image">
         <img src="{% static 'artstudio.png' %}" alt="Visual art studios">
@@ -180,7 +180,7 @@
       </div>
     </section>
 
-    <!-- Project: Jacks Surf Shop (Updated from Surf Shop Andy) -->
+    <!-- Project: Jacks Surf Shop -->
     <section class="project-section">
       <div class="project-image">
         <img src="{% static 'jacksurf.png' %}" alt="Jacks Surf Shop">
