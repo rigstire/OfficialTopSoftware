@@ -112,6 +112,13 @@
         flex-direction: column;
       }
     }
+    
+    /* Navbar Waffle Override: Hide desktop navigation on mobile devices */
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -139,7 +146,7 @@
         <p class="project-services">
           AEM Implementation / Back End Development / Dev Ops / Front End Development / Headless Magento2 Implementation / Microservices / PIM / PWA / UX/UI Design
         </p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
 
@@ -153,44 +160,10 @@
         <h2>SAO Financial Intelligence Tool</h2>
         <p>Overhauling the public-facing user experience for the Washington State Auditor's Office.</p>
         <p class="project-services">UX/UI Design</p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
 
-    <!--
-    Project: Renova Solar (Commented Out for Future Demos)
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'solar.jpeg' %}" alt="Renova Solar">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Renova Solar</h2>
-        <p>A cutting-edge website that highlights renewable energy solutions and innovative solar technology.</p>
-        <p class="project-services">
-          Web Design / UX/UI Design / SEO / Digital Marketing
-        </p>
-        <a href="#" class="project-read-more">Book now</a>
-      </div>
-    </section>
-    -->
-
-    <!-- Project: Solarcelaning PRSO -->
-    <!--<section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'solar.jpeg' %}" alt="Solarcelaning PRSO">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Solarcelaning PRSO</h2>
-        <p>Eco-friendly cleaning solutions for solar panels, featuring a user-friendly website design with interactive elements.</p>
-        <p class="project-services">
-          Web Design / Content Strategy / SEO / Interactive Features
-        </p>
-        <a href="#" class="project-read-more">Book now</a>
-      </div>
-    </section>
-   -->
     <!-- Project: Visual art studios (Updated from Artstudio Mission Viejo) -->
     <section class="project-section">
       <div class="project-image">
@@ -203,7 +176,7 @@
         <p class="project-services">
           Branding / Visual Identity / Graphic Design / Web Design
         </p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
 
@@ -219,27 +192,9 @@
         <p class="project-services">
           E-commerce Development / UX/UI Design / Digital Marketing
         </p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
-
-    <!--
-    Project: Hunninton Pup Grooming (Commented Out for Future Demos)
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'IMG_1883.jpeg' %}" alt="Hunninton Pup Grooming">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Hunninton Pup Grooming</h2>
-        <p>A stylish, user-friendly website for a pet grooming service, showcasing their work and offering online booking.</p>
-        <p class="project-services">
-          Web Design / Branding / Booking System Integration / Content Strategy
-        </p>
-        <a href="#" class="project-read-more">Book now</a>
-      </div>
-    </section>
-    -->
 
     <!-- Project: Bark -->
     <section class="project-section">
@@ -251,7 +206,7 @@
         <h2>Bark</h2>
         <p>A playful rebranding for Bark, a pet products company focused on vibrant and engaging visual identity.</p>
         <p class="project-services">Branding / Visual Identity / Digital Marketing</p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
     
@@ -265,7 +220,7 @@
         <h2>Coachella Solar Services</h2>
         <p>An innovative online platform showcasing sustainable solar solutions with cutting-edge web design and interactive features.</p>
         <p class="project-services">Web Design / UX/UI Design / SEO / Digital Marketing</p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
   </div>
