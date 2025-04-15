@@ -1,11 +1,17 @@
 {% load static %}
 
 {% block content %}
+  <!-- Include Navbar -->
+  {% include 'navbar.html' %}
+  <link rel="stylesheet" href="{% static 'navbar.css' %}">
+  <script src="{% static 'navbar.js' %}"></script>
+
+  <!-- Payment Section -->
   <section id="payment-section" class="payment-container">
     <div class="payment-card">
       <div class="payment-header">
-        <h2 class="payment-title">Upgrade Your Plan</h2>
-        <p class="payment-subtitle">Select your package and make payment to unlock premium features</p>
+        <h2 class="payment-title">Complete Your Purchase</h2>
+        <p class="payment-subtitle">Select your package and payment method</p>
       </div>
 
       <!-- Pricing Tiers -->
@@ -80,7 +86,42 @@
       <!-- Additional Details -->
       <div class="additional-details">
         <label for="additional-details" class="input-label">Project Details</label>
-        <textarea id="additional-details" class="form-control" rows="4" placeholder="Tell us about your project (website ideas, company name, special requests)"></textarea>
+        <textarea id="additional-details" class="form-control" rows="4" placeholder="Tell us about your project..."></textarea>
+      </div>
+
+      <!-- Payment Method Toggle -->
+      <div class="payment-method-toggle">
+        <button class="method-toggle active" id="paypal-toggle">PayPal</button>
+        <button class="method-toggle" id="card-toggle">Credit Card</button>
+      </div>
+
+      <!-- PayPal Container -->
+      <div id="paypal-container" class="payment-method-container">
+        <div id="paypal-button-container"></div>
+        <p class="secure-note"><i class="fas fa-lock"></i> Secure PayPal payment</p>
+      </div>
+
+      <!-- Credit Card Container -->
+      <div id="card-container" class="payment-method-container" style="display:none;">
+        <div class="card-form">
+          <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <div id="card-number" class="card-field"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiry-date">Expiry Date</label>
+              <div id="expiry-date" class="card-field"></div>
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <div id="cvv" class="card-field"></div>
+            </div>
+          </div>
+          <div id="card-errors" class="error-message" role="alert"></div>
+          <button id="card-submit" class="submit-btn">Pay $<span id="card-total">0.00</span></button>
+        </div>
+        <p class="secure-note"><i class="fas fa-lock"></i> Secure credit card payment</p>
       </div>
 
       <!-- Order Summary -->
@@ -98,49 +139,26 @@
           <span id="total-price">$0.00</span>
         </div>
       </div>
-
-      <!-- PayPal Button -->
-      <div id="paypal-button-container" class="paypal-button-container"></div>
-      
-      <!-- Secure Payment Info -->
-      <div class="secure-payment">
-        <i class="fas fa-lock"></i>
-        <span>Secure payment processed by PayPal</span>
-      </div>
     </div>
   </section>
 
-  <!-- PayPal.js SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a&currency=USD"></script>
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a&currency=USD&components=buttons,hosted-fields"></script>
   
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* Base Styles */
     :root {
       --primary-color: #4361ee;
-      --secondary-color: #3f37c9;
-      --accent-color: #4895ef;
+      --secondary-color: #3a56d4;
       --light-color: #f8f9fa;
       --dark-color: #212529;
-      --success-color: #4bb543;
-      --error-color: #ff3333;
+      --error-color: #dc3545;
       --border-radius: 8px;
       --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      color: var(--dark-color);
-      background-color: #f5f7ff;
     }
 
     .payment-container {
@@ -153,8 +171,8 @@
       background: white;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
-      overflow: hidden;
       padding: 2rem;
+      margin-top: 1rem;
     }
 
     .payment-header {
@@ -173,9 +191,10 @@
       font-size: 1rem;
     }
 
+    /* Pricing Tiers */
     .pricing-tiers {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -188,19 +207,17 @@
     }
 
     .pricing-tier:hover {
-      border-color: var(--accent-color);
-      box-shadow: 0 2px 8px rgba(67, 97, 238, 0.1);
+      border-color: var(--primary-color);
     }
 
     .tier-header {
-      margin-bottom: 1rem;
       text-align: center;
+      margin-bottom: 1rem;
     }
 
     .tier-header h3 {
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
-      color: var(--dark-color);
     }
 
     .price {
@@ -226,23 +243,15 @@
       height: 30px;
       border: none;
       border-radius: 50%;
-      background-color: var(--primary-color);
+      background: var(--primary-color);
       color: white;
       font-size: 1rem;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition: var(--transition);
     }
 
     .quantity-btn:hover {
-      background-color: var(--secondary-color);
-    }
-
-    .quantity-btn:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
+      background: var(--secondary-color);
     }
 
     .quantity-input {
@@ -253,12 +262,13 @@
       border-radius: var(--border-radius);
     }
 
+    /* Custom Amount */
     .custom-amount-toggle {
       display: flex;
       align-items: center;
       margin: 1.5rem 0;
       padding: 0.8rem 1rem;
-      background-color: #f8f9fa;
+      background: #f8f9fa;
       border-radius: var(--border-radius);
     }
 
@@ -283,7 +293,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #ccc;
+      background: #ccc;
       transition: var(--transition);
       border-radius: 24px;
     }
@@ -295,13 +305,13 @@
       width: 16px;
       left: 4px;
       bottom: 4px;
-      background-color: white;
+      background: white;
       transition: var(--transition);
       border-radius: 50%;
     }
 
     input:checked + .slider {
-      background-color: var(--primary-color);
+      background: var(--primary-color);
     }
 
     input:checked + .slider:before {
@@ -313,8 +323,8 @@
     }
 
     .custom-amount-section {
-      display: none;
       margin-bottom: 1.5rem;
+      display: none;
     }
 
     .input-label {
@@ -330,7 +340,7 @@
 
     .input-group-text {
       padding: 0.5rem 1rem;
-      background-color: #e9ecef;
+      background: #e9ecef;
       border: 1px solid #ced4da;
       border-right: none;
       border-radius: var(--border-radius) 0 0 var(--border-radius);
@@ -346,10 +356,11 @@
 
     .form-control:focus {
       outline: none;
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 0.2rem rgba(72, 149, 239, 0.25);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
     }
 
+    /* Additional Details */
     .additional-details {
       margin-bottom: 1.5rem;
     }
@@ -359,11 +370,91 @@
       resize: vertical;
     }
 
+    /* Payment Method Toggle */
+    .payment-method-toggle {
+      display: flex;
+      margin: 1.5rem 0;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .method-toggle {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      background: #f8f9fa;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .method-toggle.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    /* Payment Method Containers */
+    .payment-method-container {
+      margin: 1rem 0;
+    }
+
+    /* Card Form */
+    .card-form {
+      margin: 1rem 0;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .card-field {
+      padding: 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: var(--border-radius);
+      background: white;
+      height: 42px;
+    }
+
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+      min-height: 1.5rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--secondary-color);
+    }
+
+    /* Order Summary */
     .order-summary {
-      background-color: #f8f9fa;
+      background: #f8f9fa;
       border-radius: var(--border-radius);
       padding: 1rem;
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0;
     }
 
     .summary-row {
@@ -380,26 +471,27 @@
       border-top: 1px solid #dee2e6;
     }
 
-    .paypal-button-container {
-      margin: 1.5rem 0;
-    }
-
-    .secure-payment {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Secure Note */
+    .secure-note {
+      text-align: center;
       color: #6c757d;
       font-size: 0.9rem;
-      gap: 0.5rem;
+      margin-top: 1rem;
     }
 
-    .secure-payment i {
-      color: var(--success-color);
+    .secure-note i {
+      color: var(--primary-color);
+      margin-right: 0.5rem;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
       .pricing-tiers {
         grid-template-columns: 1fr 1fr;
+      }
+      
+      .payment-card {
+        padding: 1.5rem;
       }
     }
 
@@ -408,24 +500,82 @@
         grid-template-columns: 1fr;
       }
       
-      .payment-card {
-        padding: 1.5rem;
+      .form-row {
+        flex-direction: column;
+        gap: 0;
       }
     }
   </style>
 
   <script>
-    let totalAmount = 0;
+    // Payment amounts
     const premiumPrice = 25000;
     const basicPrice = 21000;
     const starterPrice = 18000;
     const starterPackPrice = 5500;
+    let totalAmount = 0;
+    let paypalButtons;
+    let cardFields;
 
-    document.addEventListener("DOMContentLoaded", function () {
-      updateTotal();  // Set initial total
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize payment method toggles
+      initPaymentMethodToggle();
+      
+      // Initialize PayPal SDK if available
+      if (typeof paypal !== 'undefined') {
+        initPayPal();
+        initCardFields();
+      } else {
+        // Retry initialization if SDK hasn't loaded yet
+        const paypalRetry = setInterval(() => {
+          if (typeof paypal !== 'undefined') {
+            clearInterval(paypalRetry);
+            initPayPal();
+            initCardFields();
+          }
+        }, 200);
+        
+        // Fallback if SDK fails to load after 5 seconds
+        setTimeout(() => {
+          if (typeof paypal === 'undefined') {
+            clearInterval(paypalRetry);
+            document.getElementById('paypal-container').innerHTML = 
+              '<p class="error-message">Payment system is currently unavailable. Please try again later.</p>';
+            document.getElementById('card-container').innerHTML = 
+              '<p class="error-message">Payment system is currently unavailable. Please try again later.</p>';
+          }
+        }, 5000);
+      }
+      
+      // Initialize custom amount toggle
+      document.getElementById('custom-toggle').addEventListener('change', toggleCustomAmount);
+      
+      // Set initial total
+      updateTotal();
+    });
 
-      // PayPal Buttons integration
-      paypal.Buttons({
+    // Initialize payment method toggle
+    function initPaymentMethodToggle() {
+      document.getElementById('paypal-toggle').addEventListener('click', function() {
+        this.classList.add('active');
+        document.getElementById('card-toggle').classList.remove('active');
+        document.getElementById('paypal-container').style.display = 'block';
+        document.getElementById('card-container').style.display = 'none';
+      });
+      
+      document.getElementById('card-toggle').addEventListener('click', function() {
+        this.classList.add('active');
+        document.getElementById('paypal-toggle').classList.remove('active');
+        document.getElementById('card-container').style.display = 'block';
+        document.getElementById('paypal-container').style.display = 'none';
+        updateCardTotal();
+      });
+    }
+
+    // Initialize PayPal Buttons
+    function initPayPal() {
+      paypalButtons = paypal.Buttons({
         style: {
           layout: 'vertical',
           color: 'blue',
@@ -433,12 +583,12 @@
           label: 'paypal',
           height: 40
         },
-        createOrder: function (data, actions) {
+        createOrder: function(data, actions) {
           if (totalAmount === 0) {
-            alert("Please select a plan or enter a custom amount.");
+            alert('Please select a plan or enter a custom amount');
             return;
           }
-
+          
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -449,153 +599,252 @@
                   }
                 }
               },
-              description: document.getElementById("additional-details").value || "Website Development Payment",
+              description: document.getElementById('additional-details').value || 'Website Development Payment',
               items: getOrderItems()
             }]
           });
         },
-        onApprove: function (data, actions) {
-          return actions.order.capture().then(function (details) {
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
             showSuccessMessage(details);
-            // Optionally, send details to your backend for further processing
           });
         },
-        onError: function (err) {
-          console.error("PayPal error:", err);
-          showErrorMessage();
+        onError: function(err) {
+          console.error('PayPal error:', err);
+          showErrorMessage('PayPal payment failed. Please try again.');
         }
-      }).render('#paypal-button-container');
-    });
+      });
+      
+      if (document.getElementById('paypal-button-container')) {
+        paypalButtons.render('#paypal-button-container');
+      }
+    }
 
+    // Initialize Card Fields
+    function initCardFields() {
+      if (!paypal.HostedFields.isEligible()) {
+        document.getElementById('card-container').innerHTML = 
+          '<p class="error-message">Credit card payments are not available in your region</p>';
+        return;
+      }
+      
+      paypal.HostedFields.render({
+        fields: {
+          number: {
+            selector: '#card-number',
+            placeholder: '4111 1111 1111 1111'
+          },
+          cvv: {
+            selector: '#cvv',
+            placeholder: '123'
+          },
+          expirationDate: {
+            selector: '#expiry-date',
+            placeholder: 'MM/YY'
+          }
+        },
+        styles: {
+          input: {
+            'font-size': '16px',
+            'font-family': 'Arial, sans-serif',
+            'color': '#333'
+          },
+          ':focus': {
+            'color': '#333'
+          },
+          '.valid': {
+            'color': '#28a745'
+          },
+          '.invalid': {
+            'color': '#dc3545'
+          }
+        },
+        createOrder: function() {
+          return fetch('/create-order', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              amount: (totalAmount / 100).toFixed(2)
+            })
+          }).then(function(res) {
+            return res.json();
+          }).then(function(data) {
+            return data.orderID;
+          }).catch(function(error) {
+            console.error('Order creation error:', error);
+            throw error;
+          });
+        }
+      }).then(function(hf) {
+        cardFields = hf;
+        
+        document.getElementById('card-submit').addEventListener('click', function(event) {
+          event.preventDefault();
+          
+          if (totalAmount === 0) {
+            document.getElementById('card-errors').textContent = 'Please select a plan or enter a custom amount';
+            return;
+          }
+          
+          cardFields.submit({
+            cardholderName: document.getElementById('additional-details').value || 'Website Customer'
+          }).then(function(orderData) {
+            showSuccessMessage(orderData);
+          }).catch(function(err) {
+            console.error('Card payment error:', err);
+            document.getElementById('card-errors').textContent = err.message || 'Payment failed. Please try again.';
+          });
+        });
+      }).catch(function(err) {
+        console.error('Hosted Fields error:', err);
+        document.getElementById('card-container').innerHTML = 
+          '<p class="error-message">Credit card processing is currently unavailable. Please use PayPal.</p>';
+      });
+    }
+
+    // Get order items for PayPal receipt
     function getOrderItems() {
       const items = [];
-      const qPremium = parseInt(document.getElementById("quantity-premium").value || 0);
-      const qBasic = parseInt(document.getElementById("quantity-basic").value || 0);
-      const qStarter = parseInt(document.getElementById("quantity-starter").value || 0);
-      const qStarterPack = parseInt(document.getElementById("quantity-starterpack").value || 0);
+      const qPremium = parseInt(document.getElementById('quantity-premium').value || 0);
+      const qBasic = parseInt(document.getElementById('quantity-basic').value || 0);
+      const qStarter = parseInt(document.getElementById('quantity-starter').value || 0);
+      const qStarterPack = parseInt(document.getElementById('quantity-starterpack').value || 0);
       
       if (qPremium > 0) {
         items.push({
-          name: "1-3 Pages Website",
+          name: '1-3 Pages Website',
           unit_amount: {
             value: (premiumPrice / 100).toFixed(2),
-            currency_code: "USD"
+            currency_code: 'USD'
           },
           quantity: qPremium.toString(),
-          category: "DIGITAL_GOODS"
+          category: 'DIGITAL_GOODS'
         });
       }
       
       if (qBasic > 0) {
         items.push({
-          name: "4-7 Pages Website",
+          name: '4-7 Pages Website',
           unit_amount: {
             value: (basicPrice / 100).toFixed(2),
-            currency_code: "USD"
+            currency_code: 'USD'
           },
           quantity: qBasic.toString(),
-          category: "DIGITAL_GOODS"
+          category: 'DIGITAL_GOODS'
         });
       }
       
       if (qStarter > 0) {
         items.push({
-          name: "7+ Pages Website",
+          name: '7+ Pages Website',
           unit_amount: {
             value: (starterPrice / 100).toFixed(2),
-            currency_code: "USD"
+            currency_code: 'USD'
           },
           quantity: qStarter.toString(),
-          category: "DIGITAL_GOODS"
+          category: 'DIGITAL_GOODS'
         });
       }
       
       if (qStarterPack > 0) {
         items.push({
-          name: "Starter Pack - Landing Page",
+          name: 'Starter Pack - Landing Page',
           unit_amount: {
             value: (starterPackPrice / 100).toFixed(2),
-            currency_code: "USD"
+            currency_code: 'USD'
           },
           quantity: qStarterPack.toString(),
-          category: "DIGITAL_GOODS"
+          category: 'DIGITAL_GOODS'
         });
       }
       
       return items;
     }
 
+    // Update total amount
     function updateTotal() {
-      const qPremium = parseInt(document.getElementById("quantity-premium").value || 0);
-      const qBasic = parseInt(document.getElementById("quantity-basic").value || 0);
-      const qStarter = parseInt(document.getElementById("quantity-starter").value || 0);
-      const qStarterPack = parseInt(document.getElementById("quantity-starterpack").value || 0);
-      const customAmountChecked = document.getElementById("custom-toggle").checked;
-
+      const qPremium = parseInt(document.getElementById('quantity-premium').value || 0);
+      const qBasic = parseInt(document.getElementById('quantity-basic').value || 0);
+      const qStarter = parseInt(document.getElementById('quantity-starter').value || 0);
+      const qStarterPack = parseInt(document.getElementById('quantity-starterpack').value || 0);
+      const customAmountChecked = document.getElementById('custom-toggle').checked;
+      
       if (customAmountChecked) {
-        const customAmount = parseFloat(document.getElementById("custom-amount").value || 0);
-        totalAmount = Math.round(customAmount * 100);  // Convert to cents
+        const customAmount = parseFloat(document.getElementById('custom-amount').value || 0);
+        totalAmount = Math.round(customAmount * 100);
       } else {
-        totalAmount = (qPremium * premiumPrice) + (qBasic * basicPrice) + (qStarter * starterPrice) + (qStarterPack * starterPackPrice);
+        totalAmount = (qPremium * premiumPrice) + 
+                     (qBasic * basicPrice) + 
+                     (qStarter * starterPrice) + 
+                     (qStarterPack * starterPackPrice);
       }
-
-      document.getElementById("subtotal-price").textContent = `$${(totalAmount / 100).toFixed(2)}`;
-      document.getElementById("total-price").textContent = `$${(totalAmount / 100).toFixed(2)}`;
+      
+      document.getElementById('subtotal-price').textContent = `$${(totalAmount / 100).toFixed(2)}`;
+      document.getElementById('total-price').textContent = `$${(totalAmount / 100).toFixed(2)}`;
+      updateCardTotal();
     }
 
+    // Update card payment total
+    function updateCardTotal() {
+      document.getElementById('card-total').textContent = (totalAmount / 100).toFixed(2);
+    }
+
+    // Toggle custom amount
     function toggleCustomAmount() {
-      const isChecked = document.getElementById("custom-toggle").checked;
-      const customAmountSection = document.getElementById("custom-amount-section");
-      customAmountSection.style.display = isChecked ? "block" : "none";
+      const isChecked = document.getElementById('custom-toggle').checked;
+      document.getElementById('custom-amount-section').style.display = isChecked ? 'block' : 'none';
       
-      // Disable/enable quantity inputs
-      document.getElementById("quantity-premium").disabled = isChecked;
-      document.getElementById("quantity-basic").disabled = isChecked;
-      document.getElementById("quantity-starter").disabled = isChecked;
-      document.getElementById("quantity-starterpack").disabled = isChecked;
+      // Disable quantity inputs when custom amount is selected
+      document.getElementById('quantity-premium').disabled = isChecked;
+      document.getElementById('quantity-basic').disabled = isChecked;
+      document.getElementById('quantity-starter').disabled = isChecked;
+      document.getElementById('quantity-starterpack').disabled = isChecked;
       
-      // Reset quantities when switching to custom amount
+      // Reset values when toggling
       if (isChecked) {
-        document.getElementById("quantity-premium").value = 0;
-        document.getElementById("quantity-basic").value = 0;
-        document.getElementById("quantity-starter").value = 0;
-        document.getElementById("quantity-starterpack").value = 0;
+        document.getElementById('quantity-premium').value = 0;
+        document.getElementById('quantity-basic').value = 0;
+        document.getElementById('quantity-starter').value = 0;
+        document.getElementById('quantity-starterpack').value = 0;
       } else {
-        document.getElementById("custom-amount").value = 0;
+        document.getElementById('custom-amount').value = 0;
       }
       
       updateTotal();
     }
 
+    // Adjust quantity with +- buttons
     function adjustQuantity(type, change) {
-      const inputId = `quantity-${type}`;
-      const input = document.getElementById(inputId);
+      const input = document.getElementById(`quantity-${type}`);
       let value = parseInt(input.value) || 0;
       value += change;
-      value = Math.max(0, value);  // Don't allow negative values
+      value = Math.max(0, value);
       input.value = value;
       updateTotal();
     }
 
+    // Show success message
     function showSuccessMessage(details) {
-      // You could replace this with a more elegant modal or notification
-      const message = `Payment completed successfully!\n\nThank you, ${details.payer.name.given_name}!\n\nTransaction ID: ${details.id}`;
-      alert(message);
+      // In a real app, you might redirect to a success page or show a modal
+      alert(`Payment successful!\n\nThank you for your purchase of $${(totalAmount / 100).toFixed(2)}\n\nTransaction ID: ${details.id || 'N/A'}`);
       
-      // Optionally reset the form
-      document.getElementById("quantity-premium").value = 0;
-      document.getElementById("quantity-basic").value = 0;
-      document.getElementById("quantity-starter").value = 0;
-      document.getElementById("quantity-starterpack").value = 0;
-      document.getElementById("custom-amount").value = 0;
-      document.getElementById("additional-details").value = "";
-      document.getElementById("custom-toggle").checked = false;
+      // Reset form
+      document.getElementById('quantity-premium').value = 0;
+      document.getElementById('quantity-basic').value = 0;
+      document.getElementById('quantity-starter').value = 0;
+      document.getElementById('quantity-starterpack').value = 0;
+      document.getElementById('custom-amount').value = 0;
+      document.getElementById('custom-toggle').checked = false;
+      document.getElementById('additional-details').value = '';
       toggleCustomAmount();
+      updateTotal();
     }
 
-    function showErrorMessage() {
-      // You could replace this with a more elegant error display
-      alert("There was an error processing your payment. Please try again or contact support.");
+    // Show error message
+    function showErrorMessage(message) {
+      alert(message || 'An error occurred. Please try again.');
     }
   </script>
 {% endblock %}
