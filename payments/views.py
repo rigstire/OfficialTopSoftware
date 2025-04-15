@@ -1,6 +1,6 @@
 import logging
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
@@ -12,6 +12,41 @@ paypalrestsdk.configure({
     "client_id": settings.PAYPAL_CLIENT_ID,
     "client_secret": settings.PAYPAL_CLIENT_SECRET
 })
+
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import paypalrestsdk
+import json
+
+@csrf_exempt
+def paypal_webhook(request):
+    if request.method == 'POST':
+        try:
+            # Verify webhook signature
+            body = json.loads(request.body)
+            webhook_event = paypalrestsdk.WebhookEvent(body)
+            
+            if not webhook_event.verify():
+                return HttpResponse(status=400)
+
+            # Process events
+            event_type = body.get('event_type')
+            
+            if event_type == 'PAYMENT.CAPTURE.COMPLETED':
+                # Handle successful payment
+                payment_id = body['resource']['id']
+                # ... your processing logic ...
+                
+            elif event_type == 'PAYMENT.CAPTURE.DENIED':
+                # Handle failed payment
+                pass
+                
+            return HttpResponse(status=200)
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    return HttpResponse(status=405)
 
 @csrf_exempt  # Only for testing - use proper CSRF protection in production
 def create_order(request):
