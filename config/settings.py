@@ -180,5 +180,8 @@ CORS_ALLOWED_ORIGINS = [
 
 # settings.py
 PAYPAL_MODE = "live"  # "sandbox" or "live"
-PAYPAL_CLIENT_ID = "AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a_"
-PAYPAL_CLIENT_SECRET = "ECxlHv9h6I7QFRMocQUgy09WWYYMBh1-oGGJxSFah2-kilAVFFZbhI6qAxWQ1V3458NFl23Neznku-9h"  # Get this from your PayPal developer dashboard
+PAYPAL_CLIENT_ID = "AZzKmi-sF1eEx060yoNw_emy5Og34KwAAw_Wrd1t7f5wT0JtZlA7DI6fbNgVoaSuTp8nK-aF9zPRjsxz"
+PAYPAL_CLIENT_SECRET = "EHm1hVJ4-2tttjetck5BoSD1f4bfh3Z8E-RXhXr4CL9VAu9evSS8Ua6Rk0mOAvdwgjuXLPwoVdAhjN7s"  # Get this from your PayPal developer dashboard
+
+PAYPAL_WEBHOOK_URL = "https://topsoftware.tech"
+PAYPAL_WEBHOOK_ID = "05C933854P846734T"
