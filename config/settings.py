@@ -177,3 +177,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
+
+# settings.py
+PAYPAL_MODE = "live"  # "sandbox" or "live"
+PAYPAL_CLIENT_ID = "AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a_"
+PAYPAL_CLIENT_SECRET = "ECxlHv9h6I7QFRMocQUgy09WWYYMBh1-oGGJxSFah2-kilAVFFZbhI6qAxWQ1V3458NFl23Neznku-9h"  # Get this from your PayPal developer dashboard
