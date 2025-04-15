@@ -29,11 +29,11 @@
       font-size: 96px;         /* Large size */
       font-style: italic;       /* Italic styling */
       text-transform: uppercase;
-      margin: 60px 0 60px;      /* Reduced margins for room */
+      margin: 60px 0 60px;
       letter-spacing: 1px;
       color: #fff;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-      font-weight: 400;         /* Medium weight */
+      font-weight: 400;
     }
     @media (max-width: 1024px) {
       .hero h1 {
@@ -112,6 +112,13 @@
         flex-direction: column;
       }
     }
+    
+    /* Mobile Navbar Override: Hide all desktop navigation elements */
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -121,7 +128,7 @@
   <section class="hero">
     <h1>Turning dreams into reality</h1>
     <p>
-      Since 2009, we’ve worked with ambitious startups, global nonprofits, and Fortune 500s to design and develop digital experiences and custom applications that increase sales, boost brand awareness, and streamline operations.
+      Since 2019, we’ve worked with ambitious startups, global nonprofits, and Fortune 500s to design and develop digital experiences and custom applications that increase sales, boost brand awareness, and streamline operations.
     </p>
   </section>
 
@@ -139,11 +146,11 @@
         <p class="project-services">
           AEM Implementation / Back End Development / Dev Ops / Front End Development / Headless Magento2 Implementation / Microservices / PIM / PWA / UX/UI Design
         </p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
 
-    <!-- Project: SAO Financial Intelligence Tool (Updated Image) -->
+    <!-- Project: SAO Financial Intelligence Tool -->
     <section class="project-section">
       <div class="project-image">
         <img src="{% static 'finance.webp' %}" alt="SAO Financial Intelligence Tool">
@@ -153,45 +160,11 @@
         <h2>SAO Financial Intelligence Tool</h2>
         <p>Overhauling the public-facing user experience for the Washington State Auditor's Office.</p>
         <p class="project-services">UX/UI Design</p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
 
-    <!--
-    Project: Renova Solar (Commented Out for Future Demos)
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'solar.jpeg' %}" alt="Renova Solar">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Renova Solar</h2>
-        <p>A cutting-edge website that highlights renewable energy solutions and innovative solar technology.</p>
-        <p class="project-services">
-          Web Design / UX/UI Design / SEO / Digital Marketing
-        </p>
-        <a href="#" class="project-read-more">Book now</a>
-      </div>
-    </section>
-    -->
-
-    <!-- Project: Solarcelaning PRSO -->
-    <!--<section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'solar.jpeg' %}" alt="Solarcelaning PRSO">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Solarcelaning PRSO</h2>
-        <p>Eco-friendly cleaning solutions for solar panels, featuring a user-friendly website design with interactive elements.</p>
-        <p class="project-services">
-          Web Design / Content Strategy / SEO / Interactive Features
-        </p>
-        <a href="#" class="project-read-more">Book now</a>
-      </div>
-    </section>
-   -->
-    <!-- Project: Visual art studios (Updated from Artstudio Mission Viejo) -->
+    <!-- Project: Visual art studios -->
     <section class="project-section">
       <div class="project-image">
         <img src="{% static 'artstudio.png' %}" alt="Visual art studios">
@@ -203,11 +176,11 @@
         <p class="project-services">
           Branding / Visual Identity / Graphic Design / Web Design
         </p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
 
-    <!-- Project: Jacks Surf Shop (Updated from Surf Shop Andy) -->
+    <!-- Project: Jacks Surf Shop -->
     <section class="project-section">
       <div class="project-image">
         <img src="{% static 'jacksurf.png' %}" alt="Jacks Surf Shop">
@@ -219,27 +192,9 @@
         <p class="project-services">
           E-commerce Development / UX/UI Design / Digital Marketing
         </p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
-
-    <!--
-    Project: Hunninton Pup Grooming (Commented Out for Future Demos)
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'IMG_1883.jpeg' %}" alt="Hunninton Pup Grooming">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Hunninton Pup Grooming</h2>
-        <p>A stylish, user-friendly website for a pet grooming service, showcasing their work and offering online booking.</p>
-        <p class="project-services">
-          Web Design / Branding / Booking System Integration / Content Strategy
-        </p>
-        <a href="#" class="project-read-more">Book now</a>
-      </div>
-    </section>
-    -->
 
     <!-- Project: Bark -->
     <section class="project-section">
@@ -251,7 +206,7 @@
         <h2>Bark</h2>
         <p>A playful rebranding for Bark, a pet products company focused on vibrant and engaging visual identity.</p>
         <p class="project-services">Branding / Visual Identity / Digital Marketing</p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
     
@@ -265,10 +220,11 @@
         <h2>Coachella Solar Services</h2>
         <p>An innovative online platform showcasing sustainable solar solutions with cutting-edge web design and interactive features.</p>
         <p class="project-services">Web Design / UX/UI Design / SEO / Digital Marketing</p>
-        <a href="#" class="project-read-more">Book now</a>
+        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
       </div>
     </section>
   </div>
   
 </body>
 </html>
+
