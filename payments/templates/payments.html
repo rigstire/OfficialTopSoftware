@@ -1,10 +1,10 @@
 {% load static %}
 
 {% block content %}
-  <!-- Include Navbar -->
+  <!-- Navbar Inclusion -->
   {% include 'navbar.html' %}
-  <link rel="stylesheet" href="{% static 'navbar.css' %}">
-  <script src="{% static 'navbar.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <script src="{% static 'js/navbar.js' %}"></script>
 
   <!-- Payment Section -->
   <section id="payment-section" class="payment-container">
@@ -103,24 +103,35 @@
 
       <!-- Credit Card Container -->
       <div id="card-container" class="payment-method-container" style="display:none;">
-        <div class="card-form">
+        <form id="card-form">
           <div class="form-group">
-            <label for="card-number">Card Number</label>
+            <label>Card Number</label>
             <div id="card-number" class="card-field"></div>
           </div>
+          
           <div class="form-row">
             <div class="form-group">
-              <label for="expiry-date">Expiry Date</label>
-              <div id="expiry-date" class="card-field"></div>
+              <label>Expiration Date</label>
+              <div id="card-expiry" class="card-field"></div>
             </div>
+            
             <div class="form-group">
-              <label for="cvv">CVV</label>
-              <div id="cvv" class="card-field"></div>
+              <label>CVV</label>
+              <div id="card-cvv" class="card-field"></div>
             </div>
           </div>
-          <div id="card-errors" class="error-message" role="alert"></div>
-          <button id="card-submit" class="submit-btn">Pay $<span id="card-total">0.00</span></button>
-        </div>
+          
+          <div class="form-group">
+            <label for="cardholder-name">Name on Card</label>
+            <input type="text" id="cardholder-name" class="form-control" required>
+          </div>
+          
+          <div id="card-errors" class="error-message"></div>
+          
+          <button type="submit" id="card-submit" class="submit-btn">
+            Pay $<span id="card-total">0.00</span>
+          </button>
+        </form>
         <p class="secure-note"><i class="fas fa-lock"></i> Secure credit card payment</p>
       </div>
 
@@ -156,9 +167,23 @@
       --light-color: #f8f9fa;
       --dark-color: #212529;
       --error-color: #dc3545;
+      --success-color: #28a745;
       --border-radius: 8px;
       --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark-color);
+      background-color: #f5f7ff;
     }
 
     .payment-container {
@@ -172,7 +197,6 @@
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
       padding: 2rem;
-      margin-top: 1rem;
     }
 
     .payment-header {
@@ -508,21 +532,33 @@
   </style>
 
   <script>
-    // Payment amounts
+    // Payment configuration
     const premiumPrice = 25000;
     const basicPrice = 21000;
     const starterPrice = 18000;
     const starterPackPrice = 5500;
     let totalAmount = 0;
-    let paypalButtons;
     let cardFields;
 
     // Initialize when DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialize payment method toggles
-      initPaymentMethodToggle();
+      // Setup payment method toggle
+      document.getElementById('paypal-toggle').addEventListener('click', function() {
+        this.classList.add('active');
+        document.getElementById('card-toggle').classList.remove('active');
+        document.getElementById('paypal-container').style.display = 'block';
+        document.getElementById('card-container').style.display = 'none';
+      });
       
-      // Initialize PayPal SDK if available
+      document.getElementById('card-toggle').addEventListener('click', function() {
+        this.classList.add('active');
+        document.getElementById('paypal-toggle').classList.remove('active');
+        document.getElementById('card-container').style.display = 'block';
+        document.getElementById('paypal-container').style.display = 'none';
+        updateCardTotal();
+      });
+
+      // Initialize PayPal if SDK is loaded
       if (typeof paypal !== 'undefined') {
         initPayPal();
         initCardFields();
@@ -540,14 +576,11 @@
         setTimeout(() => {
           if (typeof paypal === 'undefined') {
             clearInterval(paypalRetry);
-            document.getElementById('paypal-container').innerHTML = 
-              '<p class="error-message">Payment system is currently unavailable. Please try again later.</p>';
-            document.getElementById('card-container').innerHTML = 
-              '<p class="error-message">Payment system is currently unavailable. Please try again later.</p>';
+            showPaymentError();
           }
         }, 5000);
       }
-      
+
       // Initialize custom amount toggle
       document.getElementById('custom-toggle').addEventListener('change', toggleCustomAmount);
       
@@ -555,27 +588,9 @@
       updateTotal();
     });
 
-    // Initialize payment method toggle
-    function initPaymentMethodToggle() {
-      document.getElementById('paypal-toggle').addEventListener('click', function() {
-        this.classList.add('active');
-        document.getElementById('card-toggle').classList.remove('active');
-        document.getElementById('paypal-container').style.display = 'block';
-        document.getElementById('card-container').style.display = 'none';
-      });
-      
-      document.getElementById('card-toggle').addEventListener('click', function() {
-        this.classList.add('active');
-        document.getElementById('paypal-toggle').classList.remove('active');
-        document.getElementById('card-container').style.display = 'block';
-        document.getElementById('paypal-container').style.display = 'none';
-        updateCardTotal();
-      });
-    }
-
     // Initialize PayPal Buttons
     function initPayPal() {
-      paypalButtons = paypal.Buttons({
+      paypal.Buttons({
         style: {
           layout: 'vertical',
           color: 'blue',
@@ -583,25 +598,27 @@
           label: 'paypal',
           height: 40
         },
-        createOrder: function(data, actions) {
+        createOrder: function() {
           if (totalAmount === 0) {
-            alert('Please select a plan or enter a custom amount');
-            return;
+            throw new Error('Please select a plan or enter a custom amount');
           }
           
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: (totalAmount / 100).toFixed(2),
-                breakdown: {
-                  item_total: {
-                    value: (totalAmount / 100).toFixed(2)
-                  }
-                }
-              },
-              description: document.getElementById('additional-details').value || 'Website Development Payment',
-              items: getOrderItems()
-            }]
+          return fetch('/create-order/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+              amount: (totalAmount / 100).toFixed(2)
+            })
+          })
+          .then(function(res) {
+            return res.json();
+          })
+          .then(function(data) {
+            if (data.error) throw new Error(data.error);
+            return data.orderID;
           });
         },
         onApprove: function(data, actions) {
@@ -611,20 +628,20 @@
         },
         onError: function(err) {
           console.error('PayPal error:', err);
-          showErrorMessage('PayPal payment failed. Please try again.');
+          document.getElementById('card-errors').textContent = 
+            err.message || 'PayPal payment failed. Please try again.';
         }
-      });
-      
-      if (document.getElementById('paypal-button-container')) {
-        paypalButtons.render('#paypal-button-container');
-      }
+      }).render('#paypal-button-container');
     }
 
     // Initialize Card Fields
     function initCardFields() {
       if (!paypal.HostedFields.isEligible()) {
-        document.getElementById('card-container').innerHTML = 
-          '<p class="error-message">Credit card payments are not available in your region</p>';
+        document.getElementById('card-container').innerHTML = `
+          <div class="alert alert-warning">
+            Credit card processing not available in your region. Please use PayPal.
+          </div>
+        `;
         return;
       }
       
@@ -634,13 +651,13 @@
             selector: '#card-number',
             placeholder: '4111 1111 1111 1111'
           },
-          cvv: {
-            selector: '#cvv',
-            placeholder: '123'
-          },
           expirationDate: {
-            selector: '#expiry-date',
+            selector: '#card-expiry',
             placeholder: 'MM/YY'
+          },
+          cvv: {
+            selector: '#card-cvv',
+            placeholder: '123'
           }
         },
         styles: {
@@ -660,107 +677,53 @@
           }
         },
         createOrder: function() {
-          return fetch('/create-order', {
+          if (totalAmount === 0) {
+            throw new Error('Please select a plan or enter a custom amount');
+          }
+          
+          return fetch('/create-order/', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
             },
             body: JSON.stringify({
               amount: (totalAmount / 100).toFixed(2)
             })
-          }).then(function(res) {
+          })
+          .then(function(res) {
             return res.json();
-          }).then(function(data) {
+          })
+          .then(function(data) {
+            if (data.error) throw new Error(data.error);
             return data.orderID;
-          }).catch(function(error) {
-            console.error('Order creation error:', error);
-            throw error;
           });
         }
       }).then(function(hf) {
         cardFields = hf;
         
-        document.getElementById('card-submit').addEventListener('click', function(event) {
+        document.getElementById('card-form').addEventListener('submit', function(event) {
           event.preventDefault();
           
-          if (totalAmount === 0) {
-            document.getElementById('card-errors').textContent = 'Please select a plan or enter a custom amount';
+          if (!document.getElementById('cardholder-name').value) {
+            document.getElementById('card-errors').textContent = 'Please enter the name on your card';
             return;
           }
           
           cardFields.submit({
-            cardholderName: document.getElementById('additional-details').value || 'Website Customer'
+            cardholderName: document.getElementById('cardholder-name').value
           }).then(function(orderData) {
             showSuccessMessage(orderData);
           }).catch(function(err) {
             console.error('Card payment error:', err);
-            document.getElementById('card-errors').textContent = err.message || 'Payment failed. Please try again.';
+            document.getElementById('card-errors').textContent = 
+              err.message || 'Payment failed. Please check your card details.';
           });
         });
       }).catch(function(err) {
         console.error('Hosted Fields error:', err);
-        document.getElementById('card-container').innerHTML = 
-          '<p class="error-message">Credit card processing is currently unavailable. Please use PayPal.</p>';
+        showPaymentError();
       });
-    }
-
-    // Get order items for PayPal receipt
-    function getOrderItems() {
-      const items = [];
-      const qPremium = parseInt(document.getElementById('quantity-premium').value || 0);
-      const qBasic = parseInt(document.getElementById('quantity-basic').value || 0);
-      const qStarter = parseInt(document.getElementById('quantity-starter').value || 0);
-      const qStarterPack = parseInt(document.getElementById('quantity-starterpack').value || 0);
-      
-      if (qPremium > 0) {
-        items.push({
-          name: '1-3 Pages Website',
-          unit_amount: {
-            value: (premiumPrice / 100).toFixed(2),
-            currency_code: 'USD'
-          },
-          quantity: qPremium.toString(),
-          category: 'DIGITAL_GOODS'
-        });
-      }
-      
-      if (qBasic > 0) {
-        items.push({
-          name: '4-7 Pages Website',
-          unit_amount: {
-            value: (basicPrice / 100).toFixed(2),
-            currency_code: 'USD'
-          },
-          quantity: qBasic.toString(),
-          category: 'DIGITAL_GOODS'
-        });
-      }
-      
-      if (qStarter > 0) {
-        items.push({
-          name: '7+ Pages Website',
-          unit_amount: {
-            value: (starterPrice / 100).toFixed(2),
-            currency_code: 'USD'
-          },
-          quantity: qStarter.toString(),
-          category: 'DIGITAL_GOODS'
-        });
-      }
-      
-      if (qStarterPack > 0) {
-        items.push({
-          name: 'Starter Pack - Landing Page',
-          unit_amount: {
-            value: (starterPackPrice / 100).toFixed(2),
-            currency_code: 'USD'
-          },
-          quantity: qStarterPack.toString(),
-          category: 'DIGITAL_GOODS'
-        });
-      }
-      
-      return items;
     }
 
     // Update total amount
@@ -786,7 +749,7 @@
       updateCardTotal();
     }
 
-    // Update card payment total
+    // Update card payment total display
     function updateCardTotal() {
       document.getElementById('card-total').textContent = (totalAmount / 100).toFixed(2);
     }
@@ -827,7 +790,6 @@
 
     // Show success message
     function showSuccessMessage(details) {
-      // In a real app, you might redirect to a success page or show a modal
       alert(`Payment successful!\n\nThank you for your purchase of $${(totalAmount / 100).toFixed(2)}\n\nTransaction ID: ${details.id || 'N/A'}`);
       
       // Reset form
@@ -838,13 +800,39 @@
       document.getElementById('custom-amount').value = 0;
       document.getElementById('custom-toggle').checked = false;
       document.getElementById('additional-details').value = '';
+      document.getElementById('cardholder-name').value = '';
       toggleCustomAmount();
       updateTotal();
     }
 
-    // Show error message
-    function showErrorMessage(message) {
-      alert(message || 'An error occurred. Please try again.');
+    // Show payment error
+    function showPaymentError() {
+      document.getElementById('paypal-container').innerHTML = `
+        <div class="error-message">
+          Payment system is currently unavailable. Please try again later.
+        </div>
+      `;
+      document.getElementById('card-container').innerHTML = `
+        <div class="error-message">
+          Payment system is currently unavailable. Please try again later.
+        </div>
+      `;
+    }
+
+    // CSRF token helper
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
     }
   </script>
 {% endblock %}
