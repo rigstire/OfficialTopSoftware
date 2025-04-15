@@ -8,9 +8,9 @@ import paypalrestsdk
 import json
 
 paypalrestsdk.configure({
-    "mode": "sandbox",  # or "live"
-    "client_id": " AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a_",
-    "client_secret": "ECxlHv9h6I7QFRMocQUgy09WWYYMBh1-oGGJxSFah2-kilAVFFZbhI6qAxWQ1V3458NFl23Neznku-9h"  # Make sure to keep this secret!
+    "mode": settings.PAYPAL_MODE,
+    "client_id": settings.PAYPAL_CLIENT_ID,
+    "client_secret": settings.PAYPAL_CLIENT_SECRET
 })
 
 @csrf_exempt  # Only for testing - use proper CSRF protection in production
