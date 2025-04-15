@@ -1,62 +1,421 @@
 {% load static %}
 
 {% block content %}
-  <section id="payment-section" class="container mt-5 mb-5">
-    <div class="card">
-      <h4 class="section-heading">Upgrade your plan</h4>
-      <p>Please make the payment to start enjoying all the features of our premium plan.</p>
-
-      <!-- Product Pricing Blocks -->
-      <div>
-        <label for="quantity-premium" class="fw-bold">1-3 Pages ($250 each):</label>
-        <input type="number" id="quantity-premium" class="form-control" value="0" min="0" onchange="updateTotal()" />
-
-        <label for="quantity-basic" class="fw-bold">4-7 Pages ($210 each):</label>
-        <input type="number" id="quantity-basic" class="form-control" value="0" min="0" onchange="updateTotal()" />
-
-        <label for="quantity-starter" class="fw-bold">7+ Pages ($180 each):</label>
-        <input type="number" id="quantity-starter" class="form-control" value="0" min="0" onchange="updateTotal()" />
-
-        <label for="quantity-starterpack" class="fw-bold">Starter Pack - Landing Page ($55 each):</label>
-        <input type="number" id="quantity-starterpack" class="form-control" value="0" min="0" onchange="updateTotal()" />
+  <section id="payment-section" class="payment-container">
+    <div class="payment-card">
+      <div class="payment-header">
+        <h2 class="payment-title">Upgrade Your Plan</h2>
+        <p class="payment-subtitle">Select your package and make payment to unlock premium features</p>
       </div>
 
-      <!-- Toggle Custom Amount -->
-      <div class="mt-4">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="custom-toggle" onchange="toggleCustomAmount()" />
-          <label class="form-check-label fw-bold" for="custom-toggle">I want to pay a custom amount</label>
+      <!-- Pricing Tiers -->
+      <div class="pricing-tiers">
+        <div class="pricing-tier">
+          <div class="tier-header">
+            <h3>1-3 Pages</h3>
+            <span class="price">$250<span class="per-page">/page</span></span>
+          </div>
+          <div class="tier-control">
+            <button class="quantity-btn minus" onclick="adjustQuantity('premium', -1)">-</button>
+            <input type="number" id="quantity-premium" class="quantity-input" value="0" min="0" onchange="updateTotal()">
+            <button class="quantity-btn plus" onclick="adjustQuantity('premium', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="pricing-tier">
+          <div class="tier-header">
+            <h3>4-7 Pages</h3>
+            <span class="price">$210<span class="per-page">/page</span></span>
+          </div>
+          <div class="tier-control">
+            <button class="quantity-btn minus" onclick="adjustQuantity('basic', -1)">-</button>
+            <input type="number" id="quantity-basic" class="quantity-input" value="0" min="0" onchange="updateTotal()">
+            <button class="quantity-btn plus" onclick="adjustQuantity('basic', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="pricing-tier">
+          <div class="tier-header">
+            <h3>7+ Pages</h3>
+            <span class="price">$180<span class="per-page">/page</span></span>
+          </div>
+          <div class="tier-control">
+            <button class="quantity-btn minus" onclick="adjustQuantity('starter', -1)">-</button>
+            <input type="number" id="quantity-starter" class="quantity-input" value="0" min="0" onchange="updateTotal()">
+            <button class="quantity-btn plus" onclick="adjustQuantity('starter', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="pricing-tier">
+          <div class="tier-header">
+            <h3>Starter Pack</h3>
+            <span class="price">$55<span class="per-page">/page</span></span>
+          </div>
+          <div class="tier-control">
+            <button class="quantity-btn minus" onclick="adjustQuantity('starterpack', -1)">-</button>
+            <input type="number" id="quantity-starterpack" class="quantity-input" value="0" min="0" onchange="updateTotal()">
+            <button class="quantity-btn plus" onclick="adjustQuantity('starterpack', 1)">+</button>
+          </div>
         </div>
       </div>
 
-      <!-- Custom Amount -->
-      <div class="mt-3" id="custom-amount-section" style="display: none;">
-        <label for="custom-amount" class="fw-bold">Enter custom amount ($):</label>
-        <input type="number" id="custom-amount" class="form-control" value="0" min="0" step="0.01" onchange="updateTotal()" />
+      <!-- Custom Amount Toggle -->
+      <div class="custom-amount-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" id="custom-toggle" onchange="toggleCustomAmount()">
+          <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">Pay custom amount</span>
       </div>
 
-      <!-- Additional Info -->
-      <div class="mt-4 additional-info">
-        <label for="additional-details" class="fw-bold">Additional Details (e.g., website ideas, company name):</label>
-        <textarea id="additional-details" class="form-control" rows="3" placeholder="Enter any details..."></textarea>
+      <!-- Custom Amount Input -->
+      <div class="custom-amount-section" id="custom-amount-section">
+        <label for="custom-amount" class="input-label">Custom Amount</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="number" id="custom-amount" class="form-control" value="0" min="0" step="0.01" onchange="updateTotal()">
+        </div>
       </div>
 
-      <!-- Total -->
-      <div class="mt-4">
-        <h5>Total Amount: <span id="total-price">$0.00</span></h5>
+      <!-- Additional Details -->
+      <div class="additional-details">
+        <label for="additional-details" class="input-label">Project Details</label>
+        <textarea id="additional-details" class="form-control" rows="4" placeholder="Tell us about your project (website ideas, company name, special requests)"></textarea>
       </div>
 
-      <!-- PayPal Checkout -->
-      <div id="paypal-button-container" class="mt-4"></div>
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span id="subtotal-price">$0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax:</span>
+          <span>$0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span id="total-price">$0.00</span>
+        </div>
+      </div>
+
+      <!-- PayPal Button -->
+      <div id="paypal-button-container" class="paypal-button-container"></div>
+      
+      <!-- Secure Payment Info -->
+      <div class="secure-payment">
+        <i class="fas fa-lock"></i>
+        <span>Secure payment processed by PayPal</span>
+      </div>
     </div>
   </section>
 
   <!-- PayPal.js SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a&currency=USD"></script>
   
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --accent-color: #4895ef;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #4bb543;
+      --error-color: #ff3333;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark-color);
+      background-color: #f5f7ff;
+    }
+
+    .payment-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .payment-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .payment-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .payment-title {
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .payment-subtitle {
+      color: #6c757d;
+      font-size: 1rem;
+    }
+
+    .pricing-tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-tier {
+      border: 1px solid #e0e0e0;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      transition: var(--transition);
+    }
+
+    .pricing-tier:hover {
+      border-color: var(--accent-color);
+      box-shadow: 0 2px 8px rgba(67, 97, 238, 0.1);
+    }
+
+    .tier-header {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .tier-header h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark-color);
+    }
+
+    .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .per-page {
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+
+    .tier-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .quantity-btn:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .quantity-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .quantity-input {
+      width: 50px;
+      text-align: center;
+      padding: 0.3rem;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+    }
+
+    .custom-amount-toggle {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      padding: 0.8rem 1rem;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-right: 1rem;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: var(--transition);
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: var(--transition);
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .toggle-label {
+      font-weight: 500;
+    }
+
+    .custom-amount-section {
+      display: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .input-group-text {
+      padding: 0.5rem 1rem;
+      background-color: #e9ecef;
+      border: 1px solid #ced4da;
+      border-right: none;
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 0.2rem rgba(72, 149, 239, 0.25);
+    }
+
+    .additional-details {
+      margin-bottom: 1.5rem;
+    }
+
+    textarea.form-control {
+      border-radius: var(--border-radius);
+      resize: vertical;
+    }
+
+    .order-summary {
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-row.total {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #dee2e6;
+    }
+
+    .paypal-button-container {
+      margin: 1.5rem 0;
+    }
+
+    .secure-payment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+      font-size: 0.9rem;
+      gap: 0.5rem;
+    }
+
+    .secure-payment i {
+      color: var(--success-color);
+    }
+
+    @media (max-width: 768px) {
+      .pricing-tiers {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pricing-tiers {
+        grid-template-columns: 1fr;
+      }
+      
+      .payment-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+
   <script>
     let totalAmount = 0;
-
     const premiumPrice = 25000;
     const basicPrice = 21000;
     const starterPrice = 18000;
@@ -67,6 +426,13 @@
 
       // PayPal Buttons integration
       paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'blue',
+          shape: 'rect',
+          label: 'paypal',
+          height: 40
+        },
         createOrder: function (data, actions) {
           if (totalAmount === 0) {
             alert("Please select a plan or enter a custom amount.");
@@ -76,24 +442,88 @@
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: (totalAmount / 100).toFixed(2)
+                value: (totalAmount / 100).toFixed(2),
+                breakdown: {
+                  item_total: {
+                    value: (totalAmount / 100).toFixed(2)
+                  }
+                }
               },
-              description: document.getElementById("additional-details").value || "TopSoftware Payment"
+              description: document.getElementById("additional-details").value || "Website Development Payment",
+              items: getOrderItems()
             }]
           });
         },
         onApprove: function (data, actions) {
           return actions.order.capture().then(function (details) {
-            alert("Payment completed by " + details.payer.name.given_name);
+            showSuccessMessage(details);
             // Optionally, send details to your backend for further processing
           });
         },
         onError: function (err) {
           console.error("PayPal error:", err);
-          alert("Something went wrong with PayPal. Please try again.");
+          showErrorMessage();
         }
       }).render('#paypal-button-container');
     });
+
+    function getOrderItems() {
+      const items = [];
+      const qPremium = parseInt(document.getElementById("quantity-premium").value || 0);
+      const qBasic = parseInt(document.getElementById("quantity-basic").value || 0);
+      const qStarter = parseInt(document.getElementById("quantity-starter").value || 0);
+      const qStarterPack = parseInt(document.getElementById("quantity-starterpack").value || 0);
+      
+      if (qPremium > 0) {
+        items.push({
+          name: "1-3 Pages Website",
+          unit_amount: {
+            value: (premiumPrice / 100).toFixed(2),
+            currency_code: "USD"
+          },
+          quantity: qPremium.toString(),
+          category: "DIGITAL_GOODS"
+        });
+      }
+      
+      if (qBasic > 0) {
+        items.push({
+          name: "4-7 Pages Website",
+          unit_amount: {
+            value: (basicPrice / 100).toFixed(2),
+            currency_code: "USD"
+          },
+          quantity: qBasic.toString(),
+          category: "DIGITAL_GOODS"
+        });
+      }
+      
+      if (qStarter > 0) {
+        items.push({
+          name: "7+ Pages Website",
+          unit_amount: {
+            value: (starterPrice / 100).toFixed(2),
+            currency_code: "USD"
+          },
+          quantity: qStarter.toString(),
+          category: "DIGITAL_GOODS"
+        });
+      }
+      
+      if (qStarterPack > 0) {
+        items.push({
+          name: "Starter Pack - Landing Page",
+          unit_amount: {
+            value: (starterPackPrice / 100).toFixed(2),
+            currency_code: "USD"
+          },
+          quantity: qStarterPack.toString(),
+          category: "DIGITAL_GOODS"
+        });
+      }
+      
+      return items;
+    }
 
     function updateTotal() {
       const qPremium = parseInt(document.getElementById("quantity-premium").value || 0);
@@ -109,17 +539,63 @@
         totalAmount = (qPremium * premiumPrice) + (qBasic * basicPrice) + (qStarter * starterPrice) + (qStarterPack * starterPackPrice);
       }
 
+      document.getElementById("subtotal-price").textContent = `$${(totalAmount / 100).toFixed(2)}`;
       document.getElementById("total-price").textContent = `$${(totalAmount / 100).toFixed(2)}`;
     }
 
     function toggleCustomAmount() {
       const isChecked = document.getElementById("custom-toggle").checked;
-      document.getElementById("custom-amount-section").style.display = isChecked ? "block" : "none";
+      const customAmountSection = document.getElementById("custom-amount-section");
+      customAmountSection.style.display = isChecked ? "block" : "none";
+      
+      // Disable/enable quantity inputs
       document.getElementById("quantity-premium").disabled = isChecked;
       document.getElementById("quantity-basic").disabled = isChecked;
       document.getElementById("quantity-starter").disabled = isChecked;
       document.getElementById("quantity-starterpack").disabled = isChecked;
+      
+      // Reset quantities when switching to custom amount
+      if (isChecked) {
+        document.getElementById("quantity-premium").value = 0;
+        document.getElementById("quantity-basic").value = 0;
+        document.getElementById("quantity-starter").value = 0;
+        document.getElementById("quantity-starterpack").value = 0;
+      } else {
+        document.getElementById("custom-amount").value = 0;
+      }
+      
       updateTotal();
+    }
+
+    function adjustQuantity(type, change) {
+      const inputId = `quantity-${type}`;
+      const input = document.getElementById(inputId);
+      let value = parseInt(input.value) || 0;
+      value += change;
+      value = Math.max(0, value);  // Don't allow negative values
+      input.value = value;
+      updateTotal();
+    }
+
+    function showSuccessMessage(details) {
+      // You could replace this with a more elegant modal or notification
+      const message = `Payment completed successfully!\n\nThank you, ${details.payer.name.given_name}!\n\nTransaction ID: ${details.id}`;
+      alert(message);
+      
+      // Optionally reset the form
+      document.getElementById("quantity-premium").value = 0;
+      document.getElementById("quantity-basic").value = 0;
+      document.getElementById("quantity-starter").value = 0;
+      document.getElementById("quantity-starterpack").value = 0;
+      document.getElementById("custom-amount").value = 0;
+      document.getElementById("additional-details").value = "";
+      document.getElementById("custom-toggle").checked = false;
+      toggleCustomAmount();
+    }
+
+    function showErrorMessage() {
+      // You could replace this with a more elegant error display
+      alert("There was an error processing your payment. Please try again or contact support.");
     }
   </script>
 {% endblock %}
