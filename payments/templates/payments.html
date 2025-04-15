@@ -2,10 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Upgrade Your Plan | TopSoftware</title>
   <meta name="description" content="Upgrade your plan with TopSoftware.">
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy your website | TopSoftware</title>
+  <meta name="description" content="Start your plan with TopSoftware.">
+>>>>>>> 89e0715c552a5e37ac794d1e2ef332f8d4ad60cd
 
   <!-- Google Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
@@ -49,15 +56,24 @@
       padding-left: 20px;
       padding-right: 20px;
     }
+<<<<<<< HEAD
+    .card {
+      background-color: #fff;
+      color: #000;
+=======
+    /* Card styling with updated typography */
     #payment-section .card {
       background-color: #fff !important;
       color: #000 !important;
+      font-family: 'Roboto', sans-serif;
     }
+    /* Global page background and text color */
     html, body {
       margin: 0;
       padding: 0;
       background-color: #000 !important;
       color: #fff !important;
+>>>>>>> 89e0715c552a5e37ac794d1e2ef332f8d4ad60cd
     }
     /* Payment Section Text Enhancements */
     #payment-section .card .heading {
@@ -139,12 +155,20 @@
 
   <script>
     let totalAmount = 0;
+<<<<<<< HEAD
 
+    const premiumPrice = 250;
+    const basicPrice = 210;
+    const starterPrice = 180;
+    const starterPackPrice = 55;
+
+=======
+  
     const premiumPrice = 25000;
     const basicPrice = 21000;
     const starterPrice = 18000;
     const starterPackPrice = 5500;
-
+  
     document.addEventListener("DOMContentLoaded", async function () {
       // Attach onchange events
       ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack", "custom-amount"]
@@ -152,9 +176,9 @@
           const el = document.getElementById(id);
           if (el) el.addEventListener("change", updateTotal);
         });
-
+  
       updateTotal();
-
+  
       elements = stripe.elements();
       card = elements.create("card", {
         style: {
@@ -170,25 +194,25 @@
         }
       });
       card.mount("#card-container");
-
+  
       document.getElementById("pay-button").addEventListener("click", async () => {
         if (totalAmount === 0) {
           alert("Please select a plan or enter a custom amount.");
           return;
         }
-
+  
         const { paymentMethod, error } = await stripe.createPaymentMethod({
           type: "card",
           card: card,
         });
-
+  
         if (error) {
           alert("Payment failed: " + error.message);
           return;
         }
-
+  
         const additionalDetails = document.getElementById("additional-details")?.value || "";
-
+  
         const response = await fetch("/payments/process-payment/", {
           method: "POST",
           headers: {
@@ -201,9 +225,9 @@
             additionalDetails: additionalDetails
           })
         });
-
+  
         const result = await response.json();
-
+  
         if (result.status === "success") {
           alert("Payment successful! Payment ID: " + result.payment_intent_id);
         } else {
@@ -211,47 +235,109 @@
         }
       });
     });
-
+  
     function toggleCustomAmount() {
       const isCustom = document.getElementById("custom-toggle").checked;
       document.getElementById("custom-amount-section").style.display = isCustom ? "block" : "none";
-
+  
       ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.disabled = isCustom;
       });
-
+  
       updateTotal();
     }
-
+  
+>>>>>>> 89e0715c552a5e37ac794d1e2ef332f8d4ad60cd
     function updateTotal() {
       const isCustom = document.getElementById("custom-toggle").checked;
       if (isCustom) {
         const custom = parseFloat(document.getElementById("custom-amount").value || 0);
         totalAmount = custom;
       } else {
+<<<<<<< HEAD
+        const qPremium = parseInt(document.getElementById("quantity-premium").value || 0);
+        const qBasic = parseInt(document.getElementById("quantity-basic").value || 0);
+        const qStarter = parseInt(document.getElementById("quantity-starter").value || 0);
+        const qStarterPack = parseInt(document.getElementById("quantity-starterpack").value || 0);
+
+=======
         const qPremium = parseInt(document.getElementById("quantity-premium")?.value || 0);
         const qBasic = parseInt(document.getElementById("quantity-basic")?.value || 0);
         const qStarter = parseInt(document.getElementById("quantity-starter")?.value || 0);
         const qStarterPack = parseInt(document.getElementById("quantity-starterpack")?.value || 0);
-
+  
+>>>>>>> 89e0715c552a5e37ac794d1e2ef332f8d4ad60cd
         totalAmount = (qPremium * premiumPrice) +
                       (qBasic * basicPrice) +
                       (qStarter * starterPrice) +
                       (qStarterPack * starterPackPrice);
       }
+<<<<<<< HEAD
 
+      document.getElementById("total-price").innerText = `$${totalAmount.toFixed(2)}`;
+    }
+
+    function toggleCustomAmount() {
+      const isCustom = document.getElementById("custom-toggle").checked;
+      document.getElementById("custom-amount-section").style.display = isCustom ? "block" : "none";
+
+      ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack"].forEach(id => {
+        document.getElementById(id).disabled = isCustom;
+      });
+
+      updateTotal();
+=======
+  
       const totalDisplay = document.getElementById("total-price");
       if (totalDisplay) {
         totalDisplay.innerText = `$${(totalAmount / 100).toFixed(2)}`;
       }
     }
-
+  
     function getCSRFToken() {
       return document.cookie.split('; ')
         .find(row => row.trim().startsWith('csrftoken='))
         ?.split('=')[1] || '';
+>>>>>>> 89e0715c552a5e37ac794d1e2ef332f8d4ad60cd
     }
+
+    // Update total on input change
+    document.addEventListener("DOMContentLoaded", () => {
+      ["quantity-premium", "quantity-basic", "quantity-starter", "quantity-starterpack", "custom-amount"]
+        .forEach(id => {
+          document.getElementById(id)?.addEventListener("input", updateTotal);
+        });
+
+      updateTotal();
+
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          if (totalAmount <= 0) {
+            alert("Please select a plan or enter a custom amount.");
+            return;
+          }
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: totalAmount.toFixed(2)
+              },
+              description: document.getElementById("additional-details").value || "TopSoftware Payment"
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Payment completed successfully by ' + details.payer.name.given_name + '!');
+            // Optionally: send to your server to store order info
+          });
+        },
+        onError: function(err) {
+          console.error(err);
+          alert("An error occurred during payment. Please try again.");
+        }
+      }).render('#paypal-button-container');
+    });
   </script>
 </body>
 </html>
