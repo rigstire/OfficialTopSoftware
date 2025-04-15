@@ -1,14 +1,55 @@
 import logging
-import stripe
 from django.conf import settings
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+import paypalrestsdk
+import json
+
+paypalrestsdk.configure({
+    "mode": "sandbox",  # or "live"
+    "client_id": " AdIOdwGbHBKpREd3SXfhvoXY214yqYYnRt0jExL97hutsewKrcnF-2CcIFUnqg7koC2iuPIFa0yzA7a_",
+    "client_secret": "ECxlHv9h6I7QFRMocQUgy09WWYYMBh1-oGGJxSFah2-kilAVFFZbhI6qAxWQ1V3458NFl23Neznku-9h"  # Make sure to keep this secret!
+})
+
+@csrf_exempt  # Only for testing - use proper CSRF protection in production
+def create_order(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            amount = data.get('amount')
+            
+            # Create PayPal payment
+            payment = paypalrestsdk.Payment({
+                "intent": "sale",
+                "payer": {
+                    "payment_method": "paypal"
+                },
+                "transactions": [{
+                    "amount": {
+                        "total": amount,
+                        "currency": "USD"
+                    },
+                    "description": "Website Development Payment"
+                }],
+                "redirect_urls": {
+                    "return_url": "https://topsoftware.tech/",
+                    "cancel_url": "https://topsoftware.tech/"
+                }
+            })
+            
+            if payment.create():
+                return JsonResponse({'orderID': payment.id})
+            else:
+                return JsonResponse({'error': payment.error}, status=400)
+                
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
     
 logger = logging.getLogger(__name__)
-
-stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def payment_view(request):
