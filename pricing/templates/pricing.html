@@ -60,6 +60,13 @@
       font-size: 1.8rem !important;
       cursor: pointer !important;
     }
+    /* Added media query to hide the desktop navigation on mobile devices.
+       This targets the <ul> with class "desktop-nav" within the navbar. */
+    @media (max-width: 768px) {
+      nav.navbar ul.desktop-nav {
+        display: none !important;
+      }
+    }
   </style>
 
   <!-- Force Black Background and White Text on Entire Page -->
