@@ -1,60 +1,27 @@
+# payments/views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import paypalrestsdk
+import json
 import logging
-from django.conf import settings
-from django.http import JsonResponse,HttpResponse
-import json
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-import paypalrestsdk
-import json
 
-paypalrestsdk.configure({
-    "mode": settings.PAYPAL_MODE,
-    "client_id": settings.PAYPAL_CLIENT_ID,
-    "client_secret": settings.PAYPAL_CLIENT_SECRET
-})
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import paypalrestsdk
-import json
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
-def paypal_webhook(request):
-    if request.method == 'POST':
-        try:
-            # Verify webhook signature
-            body = json.loads(request.body)
-            webhook_event = paypalrestsdk.WebhookEvent(body)
-            
-            if not webhook_event.verify():
-                return HttpResponse(status=400)
-
-            # Process events
-            event_type = body.get('event_type')
-            
-            if event_type == 'PAYMENT.CAPTURE.COMPLETED':
-                # Handle successful payment
-                payment_id = body['resource']['id']
-                # ... your processing logic ...
-                
-            elif event_type == 'PAYMENT.CAPTURE.DENIED':
-                # Handle failed payment
-                pass
-                
-            return HttpResponse(status=200)
-            
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-    
-    return HttpResponse(status=405)
-
-@csrf_exempt  # Only for testing - use proper CSRF protection in production
 def create_order(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             amount = data.get('amount')
             
+            # Validate amount
+            try:
+                amount_float = float(amount)
+                if amount_float < 1.00:  # Minimum $1.00
+                    return JsonResponse({'error': 'Minimum payment is $1.00'}, status=400)
+            except (ValueError, TypeError):
+                return JsonResponse({'error': 'Invalid amount'}, status=400)
+
             # Create PayPal payment
             payment = paypalrestsdk.Payment({
                 "intent": "sale",
@@ -63,41 +30,40 @@ def create_order(request):
                 },
                 "transactions": [{
                     "amount": {
-                        "total": amount,
+                        "total": "{:.2f}".format(amount_float),
                         "currency": "USD"
                     },
-                    "description": "Website Development Payment"
+                    "description": "Website Development Service"
                 }],
                 "redirect_urls": {
-                    "return_url": "https://topsoftware.tech/",
-                    "cancel_url": "https://topsoftware.tech/"
+                    "return_url": "https://yourdomain.com/payment/success/",
+                    "cancel_url": "https://yourdomain.com/payment/cancel/"
                 }
             })
-            
+
             if payment.create():
-                return JsonResponse({'orderID': payment.id})
+                logger.info(f"PayPal payment created: {payment.id}")
+                return JsonResponse({
+                    'orderID': payment.id,
+                    'status': payment.state
+                })
             else:
-                return JsonResponse({'error': payment.error}, status=400)
-                
+                error_msg = payment.error.get('message', 'Payment creation failed')
+                logger.error(f"PayPal error: {error_msg}")
+                return JsonResponse({'error': error_msg}, status=400)
+
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-    
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-    
-logger = logging.getLogger(__name__)
+            logger.error(f"Payment error: {str(e)}")
+            return JsonResponse({'error': 'Server error'}, status=500)
 
-
-def payment_view(request):
-    return render(request, "payments.html")
+    return JsonResponse({'error': 'Invalid request'}, status=405)
 
 @csrf_exempt
-def paypal_confirm(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            logger.info(f"PayPal confirmation: {data}")
-            return JsonResponse({"status": "success"})
-        except Exception as e:
-            logger.error(f"PayPal confirm error: {e}")
-            return JsonResponse({"status": "error", "message": "Server error"}, status=500)
-    return JsonResponse({"status": "error", "message": "Invalid request"}, status=405)
+def payment_success(request):
+    # Handle successful payment (save to database, send email, etc.)
+    return render(request, 'payments/success.html')
+
+@csrf_exempt
+def payment_cancel(request):
+    # Handle canceled payment
+    return render(request, 'payments/cancel.html')
