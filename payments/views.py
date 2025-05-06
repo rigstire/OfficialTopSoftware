@@ -67,3 +67,7 @@ def payment_success(request):
 def payment_cancel(request):
     # Handle canceled payment
     return render(request, 'payments/cancel.html')
+
+def payments(request):
+    # Handle canceled payment
+    return render(request, 'payments/payments.html')
