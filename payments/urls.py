@@ -1,9 +1,9 @@
+# payments/urls.py
 from django.urls import path
-from .views import  payment_view, paypal_confirm, create_order, paypal_webhook
+from .views import create_order, payment_success, payment_cancel
 
 urlpatterns = [
-    path("payments/", payment_view, name="payments"),
-    path('paypal-confirm/', paypal_confirm, name='paypal_confirm'),
-    path('create_order/', create_order, name='create_order'  ),
-    path('paypal_webhook',paypal_webhook, name="paypal_webhook")
+    path('create-order/', create_order, name='create_order'),
+    path('payment/success/', payment_success, name='payment_success'),
+    path('payment/cancel/', payment_cancel, name='payment_cancel'),
 ]
