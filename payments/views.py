@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import paypalrestsdk
 import json
 import logging
+from django.shortcuts import render
 
 logger = logging.getLogger(__name__)
 
