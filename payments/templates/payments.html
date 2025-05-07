@@ -1,3 +1,5 @@
+{% load static %}
+{% include "navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +62,50 @@
             font-size: 1rem;
         }
 
+        .amount-selector {
+            margin: 1.5rem 0;
+        }
+
+        .amount-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .amount-tab {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .amount-tab:hover {
+            border-color: var(--primary-color);
+        }
+
+        .amount-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .custom-amount {
+            margin-top: 1rem;
+        }
+
+        .custom-amount input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
         .order-summary {
             background: #f8f9fa;
             border-radius: var(--border-radius);
@@ -116,6 +162,12 @@
             .payment-title {
                 font-size: 1.5rem;
             }
+            
+            .amount-tab {
+                min-width: 80px;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -125,6 +177,21 @@
             <div class="payment-header">
                 <h2 class="payment-title">Complete Your Purchase</h2>
                 <p class="payment-subtitle">Secure payment processed through PayPal</p>
+            </div>
+
+            <!-- Amount Selection Section -->
+            <div class="amount-selector">
+                <h3>Select Payment Amount</h3>
+                <div class="amount-tabs">
+                    <div class="amount-tab" data-amount="5.00">$5.00</div>
+                    <div class="amount-tab" data-amount="10.00">$10.00</div>
+                    <div class="amount-tab" data-amount="25.00">$25.00</div>
+                    <div class="amount-tab" data-amount="50.00">$50.00</div>
+                    <div class="amount-tab" data-amount="100.00">$100.00</div>
+                </div>
+                <div class="custom-amount">
+                    <input type="number" id="custom-amount" placeholder="Or enter custom amount ($1.00 minimum)" min="1" step="0.01">
+                </div>
             </div>
 
             <!-- Order Summary -->
@@ -161,19 +228,55 @@
         // Set your total amount (in cents for precision)
         let totalAmount = 0;
         
-        // Sample pricing - update with your actual pricing logic
-        const premiumPrice = 250;
-        const basicPrice = 210;
-        const starterPrice = 180;
-        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Set initial total
-            updateTotal();
+            // Set up amount selection
+            setupAmountSelection();
             
             // Initialize PayPal Buttons
             initPayPal();
         });
+
+        // Set up amount selection tabs and custom amount input
+        function setupAmountSelection() {
+            const tabs = document.querySelectorAll('.amount-tab');
+            const customAmountInput = document.getElementById('custom-amount');
+            
+            // Handle tab clicks
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Clear custom amount input
+                    customAmountInput.value = '';
+                    
+                    // Update total amount
+                    const amount = parseFloat(this.getAttribute('data-amount'));
+                    totalAmount = Math.round(amount * 100); // Convert to cents
+                    updateTotal();
+                });
+            });
+            
+            // Handle custom amount input
+            customAmountInput.addEventListener('input', function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // Update total amount
+                const amount = parseFloat(this.value) || 0;
+                totalAmount = Math.round(amount * 100); // Convert to cents
+                updateTotal();
+            });
+            
+            // Set first tab as active by default
+            if (tabs.length > 0) {
+                tabs[0].click();
+            }
+        }
 
         // Initialize PayPal Buttons with Guest Checkout
         function initPayPal() {
@@ -189,7 +292,7 @@
 
                 createOrder: function(data, actions) {
                     if (totalAmount === 0) {
-                        showError('Please select a plan or enter an amount');
+                        showError('Please select an amount or enter a custom amount');
                         throw new Error('Amount cannot be zero');
                     }
                     
@@ -241,15 +344,8 @@
             }).render('#paypal-button-container');
         }
 
-        // Update total amount
+        // Update total amount display
         function updateTotal() {
-            // Example calculation - replace with your actual logic
-            const qPremium = parseInt(document.getElementById('quantity-premium')?.value || 0);
-            const qBasic = parseInt(document.getElementById('quantity-basic')?.value || 0);
-            const qStarter = parseInt(document.getElementById('quantity-starter')?.value || 0);
-            
-            totalAmount = (qPremium * premiumPrice) + (qBasic * basicPrice) + (qStarter * starterPrice);
-            
             document.getElementById('subtotal-price').textContent = `$${(totalAmount / 100).toFixed(2)}`;
             document.getElementById('total-price').textContent = `$${(totalAmount / 100).toFixed(2)}`;
         }
