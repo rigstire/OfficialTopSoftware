@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_recaptcha',
     
     # Local apps
     'contact',
@@ -185,3 +186,8 @@ PAYPAL_CLIENT_SECRET = "EHm1hVJ4-2tttjetck5BoSD1f4bfh3Z8E-RXhXr4CL9VAu9evSS8Ua6R
 
 PAYPAL_WEBHOOK_URL = "https://topsoftware.tech"
 PAYPAL_WEBHOOK_ID = "05C933854P846734T"
+
+# settings.py
+RECAPTCHA_PUBLIC_KEY = '6LfZozArAAAAAEO8R18iiDDPaj6g1gbyAnaaVVnc'  # This is your Google Site Key
+RECAPTCHA_PRIVATE_KEY = '6LfZozArAAAAANEt5HnwsnPjRlswFO-7KDh2zV-F'  # This is your Google Secret Key
+RECAPTCHA_DOMAIN = 'www.topsoftware.tech'
