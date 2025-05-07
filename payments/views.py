@@ -71,4 +71,4 @@ def payment_cancel(request):
 
 def payments(request):
     # Handle canceled payment
-    return render(request, 'payments/payments.html')
+    return render(request, 'payments.html')
