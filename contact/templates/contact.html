@@ -119,6 +119,9 @@
       <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
         {% csrf_token %}
         <label class="cs-label">
+          {{ form.captcha }}
+          <input class="cs-input" required type="text" name="name" placeholder="Your Name">
+        <label class="cs-label">
           Name
           <input class="cs-input" required type="text" name="name" placeholder="Your Name">
         </label>
