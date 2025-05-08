@@ -214,16 +214,25 @@
             <!-- Payment Method -->
             <div id="payment-method">
                 <h3>Payment Method</h3>
-                <div id="paypal-button-container"></div>
+                <div id="paypal-button-container">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="officialtopsoftware@gmail.com">
+                        <input type="hidden" name="item_name" value="Payment for services">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="amount" id="paypal-amount" value="0.00">
+                        <input type="hidden" name="return" value="{{ request.scheme }}://{{ request.get_host }}/payment/success/">
+                        <input type="hidden" name="cancel_return" value="{{ request.scheme }}://{{ request.get_host }}/payment/cancel/">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+                </div>
                 <div id="payment-errors" class="error-message"></div>
-                <p class="secure-note"><i class="fas fa-lock"></i> Secure credit card and PayPal payment</p>
+                <p class="secure-note"><i class="fas fa-lock"></i> Secure payment processed through PayPal</p>
             </div>
         </div>
     </div>
 
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AZzKmi-sF1eEx060yoNw_emy5Og34KwAAw_Wrd1t7f5wT0JtZlA7DI6fbNgVoaSuTp8nK-aF9zPRjsxz&currency=USD"></script>
-    
     <script>
         // Set your total amount (in cents for precision)
         let totalAmount = 0;
@@ -232,15 +241,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Set up amount selection
             setupAmountSelection();
-            
-            // Initialize PayPal Buttons
-            initPayPal();
         });
 
         // Set up amount selection tabs and custom amount input
         function setupAmountSelection() {
             const tabs = document.querySelectorAll('.amount-tab');
             const customAmountInput = document.getElementById('custom-amount');
+            const paypalAmount = document.getElementById('paypal-amount');
             
             // Handle tab clicks
             tabs.forEach(tab => {
@@ -278,76 +285,12 @@
             }
         }
 
-        // Initialize PayPal Buttons with Guest Checkout
-        function initPayPal() {
-            paypal.Buttons({
-                style: {
-                    layout: 'vertical',
-                    color: 'blue',
-                    shape: 'rect',
-                    label: 'checkout',  // This enables guest checkout
-                    height: 45,
-                    tagline: false
-                },
-
-                createOrder: function(data, actions) {
-                    if (totalAmount === 0) {
-                        showError('Please select an amount or enter a custom amount');
-                        throw new Error('Amount cannot be zero');
-                    }
-                    
-                    if (totalAmount < 100) { // Minimum $1.00
-                        showError('Minimum payment amount is $1.00');
-                        throw new Error('Minimum amount not met');
-                    }
-
-                    return fetch('/create_order/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCookie('csrftoken')
-                        },
-                        body: JSON.stringify({
-                            amount: (totalAmount / 100).toFixed(2)
-                        })
-                    })
-                    .then(function(res) {
-                        if (!res.ok) {
-                            return res.json().then(err => { throw new Error(err.error || 'Failed to create order'); });
-                        }
-                        return res.json();
-                    })
-                    .then(function(data) {
-                        if (!data.orderID) throw new Error('No order ID received');
-                        return data.orderID;
-                    });
-                },
-
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        // On successful payment
-                        console.log('Payment completed:', details);
-                        window.location.href = '/payment/success/';
-                    });
-                },
-
-                onError: function(err) {
-                    console.error('PayPal error:', err);
-                    showError(err.message || 'Payment failed. Please try again.');
-                },
-
-                onCancel: function(data) {
-                    console.log('Payment canceled');
-                    showError('Payment was canceled');
-                }
-
-            }).render('#paypal-button-container');
-        }
-
         // Update total amount display
         function updateTotal() {
-            document.getElementById('subtotal-price').textContent = `$${(totalAmount / 100).toFixed(2)}`;
-            document.getElementById('total-price').textContent = `$${(totalAmount / 100).toFixed(2)}`;
+            const amount = (totalAmount / 100).toFixed(2);
+            document.getElementById('subtotal-price').textContent = `$${amount}`;
+            document.getElementById('total-price').textContent = `$${amount}`;
+            document.getElementById('paypal-amount').value = amount;
         }
 
         // Show error message
@@ -358,22 +301,6 @@
             setTimeout(() => {
                 errorElement.style.display = 'none';
             }, 5000);
-        }
-
-        // Helper function to get CSRF token
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
         }
     </script>
 </body>
