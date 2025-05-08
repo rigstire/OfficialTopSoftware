@@ -69,8 +69,12 @@ MIDDLEWARE = [
     "config.middleware.EnforceDomainMiddleware"
 ]
 
-CSRF_TRUSTED_ORIGINS = ["https://www.topsoftware.tech"]
-CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.topsoftware.tech",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000"
+]
+CSRF_COOKIE_SECURE = not DEBUG  # Only use secure cookies in production
 
 ROOT_URLCONF = 'config.urls'
 
@@ -179,12 +183,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 
-# settings.py
-PAYPAL_MODE = "live"  # "sandbox" or "live"
+# PayPal Settings
+PAYPAL_MODE = "sandbox"  # Change to "live" for production
 PAYPAL_CLIENT_ID = "AZzKmi-sF1eEx060yoNw_emy5Og34KwAAw_Wrd1t7f5wT0JtZlA7DI6fbNgVoaSuTp8nK-aF9zPRjsxz"
-PAYPAL_CLIENT_SECRET = "EHm1hVJ4-2tttjetck5BoSD1f4bfh3Z8E-RXhXr4CL9VAu9evSS8Ua6Rk0mOAvdwgjuXLPwoVdAhjN7s"  # Get this from your PayPal developer dashboard
+PAYPAL_CLIENT_SECRET = "EHm1hVJ4-2tttjetck5BoSD1f4bfh3Z8E-RXhXr4CL9VAu9evSS8Ua6Rk0mOAvdwgjuXLPwoVdAhjN7s"
 
-PAYPAL_WEBHOOK_URL = "https://topsoftware.tech"
+PAYPAL_WEBHOOK_URL = "http://localhost:8000" if DEBUG else "https://topsoftware.tech"
 PAYPAL_WEBHOOK_ID = "05C933854P846734T"
 
 # settings.py
