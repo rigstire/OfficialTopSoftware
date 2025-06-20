@@ -1,4 +1,4 @@
-<!-- {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,146 +12,116 @@
 
   <!-- Global Styles -->
   <link rel="stylesheet" href="{% static 'css/corestyles.css' %}" />
-  <link rel="stylesheet" href="{% static 'style.css' %}" />
-
-  <!-- Contact-Specific Styles -->
-  <link rel="stylesheet" href="{% static 'contact.css' %}" />
-
-  <!-- Shared Navbar Styles & Scripts -->
-  <link rel="stylesheet" href="{% static 'navbar.css' %}" />
-  <script src="{% static 'navbar.js' %}"></script>
-
-  <!-- Force Navbar Styling Overrides -->
-  <style>
-    nav.navbar {
-      background-color: #000 !important;
-      padding: 10px 20px !important;
-      position: relative !important;
-      z-index: 1000 !important;
-      font-family: 'Montserrat', sans-serif !important;
-    }
-    .navbar-container {
-      max-width: 960px !important;
-      margin: 0 auto !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-    }
-    .navbar-brand {
-      color: #fff !important;
-      font-size: 1.5rem !important;
-      text-decoration: none !important;
-      font-weight: 400 !important; /* Changed from 600 to 400 */
-    }
-    .navbar-menu {
-      list-style: none !important;
-      display: flex !important;
-      gap: 20px !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    .navbar-menu li a {
-      color: #fff !important;
-      text-decoration: none !important;
-      font-size: 1rem !important;
-      font-weight: 400 !important;
-    }
-    .mobile-menu-icon {
-      font-size: 1.8rem !important;
-      cursor: pointer !important;
-    }
-    /* Added media query to hide desktop nav on mobile */
-    @media (max-width: 768px) {
-      .desktop-nav {
-        display: none !important;
-      }
-    }
-  </style>
-
-  <!-- Global Overrides for Contact page (non-navbar) -->
-  <style>
-    html, body {
-      background-color: #000 !important;
-      color: #fff !important;
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'css/modern-theme.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=2" />
+  <script src="{% static 'js/navbar.js' %}"></script>
 </head>
 <body>
   {% include "navbar.html" %}
 
-  <!-- Contact Section -->
-  <section id="contact-1150" style="padding-top: 180px;">
-    <div class="cs-container">
-      <div class="cs-content">
-        <span class="cs-topper">Contact TopSoftware</span>
-        <h2 class="cs-title">We Love to Bring Your Software Ideas to Life</h2>
-      </div>
-      <div class="cs-contact-group">
-        <!-- Contact Image -->
-        <picture class="cs-picture">
-          <source media="(max-width: 600px)" srcset="{% static 'make.jpeg' %}">
-          <source media="(min-width: 601px)" srcset="{% static 'make.jpeg' %}">
-          <img loading="lazy" decoding="async" src="{% static 'make.jpeg' %}" alt="Team at TopSoftware" width="630" height="300" />
-        </picture>
-        <p class="cs-contact-text">
-          At TopSoftware, we specialize in developing innovative apps, websites, and custom software solutions that meet your business needs. Let’s work together to transform your vision into reality.
-        </p>
-        <ul class="cs-ul">
-          <li class="cs-li">
-            <picture class="cs-icon-wrapper">
-              <img aria-hidden="true" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/mech-phone.svg" alt="phone icon" class="cs-icon" width="40" height="40" decoding="async">
-            </picture>
-            <div class="cs-flex-group">
-              <span class="cs-header">Phone</span>
-              <a href="tel:7606259806" class="cs-link">760-799-0433</a>
-            </div>
-          </li>
-          <li class="cs-li">
-            <div class="cs-flex-group">
-              <span class="cs-header">Email</span>
-              <a href="mailto:officialtopsoftware@gmail.com" class="cs-link">officialtopsoftware@gmail.com</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Django Contact Form -->
-      <form class="cs-form" id="cs-form-1150" name="Contact Form" method="post" action="{% url 'contact' %}">
-        {% csrf_token %}
-        <label class="cs-label">
-          {{ form.captcha }}
-          <input class="cs-input" required type="text" name="name" placeholder="Your Name">
-        <label class="cs-label">
-          Name
-          <input class="cs-input" required type="text" name="name" placeholder="Your Name">
-        </label>
-        <label class="cs-label cs-email">
-          Email
-          <input class="cs-input" required type="email" name="email" placeholder="Your Email">
-        </label>
-        <label class="cs-label cs-phone">
-          Phone
-          <input class="cs-input" required type="text" name="phone" placeholder="Your Phone">
-        </label>
-        <label class="cs-label">
-          Message
-          <textarea class="cs-input cs-textarea" required name="message" placeholder="Write your message..."></textarea>
-        </label>
-        <label class="cs-label">
-          Preferred Consultation Time
-          <input class="cs-input" type="datetime-local" name="consultation_time">
-        </label>
-        <button class="cs-button-solid cs-submit" type="submit">Send Your Inquiry</button>
-      </form>
-
-      <!-- Decorative Graphics -->
-      <img class="cs-graphic cs-graphic1" loading="lazy" decoding="async"
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/bounce.svg"
-           alt="bounce" width="208" height="124">
-      <img class="cs-graphic cs-graphic2" loading="lazy" decoding="async"
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/coin.svg"
-           alt="coin" width="205" height="161">
-    </div>
+  <!-- Contact Hero Section -->
+  <section class="modern-hero">
+    <h1>We Love to Bring Your Software Ideas to Life</h1>
+    <p>At TopSoftware, we specialize in developing innovative apps, websites, and custom software solutions that meet your business needs. Let's work together to transform your vision into reality.</p>
   </section>
+
+  <!-- Contact Section -->
+  <div class="modern-container">
+    <div class="modern-grid modern-grid-2">
+      <!-- Contact Info -->
+      <div class="glass-card-sm fade-in-up">
+        <h2 class="modern-heading">Get In Touch</h2>
+        
+        <img loading="lazy" decoding="async" src="{% static 'make.jpeg' %}" alt="Team at TopSoftware" 
+             style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 2rem;" />
+        
+        <div style="margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+              <span style="color: white; font-size: 1.2rem; font-weight: bold;">📞</span>
+            </div>
+            <div>
+              <div style="font-weight: 600; color: var(--dark-color);">Phone</div>
+              <a href="tel:7607990433" style="color: var(--primary-color); text-decoration: none;">760-799-0433</a>
+            </div>
+          </div>
+          
+          <div style="display: flex; align-items: center;">
+            <div style="width: 50px; height: 50px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+              <span style="color: white; font-size: 1.2rem; font-weight: bold;">✉️</span>
+            </div>
+            <div>
+              <div style="font-weight: 600; color: var(--dark-color);">Email</div>
+              <a href="mailto:officialtopsoftware@gmail.com" style="color: var(--primary-color); text-decoration: none;">officialtopsoftware@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        
+        <div style="background: var(--gradient-primary); padding: 1.5rem; border-radius: 12px; text-align: center;">
+          <h3 style="color: white; margin: 0 0 0.5rem 0;">Ready to Start?</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 0.9rem;">We'll get back to you within 24 hours!</p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="glass-card-sm slide-in-right">
+        <h2 class="modern-heading">Send Us a Message</h2>
+        
+        <form class="modern-form" method="post" action="{% url 'contact' %}">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label>Name</label>
+            <input required type="text" name="name" placeholder="Your Name">
+          </div>
+          
+          <div class="form-group">
+            <label>Email</label>
+            <input required type="email" name="email" placeholder="Your Email">
+          </div>
+          
+          <div class="form-group">
+            <label>Phone</label>
+            <input required type="text" name="phone" placeholder="Your Phone">
+          </div>
+          
+          <div class="form-group">
+            <label>Message</label>
+            <textarea required name="message" placeholder="Tell us about your project..." rows="5"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Preferred Consultation Time</label>
+            <input type="datetime-local" name="consultation_time">
+          </div>
+          
+          <button class="modern-btn" type="submit" style="width: 100%;">Send Your Inquiry</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Services Preview -->
+    <div class="glass-card mt-3">
+      <h2 class="modern-title">What We Can Help You With</h2>
+      <div class="modern-grid modern-grid-4">
+        <div class="feature-card">
+          <h3>Web Development</h3>
+          <p>Custom websites and web applications</p>
+        </div>
+        <div class="feature-card">
+          <h3>Mobile Apps</h3>
+          <p>Native and cross-platform solutions</p>
+        </div>
+        <div class="feature-card">
+          <h3>SaaS Platforms</h3>
+          <p>Scalable software-as-a-service solutions</p>
+        </div>
+        <div class="feature-card">
+          <h3>AI Chatbots</h3>
+          <p>Intelligent conversational interfaces</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
-</html> -->
+</html>

@@ -27,7 +27,7 @@ def payments(request):
 @csrf_exempt
 @require_POST
 def create_payment_intent(request):
-    """Create a Stripe Payment Intent."""
+    """Create a Stripe Payment Intent with Apple Pay support."""
     try:
         data = json.loads(request.body)
         amount = float(data.get('amount', 0))
@@ -38,16 +38,20 @@ def create_payment_intent(request):
         # Convert amount to cents for Stripe
         amount_cents = int(amount * 100)
 
-        # Create Payment Intent
+        # Create Payment Intent with Apple Pay support
         intent = stripe.PaymentIntent.create(
             amount=amount_cents,
             currency='usd',
+            automatic_payment_methods={
+                'enabled': True,
+            },
+            payment_method_types=['card', 'apple_pay'],
             metadata={
                 'description': 'Payment for services'
             }
         )
 
-        logger.info(f"Stripe Payment Intent created successfully: {intent.id}")
+        logger.info(f"Stripe Payment Intent created successfully with Apple Pay support: {intent.id}")
         return JsonResponse({
             'client_secret': intent.client_secret,
             'payment_intent_id': intent.id

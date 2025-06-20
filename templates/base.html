@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}TopSoftware{% endblock %}</title>
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
+  
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
+  
+  <!-- Navbar Assets -->
+      <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=2">
+  <script src="{% static 'js/navbar.js' %}"></script>
+  
+  <!-- Page-specific styles -->
+  {% block extra_css %}{% endblock %}
+  
+  <!-- Page-specific meta tags -->
+  {% block meta %}{% endblock %}
+</head>
+<body>
+  <!-- Navigation -->
+  {% include 'navbar.html' %}
+  
+  <!-- Main Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  
+  <!-- Page-specific scripts -->
+  {% block extra_js %}{% endblock %}
+</body>
+</html> 

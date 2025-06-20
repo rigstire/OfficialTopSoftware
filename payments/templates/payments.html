@@ -1,24 +1,37 @@
 {% load static %}
-{% include "navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Your Purchase</title>
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=3">
+    <script src="{% static 'js/navbar.js' %}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3a56d4;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --error-color: #dc3545;
-            --success-color: #28a745;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --box-shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
 
         * {
@@ -28,167 +41,427 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--dark-color);
-            background-color: #f5f7ff;
-            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .payment-container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 900px;
+            margin: 100px auto 40px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .payment-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 2rem;
+            box-shadow: var(--box-shadow-lg);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
         }
 
         .payment-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
         }
 
         .payment-title {
-            color: var(--primary-color);
-            font-size: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
         .payment-subtitle {
-            color: #6c757d;
-            font-size: 1rem;
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
         }
 
         .amount-selector {
-            margin: 1.5rem 0;
+            margin: 2.5rem 0;
+        }
+
+        .amount-selector h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .amount-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 1.5rem;
         }
 
         .amount-tab {
-            flex: 1;
-            min-width: 100px;
             text-align: center;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
+            padding: 16px 12px;
+            border: 2px solid transparent;
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--dark-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .amount-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
             transition: var(--transition);
         }
 
         .amount-tab:hover {
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(99, 102, 241, 0.4);
         }
 
         .amount-tab.active {
-            background-color: var(--primary-color);
+            background: var(--gradient-primary);
             color: white;
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(99, 102, 241, 0.5);
+        }
+
+        .amount-tab.active::before {
+            opacity: 1;
         }
 
         .custom-amount {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .custom-amount input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--border-radius-sm);
             font-size: 1rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            color: var(--dark-color);
+        }
+
+        .custom-amount input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .custom-amount input::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
         }
 
         .order-summary {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-accent);
+        }
+
+        .order-summary h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
         }
 
         .summary-row.total {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #dee2e6;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(99, 102, 241, 0.2);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #payment-method {
+            margin: 2.5rem 0;
+        }
+
+        #payment-method h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         #card-element {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            background: white;
-            margin: 1rem 0;
+            padding: 20px;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--border-radius-sm);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            margin: 1.5rem 0;
+            min-height: 60px;
+            font-size: 16px;
+            transition: var(--transition);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        #card-element:focus,
+        #card-element:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        /* Mobile-specific card element styles */
+        @media (max-width: 768px) {
+            #card-element {
+                padding: 16px;
+                min-height: 60px;
+                font-size: 16px;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            #card-element:focus {
+                border-color: var(--primary-color);
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+            }
+            
+            /* Ensure Stripe iframes are properly sized on mobile */
+            #card-element iframe {
+                min-height: 40px !important;
+                height: auto !important;
+            }
+            
+            /* Fix for iOS zoom on input focus */
+            #card-element input {
+                font-size: 16px !important;
+            }
         }
 
         #pay-button {
             width: 100%;
-            padding: 12px 24px;
-            background-color: var(--primary-color);
+            padding: 18px 32px;
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            margin: 1rem 0;
+            margin: 2rem 0 1rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px -8px rgba(99, 102, 241, 0.4);
+        }
+
+        #pay-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
         #pay-button:hover:not(:disabled) {
-            background-color: var(--secondary-color);
+            background: var(--gradient-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px -8px rgba(99, 102, 241, 0.5);
+        }
+
+        #pay-button:hover:not(:disabled)::before {
+            left: 100%;
         }
 
         #pay-button:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
+            background: #9ca3af;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #pay-button:disabled::before {
+            display: none;
+        }
+
+        /* Apple Pay button styles */
+        #apple-pay-button {
+            width: 100%;
+            height: 50px;
+            margin: 1rem 0;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: none; /* Hidden by default, shown when Apple Pay is available */
+        }
+
+        .payment-method-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .payment-method-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .payment-method-divider span {
+            background-color: white;
+            padding: 0 1rem;
+            color: #6c757d;
+            font-size: 0.9rem;
         }
 
         .secure-note {
             text-align: center;
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-top: 1rem;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .secure-note i {
-            color: var(--primary-color);
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-right: 0.5rem;
+            font-size: 1.1rem;
         }
 
         .error-message {
-            color: var(--error-color);
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
+            color: #dc2626;
+            background: linear-gradient(135deg, rgba(254, 226, 226, 0.9) 0%, rgba(252, 165, 165, 0.2) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            margin: 1.5rem 0;
             display: none;
+            font-weight: 500;
+            box-shadow: 0 4px 12px -4px rgba(220, 38, 38, 0.2);
         }
 
         .success-message {
-            color: var(--success-color);
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
+            color: #059669;
+            background: linear-gradient(135deg, rgba(209, 250, 229, 0.9) 0%, rgba(167, 243, 208, 0.2) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            margin: 1.5rem 0;
             display: none;
+            font-weight: 500;
+            box-shadow: 0 4px 12px -4px rgba(5, 150, 105, 0.2);
         }
 
         .loading {
@@ -214,23 +487,103 @@
         }
 
         @media (max-width: 768px) {
+            .payment-container {
+                margin: 80px auto 20px auto;
+                padding: 15px;
+            }
+            
             .payment-card {
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
             }
             
             .payment-title {
-                font-size: 1.5rem;
+                font-size: 2rem;
+            }
+            
+            .payment-subtitle {
+                font-size: 1rem;
+            }
+            
+            .amount-tabs {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
             
             .amount-tab {
-                min-width: 80px;
-                padding: 10px;
-                font-size: 0.9rem;
+                padding: 14px 10px;
+                font-size: 0.95rem;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .custom-amount input {
+                padding: 18px 16px;
+                font-size: 16px;
+            }
+            
+            .order-summary {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            #card-element {
+                padding: 18px 16px;
+                font-size: 16px;
+                min-height: 55px;
+            }
+            
+            #pay-button {
+                padding: 20px 32px;
+                font-size: 16px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
+
+        /* Add some subtle animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Floating background elements */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(-20px, -20px) rotate(2deg);
             }
         }
     </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
+    
     <div class="payment-container">
         <div class="payment-card">
             <div class="payment-header">
@@ -242,11 +595,11 @@
             <div class="amount-selector">
                 <h3>Select Payment Amount</h3>
                 <div class="amount-tabs">
-                    <div class="amount-tab" data-amount="5.00">$5.00</div>
-                    <div class="amount-tab" data-amount="10.00">$10.00</div>
-                    <div class="amount-tab" data-amount="25.00">$25.00</div>
-                    <div class="amount-tab" data-amount="50.00">$50.00</div>
-                    <div class="amount-tab" data-amount="100.00">$100.00</div>
+                    <button type="button" class="amount-tab" onclick="setAmount(500, this)">$5.00</button>
+                    <button type="button" class="amount-tab" onclick="setAmount(1000, this)">$10.00</button>
+                    <button type="button" class="amount-tab" onclick="setAmount(2500, this)">$25.00</button>
+                    <button type="button" class="amount-tab" onclick="setAmount(5000, this)">$50.00</button>
+                    <button type="button" class="amount-tab" onclick="setAmount(10000, this)">$100.00</button>
                 </div>
                 <div class="custom-amount">
                     <input type="number" id="custom-amount" placeholder="Or enter custom amount ($0.50 minimum)" min="0.50" step="0.01">
@@ -273,13 +626,24 @@
             <!-- Payment Method -->
             <div id="payment-method">
                 <h3>Payment Method</h3>
+                
+                <!-- Apple Pay Button (shown only when available) -->
+                <div id="apple-pay-button"></div>
+                
+                <!-- Payment Method Divider (shown only when Apple Pay is available) -->
+                <div class="payment-method-divider" id="payment-divider" style="display: none;">
+                    <span>or pay with card</span>
+                </div>
+                
                 <form id="payment-form">
                     <div id="card-element">
                         <!-- Stripe Elements will create form elements here -->
                     </div>
                     
+
+                    
                     <button type="submit" id="pay-button" disabled>
-                        <span id="button-text">Pay Now</span>
+                        <span id="button-text">Select Amount</span>
                         <div class="loading">
                             <div class="spinner"></div>
                             Processing...
@@ -303,23 +667,32 @@
         const stripe = Stripe('{{ stripe_publishable_key }}');
         const elements = stripe.elements();
 
-        // Create card element
+        // Create card element with mobile-friendly settings
         const cardElement = elements.create('card', {
-            style: {
-                base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                        color: '#aab7c4',
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#424770',
+                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                        fontSmoothing: 'antialiased',
+                        '::placeholder': {
+                            color: '#aab7c4',
+                        },
                     },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }
                 },
-            },
-        });
+                hidePostalCode: false
+            });
 
+        // Mount card element
         cardElement.mount('#card-element');
 
         // Set your total amount (in cents for precision)
         let totalAmount = 0;
+        let paymentRequest;
         
         // Payment form elements
         const form = document.getElementById('payment-form');
@@ -327,71 +700,98 @@
         const buttonText = document.getElementById('button-text');
         const loadingDiv = document.querySelector('.loading');
         
+                // Amount selection function
+        function setAmount(cents, clickedButton) {
+            totalAmount = cents;
+            
+            // Remove active class from all tabs
+            const allTabs = document.querySelectorAll('.amount-tab');
+            allTabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked button if provided
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            } else {
+                // Find button with matching amount and activate it
+                allTabs.forEach(tab => {
+                    if (tab.onclick && tab.onclick.toString().includes(cents.toString())) {
+                        tab.classList.add('active');
+                    }
+                });
+            }
+            
+            // Clear custom input
+            const customInput = document.getElementById('custom-amount');
+            if (customInput) {
+                customInput.value = '';
+            }
+            
+            // Update displays
+            const amount = '$' + (cents / 100).toFixed(2);
+            const subtotal = document.getElementById('subtotal-price');
+            const total = document.getElementById('total-price');
+            
+            if (subtotal) subtotal.textContent = amount;
+            if (total) total.textContent = amount;
+            
+            // Update button
+            const payBtn = document.getElementById('pay-button');
+            const btnText = document.getElementById('button-text');
+            if (payBtn && btnText) {
+                payBtn.disabled = cents < 50;
+                btnText.textContent = cents >= 50 ? 'Pay ' + amount : 'Pay Now';
+            }
+        }
+
+
+
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            setupAmountSelection();
-            setupPaymentForm();
-        });
-
-        // Set up amount selection tabs and custom amount input
-        function setupAmountSelection() {
-            const tabs = document.querySelectorAll('.amount-tab');
-            const customAmountInput = document.getElementById('custom-amount');
+            // No default amount selected - user must choose
+            // Initialize button as disabled
+            const payBtn = document.getElementById('pay-button');
+            const btnText = document.getElementById('button-text');
+            if (payBtn && btnText) {
+                payBtn.disabled = true;
+                btnText.textContent = 'Select Amount';
+            }
             
-            // Handle tab clicks
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
+            // Setup custom amount input
+            const customAmountInput = document.getElementById('custom-amount');
+            if (customAmountInput) {
+                customAmountInput.addEventListener('input', function() {
                     // Remove active class from all tabs
-                    tabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-                    
-                    // Clear custom amount input
-                    customAmountInput.value = '';
+                    const allTabs = document.querySelectorAll('.amount-tab');
+                    allTabs.forEach(t => t.classList.remove('active'));
                     
                     // Update total amount
-                    const amount = parseFloat(this.getAttribute('data-amount'));
-                    totalAmount = Math.round(amount * 100); // Convert to cents
-                    updateTotal();
-                    updatePayButton();
+                    const amount = parseFloat(this.value) || 0;
+                    totalAmount = Math.round(amount * 100);
+                    
+                    // Update displays
+                    const displayAmount = '$' + (totalAmount / 100).toFixed(2);
+                    const subtotal = document.getElementById('subtotal-price');
+                    const total = document.getElementById('total-price');
+                    
+                    if (subtotal) subtotal.textContent = displayAmount;
+                    if (total) total.textContent = displayAmount;
+                    
+                    // Update button
+                    const payBtn = document.getElementById('pay-button');
+                    const btnText = document.getElementById('button-text');
+                    if (payBtn && btnText) {
+                        payBtn.disabled = totalAmount < 50;
+                        btnText.textContent = totalAmount >= 50 ? 'Pay ' + displayAmount : 'Pay Now';
+                    }
                 });
-            });
-            
-            // Handle custom amount input
-            customAmountInput.addEventListener('input', function() {
-                // Remove active class from all tabs
-                tabs.forEach(t => t.classList.remove('active'));
-                
-                // Update total amount
-                const amount = parseFloat(this.value) || 0;
-                totalAmount = Math.round(amount * 100); // Convert to cents
-                updateTotal();
-                updatePayButton();
-            });
-            
-            // Set first tab as active by default
-            if (tabs.length > 0) {
-                tabs[0].click();
             }
-        }
+            
+            // Setup payment functionality
+            setupPaymentForm();
+            setupApplePay();
+        });
 
-        // Update total amount display
-        function updateTotal() {
-            const amount = (totalAmount / 100).toFixed(2);
-            document.getElementById('subtotal-price').textContent = `$${amount}`;
-            document.getElementById('total-price').textContent = `$${amount}`;
-        }
 
-        // Update pay button state
-        function updatePayButton() {
-            payButton.disabled = totalAmount < 50; // Minimum $0.50
-            if (totalAmount >= 50) {
-                buttonText.textContent = `Pay $${(totalAmount / 100).toFixed(2)}`;
-            } else {
-                buttonText.textContent = 'Pay Now';
-            }
-        }
 
         // Set up payment form
         function setupPaymentForm() {
@@ -407,6 +807,93 @@
 
             // Handle form submission
             form.addEventListener('submit', handleSubmit);
+        }
+
+        // Set up Apple Pay
+        function setupApplePay() {
+            paymentRequest = stripe.paymentRequest({
+                country: 'US',
+                currency: 'usd',
+                total: {
+                    label: 'Total',
+                    amount: totalAmount,
+                },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
+
+            const elements = stripe.elements();
+            const prButton = elements.create('paymentRequestButton', {
+                paymentRequest: paymentRequest,
+                style: {
+                    paymentRequestButton: {
+                        type: 'buy', // or 'donate', 'pay'
+                        theme: 'dark', // or 'light', 'light-outline'
+                        height: '50px',
+                    },
+                },
+            });
+
+            // Check if Apple Pay is available
+            paymentRequest.canMakePayment().then(function(result) {
+                if (result) {
+                    prButton.mount('#apple-pay-button');
+                    document.getElementById('apple-pay-button').style.display = 'block';
+                    document.getElementById('payment-divider').style.display = 'block';
+                    console.log('Apple Pay is available');
+                } else {
+                    console.log('Apple Pay is not available');
+                }
+            });
+
+            paymentRequest.on('paymentmethod', async (ev) => {
+                if (totalAmount < 50) {
+                    ev.complete('fail');
+                    showError('Amount must be at least $0.50');
+                    return;
+                }
+
+                try {
+                    // Create payment intent
+                    const response = await fetch('/payments/create-payment-intent/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({
+                            amount: totalAmount / 100
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Payment failed');
+                    }
+
+                    // Confirm payment with Stripe
+                    const {error: confirmError} = await stripe.confirmCardPayment(
+                        data.client_secret,
+                        {payment_method: ev.paymentMethod.id},
+                        {handleActions: false}
+                    );
+
+                    if (confirmError) {
+                        ev.complete('fail');
+                        showError(confirmError.message);
+                    } else {
+                        ev.complete('success');
+                        showSuccess('Payment successful! Redirecting...');
+                        setTimeout(() => {
+                            window.location.href = `/payments/payment/success/?payment_intent=${data.payment_intent_id}`;
+                        }, 1000);
+                    }
+                } catch (error) {
+                    ev.complete('fail');
+                    showError(error.message);
+                }
+            });
         }
 
         async function handleSubmit(event) {

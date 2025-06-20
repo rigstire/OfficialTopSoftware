@@ -1,27 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
 	const mobileMenuIcon = document.getElementById("mobile-menu-icon");
 	const mobileNav = document.getElementById("mobile-nav");
-	const navbar = document.querySelector(".navbar");
   
 	if (!mobileMenuIcon || !mobileNav) {
 	  console.error("Mobile menu elements not found; please check your template.");
 	  return;
 	}
-
-	// Add body padding to account for fixed navbar
-	document.body.style.paddingTop = navbar.offsetHeight + "px";
-
-	// Handle navbar scroll effect
-	function handleScroll() {
-		if (window.scrollY > 100) {
-			navbar.classList.add("scrolled");
-		} else {
-			navbar.classList.remove("scrolled");
-		}
-	}
-
-	// Add scroll listener
-	window.addEventListener("scroll", handleScroll, { passive: true });
 
 	function toggleMobileNav() {
 		mobileNav.classList.toggle("active");
@@ -70,5 +54,4 @@ document.addEventListener("DOMContentLoaded", function () {
 			closeMobileNav();
 		}
 	}, { passive: true });
-});
-  
+}); 
