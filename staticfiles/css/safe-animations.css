@@ -1,0 +1,93 @@
+/* Safe Scroll Animations - Content visible by default */
+
+/* Only hide elements with the 'animate-ready' class */
+.animate-ready {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* When JavaScript adds 'animate' class, show the element */
+.animate-ready.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade in animation - safe version */
+.safe-fade-in {
+    opacity: 1; /* Visible by default */
+    transform: translateY(0);
+    transition: all 0.8s ease;
+}
+
+/* When JavaScript is loaded, hide initially */
+.js-loaded .safe-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Animate when in view */
+.js-loaded .safe-fade-in.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Slide animations - safe versions */
+.safe-slide-left {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.8s ease;
+}
+
+.js-loaded .safe-slide-left {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.js-loaded .safe-slide-left.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.safe-slide-right {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.8s ease;
+}
+
+.js-loaded .safe-slide-right {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.js-loaded .safe-slide-right.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hover effects */
+.project-section:hover .safe-fade-in {
+    transform: translateY(-5px);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .animate-ready,
+    .safe-fade-in,
+    .safe-slide-left,
+    .safe-slide-right {
+        transition-duration: 0.6s;
+    }
+}
+
+/* Fallback for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .animate-ready,
+    .safe-fade-in,
+    .safe-slide-left,
+    .safe-slide-right {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+} 

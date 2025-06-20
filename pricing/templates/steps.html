@@ -1,71 +1,260 @@
 {% load static %}
-<!-- ============================================ -->
-<!--                    Steps                     -->
-<!-- ============================================ -->
-<section id="steps-1893" style="background-color: #000; color: #fff; padding: 20px 0;">
-  <div class="cs-container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
-    
-    <!-- Text Column (Left) -->
-    <div class="cs-wrapper" style="flex: 1; order: 1; padding: 20px; min-width: 300px;">
-      <div class="cs-content">
-        <span class="cs-topper" style="color: #fff;">How to Get Started</span>
-        <h2 class="cs-title" style="color: #fff;">Simple Steps to Launch Your Project with TopSoftware</h2>
-      </div>
-      <ul class="cs-card-group" style="list-style: none; padding: 0;">
-        <li class="cs-item" style="margin-bottom: 20px;">
-          <span class="cs-number" style="color: #fff; font-size: 2em; font-weight: bold;">1</span>
-          <div class="cs-flex">
-            <h3 class="cs-h3" style="color: #fff;">Schedule a Consultation</h3>
-            <p class="cs-item-text" style="color: #fff;">
-              Reach out to TopSoftware to schedule a consultation. We'll discuss your project requirements and share transparent pricing—$250 per page for 1-3 pages, $175 per page for 4-7 pages, and competitive rates for larger projects.
-            </p>
-          </div>
-        </li>
-        <li class="cs-item" style="margin-bottom: 20px;">
-          <span class="cs-number" style="color: #fff; font-size: 2em; font-weight: bold;">2</span>
-          <div class="cs-flex">
-            <h3 class="cs-h3" style="color: #fff;">Review Proposal &amp; Pricing</h3>
-            <p class="cs-item-text" style="color: #fff;">
-              Our team will craft a detailed proposal outlining the project scope, timeline, and customized pricing to meet your specific needs.
-            </p>
-          </div>
-        </li>
-        <li class="cs-item">
-          <span class="cs-number" style="color: #fff; font-size: 2em; font-weight: bold;">3</span>
-          <div class="cs-flex">
-            <h3 class="cs-h3" style="color: #fff;">Launch Your Project</h3>
-            <p class="cs-item-text" style="color: #fff;">
-              Once you approve the proposal, our experts will bring your vision to life, ensuring a seamless process from start to finish.
-            </p>
-          </div>
-        </li>
-      </ul>
-    </div>
 
-    <!-- Image Column (Right) -->
-    <div class="cs-image-group" style="flex: 1; order: 2; padding: 20px; text-align: center; max-width: 400px;">
-      <picture class="cs-picture">
-        <!-- Mobile Image -->
-        <source media="(max-width: 600px)" srcset="{% static 'make.jpeg' %}">
-        <!-- Tablet and above Image -->
-        <source media="(min-width: 601px)" srcset="{% static 'make.jpeg' %}">
-        <img loading="lazy" decoding="async" src="{% static 'make.jpeg' %}" alt="Team at TopSoftware" style="max-width: 100%; height: auto;">
-      </picture>
-      <!-- Additional Graphics (Optional) -->
-      <img class="cs-graphic cs-brown" loading="lazy" decoding="async" 
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/brown-lines2.svg" alt="graphic" width="80" height="78" aria-hidden="true">
-      <img class="cs-graphic cs-peach" loading="lazy" decoding="async" 
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/peach-blob.svg" alt="graphic" width="32" height="31" aria-hidden="true">
-      <img class="cs-graphic cs-leaf" loading="lazy" decoding="async" 
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/leaf-reverse.svg" alt="graphic" width="120" height="151" aria-hidden="true">
-      <img class="cs-graphic cs-dots" loading="lazy" decoding="async" 
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/beige-dots.svg" alt="graphic" width="139" height="88" aria-hidden="true">
-      <img class="cs-graphic cs-lines" loading="lazy" decoding="async" 
-           src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/mesh-reverse.svg" alt="graphic" width="130" height="165" aria-hidden="true">
+<!-- Modern Steps Section -->
+<div class="modern-container">
+  <div class="glass-card">
+    <h2 class="modern-title">How to Get Started</h2>
+    <p class="modern-subtitle">Simple steps to launch your project with TopSoftware</p>
+    
+    <div class="modern-grid modern-grid-2">
+      <!-- Steps Content -->
+      <div class="slide-in-left">
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          <!-- Step 1 -->
+          <div class="feature-card" style="display: flex; align-items: flex-start; text-align: left; padding: 2rem;">
+            <div style="background: var(--gradient-primary); color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; font-size: 1.5rem; font-weight: 700; flex-shrink: 0;">1</div>
+            <div>
+              <h3 style="background: linear-gradient(135deg, #1e293b 0%, #374151 50%, #1f2937 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem;">Schedule a Consultation</h3>
+              <p style="color: var(--dark-color); margin: 0; line-height: 1.6;">
+                Reach out to TopSoftware to schedule a consultation. We'll discuss your project requirements and share transparent pricing—$250 per page for 1-3 pages, $210 per page for 4-7 pages, and competitive rates for larger projects.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="feature-card" style="display: flex; align-items: flex-start; text-align: left; padding: 2rem;">
+            <div style="background: var(--gradient-secondary); color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; font-size: 1.5rem; font-weight: 700; flex-shrink: 0;">2</div>
+            <div>
+              <h3 style="background: linear-gradient(135deg, #1e293b 0%, #374151 50%, #1f2937 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem;">Review Proposal & Pricing</h3>
+              <p style="color: var(--dark-color); margin: 0; line-height: 1.6;">
+                Our team will craft a detailed proposal outlining the project scope, timeline, and customized pricing to meet your specific needs.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="feature-card" style="display: flex; align-items: flex-start; text-align: left; padding: 2rem;">
+            <div style="background: var(--gradient-accent); color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; font-size: 1.5rem; font-weight: 700; flex-shrink: 0;">3</div>
+            <div>
+              <h3 style="background: linear-gradient(135deg, #1e293b 0%, #374151 50%, #1f2937 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem;">Launch Your Project</h3>
+              <p style="color: var(--dark-color); margin: 0; line-height: 1.6;">
+                Once you approve the proposal, our experts will bring your vision to life, ensuring a seamless process from start to finish.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Animated Tech Illustration -->
+      <div class="slide-in-right" style="display: flex; align-items: center; justify-content: center;">
+        <div style="position: relative; max-width: 400px; width: 100%; height: 400px;">
+          <!-- Tech Animation Container -->
+          <div style="width: 100%; height: 100%; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%); border-radius: 16px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            
+            <!-- Central Code/Tech Icon -->
+            <div style="position: relative; z-index: 10;">
+              <div style="width: 120px; height: 120px; background: var(--gradient-primary); border-radius: 20px; display: flex; align-items: center; justify-content: center; animation: pulse 3s ease-in-out infinite; box-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.4);">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.325 3.05011L8.667 20.432C8.48329 21.0607 8.95063 21.6718 9.60718 21.6718C9.85239 21.6718 10.0824 21.5539 10.2337 21.3613L16.9671 13.4311C17.1773 13.1766 17.1361 12.8013 16.8816 12.5911C16.6271 12.3809 16.2518 12.4221 16.0416 12.6766L10.4445 19.1814L14.675 4.05011C14.8587 3.42137 14.3914 2.81028 13.7348 2.81028C13.4896 2.81028 13.2596 2.92823 13.1083 3.12081L6.37488 11.051C6.16467 11.3055 6.20581 11.6808 6.46034 11.891C6.71487 12.1012 7.09018 12.06 7.30039 11.8055L12.8975 5.30081L13.325 3.05011Z" fill="white"/>
+                </svg>
+              </div>
+            </div>
+            
+            <!-- Floating Code Elements -->
+            <div style="position: absolute; top: 20%; left: 10%; width: 60px; height: 40px; background: rgba(99, 102, 241, 0.8); border-radius: 8px; animation: floatCode1 4s ease-in-out infinite; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold;">&lt;/&gt;</div>
+            
+            <div style="position: absolute; top: 60%; right: 15%; width: 50px; height: 50px; background: rgba(139, 92, 246, 0.8); border-radius: 50%; animation: floatCode2 5s ease-in-out infinite; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">{ }</div>
+            
+            <div style="position: absolute; bottom: 25%; left: 20%; width: 40px; height: 40px; background: rgba(236, 72, 153, 0.8); border-radius: 6px; animation: floatCode3 3.5s ease-in-out infinite; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">API</div>
+            
+            <!-- Circuit Lines -->
+            <div style="position: absolute; top: 30%; left: 5%; width: 80px; height: 2px; background: linear-gradient(90deg, rgba(99, 102, 241, 0.6), transparent); animation: circuitFlow1 2s ease-in-out infinite;"></div>
+            
+            <div style="position: absolute; bottom: 40%; right: 10%; width: 60px; height: 2px; background: linear-gradient(270deg, rgba(139, 92, 246, 0.6), transparent); animation: circuitFlow2 2.5s ease-in-out infinite;"></div>
+            
+            <!-- Data Particles -->
+            <div style="position: absolute; top: 15%; right: 25%; width: 8px; height: 8px; background: rgba(6, 182, 212, 0.8); border-radius: 50%; animation: dataParticle1 3s linear infinite;"></div>
+            
+            <div style="position: absolute; bottom: 20%; left: 30%; width: 6px; height: 6px; background: rgba(16, 185, 129, 0.8); border-radius: 50%; animation: dataParticle2 4s linear infinite;"></div>
+            
+            <div style="position: absolute; top: 45%; left: 5%; width: 10px; height: 10px; background: rgba(245, 158, 11, 0.8); border-radius: 50%; animation: dataParticle3 2.5s linear infinite;"></div>
+            
+            <!-- Glowing Orbs -->
+            <div style="position: absolute; top: 10%; left: 70%; width: 30px; height: 30px; background: radial-gradient(circle, rgba(99, 102, 241, 0.8) 0%, transparent 70%); border-radius: 50%; animation: glow1 4s ease-in-out infinite;"></div>
+            
+            <div style="position: absolute; bottom: 15%; right: 5%; width: 25px; height: 25px; background: radial-gradient(circle, rgba(236, 72, 153, 0.8) 0%, transparent 70%); border-radius: 50%; animation: glow2 3s ease-in-out infinite;"></div>
+          </div>
+        </div>
+      </div>
     </div>
     
+    <!-- Call to Action -->
+    <div class="text-center mt-3">
+      <a href="{% url 'contact' %}" class="modern-btn">Start Your Project Today</a>
+    </div>
   </div>
-</section>
-<!-- ============================================ -->
-<!--                    Steps                     -->
-<!-- ============================================ -->
+</div>
+
+<style>
+/* Floating animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Central icon pulse */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 20px 40px -12px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.6);
+  }
+}
+
+/* Code element animations */
+@keyframes floatCode1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes floatCode2 {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+  }
+}
+
+@keyframes floatCode3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+}
+
+/* Circuit flow animations */
+@keyframes circuitFlow1 {
+  0% {
+    opacity: 0.3;
+    transform: scaleX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scaleX(0);
+  }
+}
+
+@keyframes circuitFlow2 {
+  0% {
+    opacity: 0.3;
+    transform: scaleX(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scaleX(0);
+  }
+}
+
+/* Data particle animations */
+@keyframes dataParticle1 {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes dataParticle2 {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80px) translateX(-30px);
+    opacity: 0;
+  }
+}
+
+@keyframes dataParticle3 {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px) translateX(40px);
+    opacity: 0;
+  }
+}
+
+/* Glowing orb animations */
+@keyframes glow1 {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.9;
+  }
+}
+
+@keyframes glow2 {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.8;
+  }
+}
+</style>

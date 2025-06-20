@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Animation Demo - TopSoftware</title>
+    <link rel="stylesheet" href="{% static 'css/scroll-animations.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .section {
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .demo-card {
+            background: #111;
+            padding: 40px 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        
+        .demo-card h3 {
+            color: #2196f3;
+            margin-bottom: 20px;
+        }
+        
+        .stats-section {
+            background: #111;
+            padding: 80px 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .counter {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2196f3;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .parallax-section {
+            height: 100vh;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23667eea" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .parallax-content {
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .text-reveal-section {
+            background: #222;
+            padding: 100px 20px;
+        }
+        
+        .glitch-text {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 40px 0;
+        }
+        
+        .floating-elements {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .floating-item {
+            width: 100px;
+            height: 100px;
+            background: #2196f3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="fade-in floating">Amazing Scroll Effects</h1>
+        <p class="fade-in">Scroll down to see the magic happen!</p>
+        <div class="loading-line"></div>
+    </section>
+
+    <!-- Basic Animations Demo -->
+    <section class="section">
+        <h2 class="slide-in-up">Basic Animation Types</h2>
+        <div class="demo-grid">
+            <div class="demo-card fade-in">
+                <h3>Fade In</h3>
+                <p>This element fades in as you scroll</p>
+            </div>
+            
+            <div class="demo-card slide-in-left">
+                <h3>Slide In Left</h3>
+                <p>This slides in from the left</p>
+            </div>
+            
+            <div class="demo-card slide-in-right">
+                <h3>Slide In Right</h3>
+                <p>This slides in from the right</p>
+            </div>
+            
+            <div class="demo-card slide-in-up">
+                <h3>Slide In Up</h3>
+                <p>This slides in from the top</p>
+            </div>
+            
+            <div class="demo-card slide-in-down">
+                <h3>Slide In Down</h3>
+                <p>This slides in from the bottom</p>
+            </div>
+            
+            <div class="demo-card zoom-in">
+                <h3>Zoom In</h3>
+                <p>This zooms in as it appears</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section with Counters -->
+    <section class="stats-section">
+        <h2 class="fade-in">Animated Counters</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="counter" data-target="500" data-duration="2000">0</span>
+                <p class="fade-in">Projects Completed</p>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="1200" data-duration="2500">0</span>
+                <p class="fade-in">Happy Clients</p>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="50" data-duration="1500">0</span>
+                <p class="fade-in">Team Members</p>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="99" data-duration="2000">0</span>
+                <p class="fade-in">Success Rate %</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax-section">
+        <div class="parallax-content parallax" data-speed="0.5">
+            <h2 class="fade-in">Parallax Effect</h2>
+            <p class="fade-in">This section moves at a different speed as you scroll</p>
+        </div>
+    </section>
+
+    <!-- Text Reveal Section -->
+    <section class="text-reveal-section">
+        <h2 class="text-reveal">Text Reveal Animation</h2>
+        <p class="fade-in">Watch the text get revealed with a sliding effect</p>
+        
+        <div class="glitch-text glitch fade-in">GLITCH EFFECT</div>
+    </section>
+
+    <!-- Stagger Animation -->
+    <section class="section">
+        <h2 class="fade-in">Staggered Animations</h2>
+        <p class="fade-in">Multiple elements animating in sequence</p>
+        
+        <div class="floating-elements">
+            <div class="floating-item stagger-item floating">1</div>
+            <div class="floating-item stagger-item floating">2</div>
+            <div class="floating-item stagger-item floating">3</div>
+            <div class="floating-item stagger-item floating">4</div>
+            <div class="floating-item stagger-item floating">5</div>
+        </div>
+    </section>
+
+    <!-- Final Section -->
+    <section class="section">
+        <h2 class="zoom-in">Ready to Implement?</h2>
+        <p class="fade-in">Add these animation classes to any element:</p>
+        <div class="demo-grid">
+            <div class="demo-card slide-in-left">
+                <code>.fade-in</code>
+            </div>
+            <div class="demo-card slide-in-right">
+                <code>.slide-in-left</code>
+            </div>
+            <div class="demo-card zoom-in">
+                <code>.zoom-in</code>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'js/scroll-animations.js' %}"></script>
+    <script>
+        // Add extra stagger effect to floating items
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingItems = document.querySelectorAll('.floating-item');
+            floatingItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html> 

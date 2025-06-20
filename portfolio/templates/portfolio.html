@@ -3,14 +3,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Our Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio - TopSoftware</title>
   <!-- Google Fonts: Using Montserrat with weights 300,400,700 -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet">
   <!-- Global Styles -->
   <link rel="stylesheet" href="{% static 'css/corestyles.css' %}">
-  <link rel="stylesheet" href="{% static 'portfolio.css' %}">
-  <link rel="stylesheet" href="{% static 'navbar.css' %}">
-  <script src="{% static 'navbar.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/modern-theme.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <script src="{% static 'js/navbar.js' %}"></script>
   <style>
     /* Overall Page Styles */
     body {
@@ -113,116 +114,117 @@
       }
     }
     
-    /* Mobile Navbar Override: Hide all desktop navigation elements */
-    @media (max-width: 768px) {
-      .desktop-nav {
-        display: none !important;
-      }
-    }
+    /* Mobile navigation is handled by navbar.css and navbar.js */
   </style>
 </head>
 <body>
   {% include 'navbar.html' %}
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Turning dreams into reality</h1>
+  <!-- Modern Hero Section -->
+  <section class="modern-hero">
+    <h1>Turning Dreams Into Reality</h1>
     <p>
-      Since 2019, we’ve worked with ambitious startups, global nonprofits, and Fortune 500s to design and develop digital experiences and custom applications that increase sales, boost brand awareness, and streamline operations.
+      Since 2019, we've worked with ambitious startups, global nonprofits, and Fortune 500s to design and develop digital experiences and custom applications that increase sales, boost brand awareness, and streamline operations.
     </p>
   </section>
 
   <!-- Projects Container -->
-  <div class="project-container">
-    <!-- Project: David’s Bridal -->
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'bridal.png' %}" alt="David’s Bridal">
-      </div>
-      <div class="project-info">
-        <span class="project-category">ECOMM</span>
-        <h2>David’s Bridal</h2>
-        <p>A new ecommerce solution for one of the largest wedding dress retailers in the world.</p>
-        <p class="project-services">
-          AEM Implementation / Back End Development / Dev Ops / Front End Development / Headless Magento2 Implementation / Microservices / PIM / PWA / UX/UI Design
-        </p>
-        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
-      </div>
-    </section>
+  <div class="modern-container">
+    <div class="glass-card">
+      <h2 class="modern-title">Our Portfolio</h2>
+      <p class="modern-subtitle">Showcasing our best work across various industries</p>
+      
+      <!-- Project Grid -->
+      <div class="modern-grid modern-grid-2">
+        <!-- Project: Tint My Ryde -->
+        <div class="feature-card">
+          <img src="{% static 'tyntmyryde.png' %}" alt="Tint My Ryde" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <div style="text-align: left;">
+            <span style="font-size: 0.9rem; color: #8b5cf6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">AUTOMOTIVE</span>
+            <h3 style="margin: 0.5rem 0; font-size: 1.5rem;">Tint My Ryde</h3>
+            <p>Professional mobile window tinting service website featuring clean design, mobile-first approach, and seamless customer experience.</p>
+            <div style="margin: 1rem 0; font-size: 0.9rem; color: #64748b; line-height: 1.4;">
+              Responsive Web Design • Mobile-First Development • Service Industry UX • Professional Branding • Customer Experience Optimization
+            </div>
+            <a href="{% url 'contact' %}" class="modern-btn">View Project</a>
+          </div>
+        </div>
 
-    <!-- Project: SAO Financial Intelligence Tool -->
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'finance.webp' %}" alt="SAO Financial Intelligence Tool">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEB APP</span>
-        <h2>SAO Financial Intelligence Tool</h2>
-        <p>Overhauling the public-facing user experience for the Washington State Auditor's Office.</p>
-        <p class="project-services">UX/UI Design</p>
-        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
-      </div>
-    </section>
+        <!-- Project: EzVest -->
+        <div class="feature-card">
+          <img src="{% static 'ezvest.png' %}" alt="EzVest Investment Platform" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <div style="text-align: left;">
+            <span style="font-size: 0.9rem; color: #8b5cf6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">FINTECH</span>
+            <h3 style="margin: 0.5rem 0; font-size: 1.5rem;">EzVest</h3>
+            <p>Professional investment platform for Alaska-based investment company, featuring modern financial UI and secure client portfolio management.</p>
+            <div style="margin: 1rem 0; font-size: 0.9rem; color: #64748b;">
+              Financial Web Development • Secure Authentication • Portfolio Management • Investment Analytics • Modern UI/UX • Client Dashboard
+            </div>
+            <a href="{% url 'contact' %}" class="modern-btn">View Project</a>
+          </div>
+        </div>
 
-    <!-- Project: Visual art studios -->
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'artstudio.png' %}" alt="Visual art studios">
-      </div>
-      <div class="project-info">
-        <span class="project-category">BRANDING</span>
-        <h2>Visual art studios</h2>
-        <p>A creative rebranding project for Visual art studios, merging modern design with innovative aesthetics.</p>
-        <p class="project-services">
-          Branding / Visual Identity / Graphic Design / Web Design
-        </p>
-        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
-      </div>
-    </section>
+        <!-- Project: Visual art studios -->
+        <div class="feature-card">
+          <img src="{% static 'artstudio.png' %}" alt="Visual art studios" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <div style="text-align: left;">
+            <span style="font-size: 0.9rem; color: #8b5cf6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">BRANDING</span>
+            <h3 style="margin: 0.5rem 0; font-size: 1.5rem;">Visual Art Studios</h3>
+            <p>A creative rebranding project for Visual art studios, merging modern design with innovative aesthetics.</p>
+            <div style="margin: 1rem 0; font-size: 0.9rem; color: #64748b;">
+              Branding • Visual Identity • Graphic Design • Web Design
+            </div>
+            <a href="{% url 'contact' %}" class="modern-btn">Book Now</a>
+          </div>
+        </div>
 
-    <!-- Project: Jacks Surf Shop -->
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'jacksurf.png' %}" alt="Jacks Surf Shop">
-      </div>
-      <div class="project-info">
-        <span class="project-category">ECOMMERCE</span>
-        <h2>Jacks Surf Shop</h2>
-        <p>A vibrant online store for Jacks Surf Shop that merges lifestyle branding with robust e-commerce functionality.</p>
-        <p class="project-services">
-          E-commerce Development / UX/UI Design / Digital Marketing
-        </p>
-        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
-      </div>
-    </section>
+        <!-- Project: EpigenScan Health Tech -->
+        <div class="feature-card">
+          <img src="{% static 'epigenscan.png' %}" alt="EpigenScan Health Tech" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <div style="text-align: left;">
+            <span style="font-size: 0.9rem; color: #8b5cf6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">HEALTH TECH</span>
+            <h3 style="margin: 0.5rem 0; font-size: 1.5rem;">EpigenScan</h3>
+            <p>AI-powered genomics analysis platform providing personalized health insights through DNA sample analysis with HIPAA-compliant security.</p>
+            <div style="margin: 1rem 0; font-size: 0.9rem; color: #64748b;">
+              AI Integration • Genomic Data Processing • HIPAA Compliance • Django Backend • React Native • Health Dashboard
+            </div>
+            <a href="{% url 'contact' %}" class="modern-btn">View Case Study</a>
+          </div>
+        </div>
 
-    <!-- Project: Bark -->
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'bark.png' %}" alt="Bark">
+        <!-- Project: Qualcomm AI Benchmark Dashboard -->
+        <div class="feature-card">
+          <img src="{% static 'qualcomm.png' %}" alt="Qualcomm AI Benchmark Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <div style="text-align: left;">
+            <span style="font-size: 0.9rem; color: #8b5cf6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">AI DASHBOARD</span>
+            <h3 style="margin: 0.5rem 0; font-size: 1.5rem;">Qualcomm AI Benchmark Dashboard</h3>
+            <p>Interactive web-based dashboard for visualizing AI model performance across Qualcomm chipsets, providing engineers with comprehensive benchmark analytics.</p>
+            <div style="margin: 1rem 0; font-size: 0.9rem; color: #64748b;">
+              Django Backend • PostgreSQL • Interactive Charts • Performance Analytics • AI Model Comparison • Chipset Optimization
+            </div>
+            <a href="{% url 'contact' %}" class="modern-btn">View Case Study</a>
+          </div>
+        </div>
+        
+        <!-- Project: Coachella Solar Services -->
+        <div class="feature-card">
+          <img src="{% static 'css.png' %}" alt="Coachella Solar Services" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+          <div style="text-align: left;">
+            <span style="font-size: 0.9rem; color: #8b5cf6; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">WEBSITE</span>
+            <h3 style="margin: 0.5rem 0; font-size: 1.5rem;">Coachella Solar Services</h3>
+            <p>An innovative online platform showcasing sustainable solar solutions with cutting-edge web design and interactive features.</p>
+            <div style="margin: 1rem 0; font-size: 0.9rem; color: #64748b;">
+              Web Design • UX/UI Design • SEO • Digital Marketing
+            </div>
+            <a href="{% url 'contact' %}" class="modern-btn">Book Now</a>
+          </div>
+        </div>
       </div>
-      <div class="project-info">
-        <span class="project-category">BRANDING</span>
-        <h2>Bark</h2>
-        <p>A playful rebranding for Bark, a pet products company focused on vibrant and engaging visual identity.</p>
-        <p class="project-services">Branding / Visual Identity / Digital Marketing</p>
-        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
+      
+      <div class="text-center mt-3">
+        <a href="{% url 'contact' %}" class="modern-btn-outline">Start Your Project</a>
       </div>
-    </section>
-    
-    <!-- Project: Coachella Solar Services -->
-    <section class="project-section">
-      <div class="project-image">
-        <img src="{% static 'css.png' %}" alt="Coachella Solar Services">
-      </div>
-      <div class="project-info">
-        <span class="project-category">WEBSITE</span>
-        <h2>Coachella Solar Services</h2>
-        <p>An innovative online platform showcasing sustainable solar solutions with cutting-edge web design and interactive features.</p>
-        <p class="project-services">Web Design / UX/UI Design / SEO / Digital Marketing</p>
-        <a href="{% url 'contact' %}" class="project-read-more">Book now</a>
-      </div>
-    </section>
+    </div>
   </div>
   
 </body>
