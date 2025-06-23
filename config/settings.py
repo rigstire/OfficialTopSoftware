@@ -194,4 +194,4 @@ STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', '')
 # reCAPTCHA Settings - Using Environment Variables for Security
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY', '')
 RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY', '')
-RECAPTCHA_DOMAIN = 'www.recaptcha.net' 
+RECAPTCHA_DOMAIN = 'www.recaptcha.net'
