@@ -38,14 +38,13 @@ def create_payment_intent(request):
         # Convert amount to cents for Stripe
         amount_cents = int(amount * 100)
 
-        # Create Payment Intent with Apple Pay support
+        # Create Payment Intent with automatic payment methods (includes Apple Pay, Google Pay, etc.)
         intent = stripe.PaymentIntent.create(
             amount=amount_cents,
             currency='usd',
             automatic_payment_methods={
                 'enabled': True,
             },
-            payment_method_types=['card', 'apple_pay'],
             metadata={
                 'description': 'Payment for services'
             }
