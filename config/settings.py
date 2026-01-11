@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '192.168.1.203',  # Your local IP address
-    'topsoftware-cc76302c7c51.herokuapp.com'
+    'topsoftware-website-1c184caef3c1.herokuapp.com'
 ]
 
 # Application definition
