@@ -110,7 +110,7 @@
   z-index: 2000 !important;
   opacity: 0 !important;
   visibility: hidden !important;
-  overflow: hidden !important;
+  overflow-y: auto !important;
   transition: all 0.25s ease !important;
   transform: translateY(-5px) scale(0.9) !important;
 }
@@ -124,7 +124,7 @@
 
 .mobile-nav.active {
   display: block !important;
-  max-height: 450px !important;
+  max-height: 600px !important;
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateY(0) scale(1) !important;
