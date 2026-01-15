@@ -213,6 +213,7 @@ FILE_UPLOAD_HANDLERS = [
 # Key Name: resumekey
 # Bucket Name: topsoftwareresumes
 # Bucket ID: 062de1c28440bff598b10b1d
+# IMPORTANT: Make sure B2_ACCESS_KEY environment variable is set to: 0046d1240f581bd0000000002
 B2_ACCESS_KEY = os.getenv('B2_ACCESS_KEY', '0046d1240f581bd0000000002')
 B2_SECRET_KEY = os.getenv('B2_SECRET_KEY', 'K0043sViXRC/ec6tic5m23VkoQiAZU8')
 B2_BUCKET_NAME = os.getenv('B2_BUCKET_NAME', 'topsoftwareresumes')
