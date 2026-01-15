@@ -232,20 +232,25 @@ if USE_B2_STORAGE:
     
     # Backblaze B2 endpoint (choose based on your region)
     # Note: B2 uses S3-compatible API, but endpoint format is different
+    # The endpoint should NOT include the bucket name
     AWS_S3_ENDPOINT_URL = 'https://s3.us-west-002.backblazeb2.com'  # US West
     # Alternative regions:
     # US West: s3.us-west-002.backblazeb2.com
     # US East: s3.us-east-005.backblazeb2.com
     # EU Central: s3.eu-central-003.backblazeb2.com
     
-    # Optional: Use custom domain for CDN
+    # Optional: Use custom domain for CDN (for file URLs)
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-west-002.backblazeb2.com'
+    
+    # B2-specific: Don't use virtual-hosted style addressing
+    AWS_S3_USE_SSL = True
+    AWS_S3_VERIFY = True
     
     # B2-specific settings (B2 doesn't support ACLs like S3)
     # Remove ACL settings as B2 handles permissions differently
     AWS_DEFAULT_ACL = None  # B2 doesn't use ACLs
     AWS_QUERYSTRING_AUTH = True   # Adds signature to URLs for security
-    AWS_S3_FILE_OVERWRITE = False  # Prevent overwriting files with same name
+    AWS_S3_FILE_OVERWRITE = True  # Allow overwriting - B2 handles this differently
     AWS_S3_MAX_MEMORY_SIZE = 5242880  # 5MB
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',  # Cache for 1 day
@@ -257,10 +262,10 @@ if USE_B2_STORAGE:
     # Disable addressing style (B2 uses path-style by default)
     AWS_S3_ADDRESSING_STYLE = 'path'
     
-    # Use B2 for media files
+    # Use B2 for media files with custom backend
     STORAGES = {
         'default': {
-            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+            'BACKEND': 'config.storage_backends.B2Storage',
         },
         'staticfiles': {
             'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
