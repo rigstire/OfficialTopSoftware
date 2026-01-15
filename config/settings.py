@@ -231,6 +231,7 @@ if USE_B2_STORAGE:
     AWS_STORAGE_BUCKET_NAME = B2_BUCKET_NAME
     
     # Backblaze B2 endpoint (choose based on your region)
+    # Note: B2 uses S3-compatible API, but endpoint format is different
     AWS_S3_ENDPOINT_URL = 'https://s3.us-west-002.backblazeb2.com'  # US West
     # Alternative regions:
     # US West: s3.us-west-002.backblazeb2.com
@@ -240,14 +241,21 @@ if USE_B2_STORAGE:
     # Optional: Use custom domain for CDN
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-west-002.backblazeb2.com'
     
-    # Security settings (IMPORTANT!)
-    AWS_DEFAULT_ACL = 'private'  # Files are private by default
+    # B2-specific settings (B2 doesn't support ACLs like S3)
+    # Remove ACL settings as B2 handles permissions differently
+    AWS_DEFAULT_ACL = None  # B2 doesn't use ACLs
     AWS_QUERYSTRING_AUTH = True   # Adds signature to URLs for security
     AWS_S3_FILE_OVERWRITE = False  # Prevent overwriting files with same name
     AWS_S3_MAX_MEMORY_SIZE = 5242880  # 5MB
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',  # Cache for 1 day
     }
+    
+    # B2 requires signature version 4
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+    
+    # Disable addressing style (B2 uses path-style by default)
+    AWS_S3_ADDRESSING_STYLE = 'path'
     
     # Use B2 for media files
     STORAGES = {
