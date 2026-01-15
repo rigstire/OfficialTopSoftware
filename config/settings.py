@@ -207,38 +207,62 @@ FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 ]
- 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Backblaze B2 Configuration
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Application Key ID: 0046d1240f581bd0000000002
+# Key Name: resumekey
+# Bucket Name: topsoftwareresumes
+# Bucket ID: 062de1c28440bff598b10b1d
+B2_ACCESS_KEY = os.getenv('B2_ACCESS_KEY', '0046d1240f581bd0000000002')
+B2_SECRET_KEY = os.getenv('B2_SECRET_KEY', 'K0043sViXRC/ec6tic5m23VkoQiAZU8')
+B2_BUCKET_NAME = os.getenv('B2_BUCKET_NAME', 'topsoftwareresumes')
 
-# Get these from your Backblaze B2 dashboard
-AWS_ACCESS_KEY_ID = os.environ.get('B2_ACCESS_KEY', '0046d1240f581bd0000000001')
-AWS_SECRET_ACCESS_KEY = os.environ.get('B2_SECRET_KEY', '0046d1240f581bd0000000001')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('B2_BUCKET_NAME', 'topsoftwareresumes')
+# Only configure B2 if credentials are provided
+USE_B2_STORAGE = bool(B2_ACCESS_KEY and B2_SECRET_KEY)
 
-# Backblaze B2 endpoint (choose based on your region)
-AWS_S3_ENDPOINT_URL = 'https://s3.us-west-002.backblazeb2.com'  # US West
-# Alternative regions:
-# US West: s3.us-west-002.backblazeb2.com
-# US East: s3.us-east-005.backblazeb2.com
-# EU Central: s3.eu-central-003.backblazeb2.com
-
-# Optional: Use custom domain for CDN
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-west-002.backblazeb2.com'
-
-# Security settings (IMPORTANT!)
-AWS_DEFAULT_ACL = 'private'  # Files are private by default
-AWS_QUERYSTRING_AUTH = True   # Adds signature to URLs for security
-AWS_S3_FILE_OVERWRITE = False  # Prevent overwriting files with same name
-AWS_S3_MAX_MEMORY_SIZE = 5242880  # 5MB
-
-# File upload limits
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
-FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
-
-# Media URL configuration
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
-MEDIA_ROOT = ''  # Not used when using S3
+if USE_B2_STORAGE:
+    # Add storages to INSTALLED_APPS if using B2
+    if 'storages' not in INSTALLED_APPS:
+        INSTALLED_APPS.append('storages')
+    
+    # AWS/B2 Settings
+    AWS_ACCESS_KEY_ID = B2_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY = B2_SECRET_KEY
+    AWS_STORAGE_BUCKET_NAME = B2_BUCKET_NAME
+    
+    # Backblaze B2 endpoint (choose based on your region)
+    AWS_S3_ENDPOINT_URL = 'https://s3.us-west-002.backblazeb2.com'  # US West
+    # Alternative regions:
+    # US West: s3.us-west-002.backblazeb2.com
+    # US East: s3.us-east-005.backblazeb2.com
+    # EU Central: s3.eu-central-003.backblazeb2.com
+    
+    # Optional: Use custom domain for CDN
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-west-002.backblazeb2.com'
+    
+    # Security settings (IMPORTANT!)
+    AWS_DEFAULT_ACL = 'private'  # Files are private by default
+    AWS_QUERYSTRING_AUTH = True   # Adds signature to URLs for security
+    AWS_S3_FILE_OVERWRITE = False  # Prevent overwriting files with same name
+    AWS_S3_MAX_MEMORY_SIZE = 5242880  # 5MB
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',  # Cache for 1 day
+    }
+    
+    # Use B2 for media files
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+    
+    # Media URL configuration for B2
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+    MEDIA_ROOT = ''  # Not used when using S3
+else:
+    # Use local storage if B2 credentials not provided
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
