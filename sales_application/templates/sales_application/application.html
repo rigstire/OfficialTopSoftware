@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Application | TopSoftware</title>
+  <meta name="description" content="Apply for a sales position at TopSoftware. Join our team and help bring innovative software solutions to clients." />
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" />
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="{% static 'css/corestyles.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/modern-theme.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=2" />
+  <link rel="stylesheet" href="{% static 'sales_application/sales_application.css' %}" />
+  <script src="{% static 'js/navbar.js' %}"></script>
+</head>
+<body>
+  {% include "navbar.html" %}
+
+  <!-- Application Hero Section -->
+  <section class="modern-hero">
+    <h1>Join Our Sales Team</h1>
+    <p>We're looking for passionate sales professionals to help us grow and bring innovative software solutions to clients worldwide.</p>
+  </section>
+
+  <!-- Application Form Section -->
+  <div class="modern-container">
+    <div class="glass-card application-form-container">
+      <h2 class="modern-heading">Sales Application Form</h2>
+      <p class="form-intro">Please fill out the form below to apply for a sales position. All fields marked with * are required.</p>
+
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form class="modern-form sales-application-form" method="post" enctype="multipart/form-data" action="{% url 'sales_application' %}">
+        {% csrf_token %}
+
+        <!-- Personal Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Personal Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.first_name.id_for_label }}">
+                First Name <span class="required">*</span>
+              </label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+                <div class="error-message">{{ form.first_name.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ form.last_name.id_for_label }}">
+                Last Name <span class="required">*</span>
+              </label>
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+                <div class="error-message">{{ form.last_name.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="{{ form.email.id_for_label }}">
+                Email Address <span class="required">*</span>
+              </label>
+              {{ form.email }}
+              {% if form.email.errors %}
+                <div class="error-message">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ form.phone_number.id_for_label }}">
+                Phone Number <span class="required">*</span>
+              </label>
+              {{ form.phone_number }}
+              {% if form.phone_number.errors %}
+                <div class="error-message">{{ form.phone_number.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Resume Upload Section -->
+        <div class="form-section">
+          <h3 class="section-title">Resume</h3>
+          <div class="form-group">
+            <label for="{{ form.resume.id_for_label }}">
+              Upload Resume (PDF only, max 5MB) <span class="required">*</span>
+            </label>
+            {{ form.resume }}
+            {% if form.resume.errors %}
+              <div class="error-message">{{ form.resume.errors }}</div>
+            {% endif %}
+            <small class="help-text">{{ form.resume.help_text }}</small>
+          </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="form-section">
+          <h3 class="section-title">Education</h3>
+          <div class="form-group">
+            <label for="{{ form.has_bachelors_degree.id_for_label }}">
+              Do you have a bachelor's degree? <span class="required">*</span>
+            </label>
+            {{ form.has_bachelors_degree }}
+            {% if form.has_bachelors_degree.errors %}
+              <div class="error-message">{{ form.has_bachelors_degree.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group" id="degree-details-group" style="display: none;">
+            <label for="{{ form.degree_details.id_for_label }}">
+              Degree Details (Optional)
+            </label>
+            {{ form.degree_details }}
+            {% if form.degree_details.errors %}
+              <div class="error-message">{{ form.degree_details.errors }}</div>
+            {% endif %}
+            <small class="help-text">{{ form.degree_details.help_text }}</small>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.educational_experience.id_for_label }}">
+              Educational Background
+            </label>
+            {{ form.educational_experience }}
+            {% if form.educational_experience.errors %}
+              <div class="error-message">{{ form.educational_experience.errors }}</div>
+            {% endif %}
+            <small class="help-text">{{ form.educational_experience.help_text }}</small>
+          </div>
+        </div>
+
+        <!-- Sales Experience Section -->
+        <div class="form-section">
+          <h3 class="section-title">Sales Experience</h3>
+          <div class="form-group">
+            <label for="{{ form.has_worked_sales_before.id_for_label }}">
+              Have you worked in sales before? <span class="required">*</span>
+            </label>
+            {{ form.has_worked_sales_before }}
+            {% if form.has_worked_sales_before.errors %}
+              <div class="error-message">{{ form.has_worked_sales_before.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group" id="years-experience-group">
+            <label for="{{ form.years_of_sales_experience.id_for_label }}">
+              Years of Sales Experience
+            </label>
+            {{ form.years_of_sales_experience }}
+            {% if form.years_of_sales_experience.errors %}
+              <div class="error-message">{{ form.years_of_sales_experience.errors }}</div>
+            {% endif %}
+            <small class="help-text">{{ form.years_of_sales_experience.help_text }}</small>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.previous_work_experience.id_for_label }}">
+              Previous Work Experience
+            </label>
+            {{ form.previous_work_experience }}
+            {% if form.previous_work_experience.errors %}
+              <div class="error-message">{{ form.previous_work_experience.errors }}</div>
+            {% endif %}
+            <small class="help-text">{{ form.previous_work_experience.help_text }}</small>
+          </div>
+        </div>
+
+        <!-- Additional Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Additional Information</h3>
+          <div class="form-group">
+            <label for="{{ form.is_certified_sales_professional.id_for_label }}">
+              Are you a certified sales professional?
+            </label>
+            {{ form.is_certified_sales_professional }}
+            {% if form.is_certified_sales_professional.errors %}
+              <div class="error-message">{{ form.is_certified_sales_professional.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.can_relocate.id_for_label }}">
+              Are you willing to relocate? <span class="required">*</span>
+            </label>
+            {{ form.can_relocate }}
+            {% if form.can_relocate.errors %}
+              <div class="error-message">{{ form.can_relocate.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.has_own_vehicle.id_for_label }}">
+              Do you have reliable transportation? <span class="required">*</span>
+            </label>
+            {{ form.has_own_vehicle }}
+            {% if form.has_own_vehicle.errors %}
+              <div class="error-message">{{ form.has_own_vehicle.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.cover_letter.id_for_label }}">
+              Cover Letter (Optional)
+            </label>
+            {{ form.cover_letter }}
+            {% if form.cover_letter.errors %}
+              <div class="error-message">{{ form.cover_letter.errors }}</div>
+            {% endif %}
+            <small class="help-text">{{ form.cover_letter.help_text }}</small>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="modern-btn modern-btn-primary" type="submit">
+            Submit Application
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Show/hide degree details based on bachelor's degree selection
+    document.addEventListener('DOMContentLoaded', function() {
+      const degreeSelect = document.getElementById('{{ form.has_bachelors_degree.id_for_label }}');
+      const degreeDetailsGroup = document.getElementById('degree-details-group');
+      
+      function toggleDegreeDetails() {
+        if (degreeSelect.value === 'yes' || degreeSelect.value === 'in_progress') {
+          degreeDetailsGroup.style.display = 'block';
+        } else {
+          degreeDetailsGroup.style.display = 'none';
+        }
+      }
+      
+      degreeSelect.addEventListener('change', toggleDegreeDetails);
+      toggleDegreeDetails(); // Initial check
+    });
+  </script>
+</body>
+</html>
+
