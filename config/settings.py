@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '192.168.1.203',  # Your local IP address
-    'topsoftware-website-1c184caef3c1.herokuapp.com'
+    'topsoftware-website-1c184caef3c1.herokuapp.com',
 ]
 
 # Application definition
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'pricing',
     'portfolio',
     'payments',
+    'sales_application',
 
     # Installed third-party apps
     'corsheaders',
@@ -195,3 +196,49 @@ STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', '')
 RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY', '')
 RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY', '')
 RECAPTCHA_DOMAIN = 'www.recaptcha.net'
+
+# Media files (Uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+FILE_UPLOAD_PERMISSIONS = 0o644
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+ 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Backblaze B2 Configuration
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Get these from your Backblaze B2 dashboard
+AWS_ACCESS_KEY_ID = os.environ.get('B2_ACCESS_KEY', 'your-key-id-here')
+AWS_SECRET_ACCESS_KEY = os.environ.get('B2_SECRET_KEY', 'your-application-key-here')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('B2_BUCKET_NAME', 'your-bucket-name')
+
+# Backblaze B2 endpoint (choose based on your region)
+AWS_S3_ENDPOINT_URL = 'https://s3.us-west-002.backblazeb2.com'  # US West
+# Alternative regions:
+# US West: s3.us-west-002.backblazeb2.com
+# US East: s3.us-east-005.backblazeb2.com
+# EU Central: s3.eu-central-003.backblazeb2.com
+
+# Optional: Use custom domain for CDN
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-west-002.backblazeb2.com'
+
+# Security settings (IMPORTANT!)
+AWS_DEFAULT_ACL = 'private'  # Files are private by default
+AWS_QUERYSTRING_AUTH = True   # Adds signature to URLs for security
+AWS_S3_FILE_OVERWRITE = False  # Prevent overwriting files with same name
+AWS_S3_MAX_MEMORY_SIZE = 5242880  # 5MB
+
+# File upload limits
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+
+# Media URL configuration
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+MEDIA_ROOT = ''  # Not used when using S3
