@@ -27,10 +27,11 @@ def payments(request):
 @csrf_exempt
 @require_POST
 def create_payment_intent(request):
-    """Create a Stripe Payment Intent with Apple Pay support."""
+    """Create a Stripe Payment Intent or Subscription with Apple Pay support."""
     try:
         data = json.loads(request.body)
         amount = float(data.get('amount', 0))
+        payment_type = data.get('payment_type', 'one_time')  # 'one_time' or 'monthly'
         
         if amount < 0.50:  # Stripe minimum is $0.50
             return JsonResponse({'error': 'Amount must be at least $0.50'}, status=400)
@@ -38,23 +39,62 @@ def create_payment_intent(request):
         # Convert amount to cents for Stripe
         amount_cents = int(amount * 100)
 
-        # Create Payment Intent with automatic payment methods (includes Apple Pay, Google Pay, etc.)
-        intent = stripe.PaymentIntent.create(
-            amount=amount_cents,
-            currency='usd',
-            automatic_payment_methods={
-                'enabled': True,
-            },
-            metadata={
-                'description': 'Payment for services'
-            }
-        )
+        if payment_type == 'monthly':
+            # Create a subscription for monthly payments
+            try:
+                # First, create a price for the subscription
+                price = stripe.Price.create(
+                    unit_amount=amount_cents,
+                    currency='usd',
+                    recurring={'interval': 'month'},
+                    product_data={
+                        'name': f'Monthly Subscription - ${amount:.2f}/month'
+                    }
+                )
+                
+                # Create a checkout session for subscription
+                checkout_session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[{
+                        'price': price.id,
+                        'quantity': 1,
+                    }],
+                    mode='subscription',
+                    success_url=request.build_absolute_uri('/payments/payment/success/') + '?session_id={CHECKOUT_SESSION_ID}',
+                    cancel_url=request.build_absolute_uri('/payments/payment/cancel/'),
+                    metadata={
+                        'description': f'Monthly subscription for ${amount:.2f}/month'
+                    }
+                )
+                
+                logger.info(f"Stripe Subscription Checkout Session created: {checkout_session.id}")
+                return JsonResponse({
+                    'session_id': checkout_session.id,
+                    'checkout_url': checkout_session.url,
+                    'payment_type': 'subscription'
+                })
+            except stripe.error.StripeError as e:
+                logger.error(f"Stripe subscription error: {str(e)}")
+                return JsonResponse({'error': f'Subscription creation failed: {str(e)}'}, status=400)
+        else:
+            # Create one-time Payment Intent
+            intent = stripe.PaymentIntent.create(
+                amount=amount_cents,
+                currency='usd',
+                automatic_payment_methods={
+                    'enabled': True,
+                },
+                metadata={
+                    'description': 'Payment for services'
+                }
+            )
 
-        logger.info(f"Stripe Payment Intent created successfully with Apple Pay support: {intent.id}")
-        return JsonResponse({
-            'client_secret': intent.client_secret,
-            'payment_intent_id': intent.id
-        })
+            logger.info(f"Stripe Payment Intent created successfully with Apple Pay support: {intent.id}")
+            return JsonResponse({
+                'client_secret': intent.client_secret,
+                'payment_intent_id': intent.id,
+                'payment_type': 'one_time'
+            })
 
     except stripe.error.CardError as e:
         logger.error(f"Stripe card error: {str(e)}")
@@ -92,8 +132,9 @@ def create_order(request):
 
 @csrf_exempt
 def payment_success(request):
-    """Handle successful payment."""
+    """Handle successful payment or subscription."""
     payment_intent_id = request.GET.get('payment_intent')
+    session_id = request.GET.get('session_id')
     
     if payment_intent_id:
         try:
@@ -105,6 +146,17 @@ def payment_success(request):
                 logger.warning(f"Payment intent status: {intent.status} for {payment_intent_id}")
         except Exception as e:
             logger.error(f"Error verifying payment intent: {str(e)}")
+    
+    if session_id:
+        try:
+            # Verify the checkout session was successful (for subscriptions)
+            session = stripe.checkout.Session.retrieve(session_id)
+            if session.payment_status == 'paid':
+                logger.info(f"Subscription checkout confirmed successful: {session_id}")
+                if session.mode == 'subscription':
+                    logger.info(f"Subscription created: {session.subscription}")
+        except Exception as e:
+            logger.error(f"Error verifying checkout session: {str(e)}")
     
     return render(request, 'payments/success.html')
 
