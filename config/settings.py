@@ -12,10 +12,32 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import re
 from dotenv import load_dotenv
-load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load .env file from project root
+env_path = BASE_DIR / '.env'
+if env_path.exists():
+    # Check if system env vars exist (they override .env)
+    b2_access_key_system = os.environ.get('B2_ACCESS_KEY', '')
+    b2_secret_key_system = os.environ.get('B2_SECRET_KEY', '')
+    
+    if b2_access_key_system or b2_secret_key_system:
+        print(f"⚠️  WARNING: System environment variables found for B2 credentials!")
+        print(f"   System B2_ACCESS_KEY: {'SET' if b2_access_key_system else 'NOT SET'} (length: {len(b2_access_key_system)})")
+        print(f"   System B2_SECRET_KEY: {'SET' if b2_secret_key_system else 'NOT SET'} (length: {len(b2_secret_key_system)})")
+        print(f"   System env vars override .env file values!")
+        print(f"   To use .env file, unset system variables or remove them from your shell profile")
+    
+    load_dotenv(dotenv_path=env_path, override=True)  # Override system vars with .env file
+    print(f"✅ Loaded .env file from: {env_path}")
+else:
+    # Fallback to default behavior (current directory)
+    load_dotenv()
+    print(f"⚠️  .env file not found at {env_path}, trying current directory...")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -209,39 +231,192 @@ FILE_UPLOAD_HANDLERS = [
 ]
 
 # Backblaze B2 Configuration
-# Application Key ID: 0046d1240f581bd0000000002
+# Application Key ID: 0046d1240f581bd0000000006
 # Key Name: resumekey
 # Bucket Name: topsoftwareresumes
 # Bucket ID: 062de1c28440bff598b10b1d
-# IMPORTANT: Make sure B2_ACCESS_KEY environment variable is set to: 0046d1240f581bd0000000002
-B2_ACCESS_KEY = os.getenv('B2_ACCESS_KEY', '0046d1240f581bd0000000002')
-B2_SECRET_KEY = os.getenv('B2_SECRET_KEY', 'K0043sViXRC/ec6tic5m23VkoQiAZU8')
-B2_BUCKET_NAME = os.getenv('B2_BUCKET_NAME', 'topsoftwareresumes')
+# IMPORTANT: Make sure these environment variables are set in your .env file:
+#   B2_ACCESS_KEY=0046d1240f581bd0000000006  (or B2_KEY_ID as fallback)
+#   B2_SECRET_KEY=<your-secret-key>  (or B2_APPLICATION_KEY as fallback)
+#   B2_BUCKET_NAME=topsoftwareresumes
+# Strip whitespace and clean credentials to prevent "malformed credential" errors
+# Support both naming conventions for backward compatibility
+def clean_credential(value):
+    """Clean credential value by removing quotes, whitespace, and newlines"""
+    if not value:
+        return ''
+    # Convert to string if not already
+    value = str(value)
+    # Remove surrounding quotes (single or double)
+    value = value.strip().strip('"').strip("'")
+    # Remove any newlines, carriage returns, and tabs
+    value = value.replace('\n', '').replace('\r', '').replace('\t', '')
+    # Remove any remaining whitespace
+    value = value.strip()
+    # Remove any non-printable characters (more aggressive cleaning)
+    value = ''.join(c for c in value if c.isprintable())
+    return value
 
-# Only configure B2 if credentials are provided
-USE_B2_STORAGE = bool(B2_ACCESS_KEY and B2_SECRET_KEY)
+# Get raw values first for debugging
+raw_b2_access_key = os.getenv('B2_ACCESS_KEY', '')
+raw_b2_key_id = os.getenv('B2_KEY_ID', '')
+raw_b2_secret_key = os.getenv('B2_SECRET_KEY', '')
+raw_b2_app_key = os.getenv('B2_APPLICATION_KEY', '')
+
+# Debug: Show what we're reading from environment
+print(f"\n🔍 Environment Variable Debug:")
+print(f"   B2_ACCESS_KEY from env: {'SET' if raw_b2_access_key else 'NOT SET'} (length: {len(raw_b2_access_key)})")
+if raw_b2_access_key:
+    print(f"   B2_ACCESS_KEY value: {raw_b2_access_key[:10]}...{raw_b2_access_key[-4:] if len(raw_b2_access_key) > 14 else raw_b2_access_key}")
+print(f"   B2_KEY_ID from env: {'SET' if raw_b2_key_id else 'NOT SET'} (length: {len(raw_b2_key_id)})")
+print(f"   B2_SECRET_KEY from env: {'SET' if raw_b2_secret_key else 'NOT SET'} (length: {len(raw_b2_secret_key)})")
+if raw_b2_secret_key:
+    print(f"   B2_SECRET_KEY value: {raw_b2_secret_key[:10]}...{raw_b2_secret_key[-4:] if len(raw_b2_secret_key) > 14 else raw_b2_secret_key}")
+print(f"   B2_APPLICATION_KEY from env: {'SET' if raw_b2_app_key else 'NOT SET'} (length: {len(raw_b2_app_key)})")
+print()
+
+B2_KEY_ID = clean_credential(raw_b2_access_key or raw_b2_key_id)
+B2_SECRET_KEY = clean_credential(raw_b2_secret_key or raw_b2_app_key)
+
+# Validate credential format - CRITICAL CHECKS
+credential_error = False
+error_messages = []
+
+if B2_KEY_ID and B2_KEY_ID.startswith('K'):
+    error_messages.append("❌ CRITICAL: B2_KEY_ID (B2_ACCESS_KEY) appears to be a Secret Key (starts with 'K')!")
+    error_messages.append("   B2 Key IDs should be 24 characters and start with NUMBERS")
+    error_messages.append("   Example: 0046d1240f581bd0000000006")
+    credential_error = True
+
+if B2_KEY_ID and (len(B2_KEY_ID) < 24 or len(B2_KEY_ID) > 25):
+    error_messages.append(f"❌ CRITICAL: B2_KEY_ID length is {len(B2_KEY_ID)}, expected 24-25 characters")
+    error_messages.append(f"   Current value: {B2_KEY_ID[:10]}...{B2_KEY_ID[-4:]}")
+    credential_error = True
+
+if B2_SECRET_KEY and not B2_SECRET_KEY.startswith('K'):
+    error_messages.append("❌ CRITICAL: B2_SECRET_KEY doesn't start with 'K'!")
+    error_messages.append("   B2 Secret Keys must start with 'K' and be 25-50 characters long")
+    credential_error = True
+
+if B2_SECRET_KEY and len(B2_SECRET_KEY) < 25:
+    error_messages.append(f"❌ CRITICAL: B2_SECRET_KEY length is {len(B2_SECRET_KEY)}, expected 25-50 characters")
+    error_messages.append(f"   Current value: {B2_SECRET_KEY[:10]}...{B2_SECRET_KEY[-4:]}")
+    credential_error = True
+
+if credential_error:
+    print("\n" + "="*70)
+    print("🚨 B2 CREDENTIAL CONFIGURATION ERROR 🚨")
+    print("="*70)
+    for msg in error_messages:
+        print(msg)
+    print("\n📋 HOW TO FIX:")
+    print("   1. Go to your Backblaze B2 dashboard")
+    print("   2. Navigate to: App Keys (or Application Keys)")
+    print("   3. Find your Application Key and copy:")
+    print("      - Application Key ID (24-25 chars, starts with numbers) → B2_ACCESS_KEY")
+    print("      - Application Key (Secret, 25-50 chars, starts with K) → B2_SECRET_KEY")
+    print("\n   Your .env file should look like:")
+    print("   B2_ACCESS_KEY=0046d1240f581bd0000000006")
+    print("   B2_SECRET_KEY=K0047/6/y1C+VybVzGLLcaqGDSFeG3M")
+    print("   B2_BUCKET_NAME=topsoftwareresumes")
+    print("   B2_ENDPOINT_URL=https://s3.us-west-002.backblazeb2.com")
+    print("\n   ⚠️  Make sure:")
+    print("      - No quotes around values")
+    print("      - No spaces around = sign")
+    print("      - Each value on a single line")
+    print("="*70 + "\n")
+    
+    # Don't raise an error here, just warn - let them see the full error
+    # But make it very clear what's wrong
+B2_BUCKET_NAME = clean_credential(os.getenv('B2_BUCKET_NAME', ''))
+B2_ENDPOINT_URL = clean_credential(os.getenv('B2_ENDPOINT_URL', 'https://s3.us-west-002.backblazeb2.com'))
+
+# Debug print with detailed validation
+print(f"DEBUG - B2_KEY_ID: {'SET' if B2_KEY_ID else 'NOT SET'}")
+if B2_KEY_ID:
+    print(f"DEBUG - B2_KEY_ID value: {B2_KEY_ID[:10]}...{B2_KEY_ID[-4:] if len(B2_KEY_ID) > 14 else B2_KEY_ID}")
+    print(f"DEBUG - B2_KEY_ID length: {len(B2_KEY_ID)} chars")
+    # B2 Key IDs are typically 24-25 characters
+    if len(B2_KEY_ID) < 24 or len(B2_KEY_ID) > 25:
+        print(f"⚠️  WARNING - B2_KEY_ID length is {len(B2_KEY_ID)}, expected 24-25 characters")
+else:
+    print("❌ ERROR - B2_KEY_ID is NOT SET! Check your .env file for B2_ACCESS_KEY or B2_KEY_ID")
+
+print(f"DEBUG - B2_SECRET_KEY: {'SET' if B2_SECRET_KEY else 'NOT SET'}")
+if B2_SECRET_KEY:
+    print(f"DEBUG - B2_SECRET_KEY length: {len(B2_SECRET_KEY)} chars")
+    # B2 Secret Keys are typically 25-50 characters
+    if len(B2_SECRET_KEY) < 25:
+        print(f"⚠️  WARNING - B2_SECRET_KEY length is {len(B2_SECRET_KEY)}, seems too short (expected 25-50)")
+else:
+    print("❌ ERROR - B2_SECRET_KEY is NOT SET! Check your .env file for B2_SECRET_KEY or B2_APPLICATION_KEY")
+
+print(f"DEBUG - B2_BUCKET_NAME: {B2_BUCKET_NAME if B2_BUCKET_NAME else 'NOT SET'}")
+if not B2_BUCKET_NAME:
+    print("❌ ERROR - B2_BUCKET_NAME is NOT SET!")
+
+# Check if we should use B2
+USE_B2_STORAGE = bool(B2_KEY_ID and B2_SECRET_KEY and B2_BUCKET_NAME)
 
 if USE_B2_STORAGE:
-    # Add storages to INSTALLED_APPS if using B2
+    print("✅ Using Backblaze B2 storage")
+    
+    # Add storages to INSTALLED_APPS
     if 'storages' not in INSTALLED_APPS:
         INSTALLED_APPS.append('storages')
     
-    # AWS/B2 Settings
-    AWS_ACCESS_KEY_ID = B2_ACCESS_KEY
+    # AWS/B2 Settings - MUST use these exact variable names
+    # Ensure credentials are clean and valid before setting
+    if not B2_KEY_ID or not B2_SECRET_KEY:
+        raise ValueError("B2_KEY_ID and B2_SECRET_KEY must be set in environment variables")
+    
+    # Additional validation: ensure no hidden characters
+    if '\n' in B2_KEY_ID or '\r' in B2_KEY_ID or '\t' in B2_KEY_ID:
+        print("⚠️  WARNING - B2_KEY_ID contains newlines or tabs, cleaning...")
+        B2_KEY_ID = B2_KEY_ID.replace('\n', '').replace('\r', '').replace('\t', '')
+    
+    if '\n' in B2_SECRET_KEY or '\r' in B2_SECRET_KEY or '\t' in B2_SECRET_KEY:
+        print("⚠️  WARNING - B2_SECRET_KEY contains newlines or tabs, cleaning...")
+        B2_SECRET_KEY = B2_SECRET_KEY.replace('\n', '').replace('\r', '').replace('\t', '')
+    
+    # Final credential validation and assignment
+    # Print actual values (partially masked) for debugging
+    print(f"🔑 B2 Credentials Summary:")
+    print(f"   Key ID: {B2_KEY_ID[:6]}...{B2_KEY_ID[-4:] if len(B2_KEY_ID) > 10 else B2_KEY_ID} (length: {len(B2_KEY_ID)})")
+    print(f"   Secret: {B2_SECRET_KEY[:6]}...{B2_SECRET_KEY[-4:] if len(B2_SECRET_KEY) > 10 else B2_SECRET_KEY} (length: {len(B2_SECRET_KEY)})")
+    print(f"   Bucket: {B2_BUCKET_NAME}")
+    
+    # Check for common issues
+    if len(B2_KEY_ID) < 24 or len(B2_KEY_ID) > 25:
+        print(f"⚠️  WARNING: Key ID length is {len(B2_KEY_ID)}, expected 24-25")
+    if len(B2_SECRET_KEY) < 25:
+        print(f"⚠️  WARNING: Secret key length is {len(B2_SECRET_KEY)}, seems short (expected 25-50)")
+    
+    # Check for problematic characters
+    problematic_chars = ['\n', '\r', '\t', '"', "'"]
+    for char in problematic_chars:
+        if char in B2_KEY_ID:
+            print(f"⚠️  WARNING: Key ID contains problematic character: {repr(char)}")
+        if char in B2_SECRET_KEY:
+            print(f"⚠️  WARNING: Secret key contains problematic character: {repr(char)}")
+    
+    AWS_ACCESS_KEY_ID = B2_KEY_ID  # ← FIXED: Must be AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY = B2_SECRET_KEY
     AWS_STORAGE_BUCKET_NAME = B2_BUCKET_NAME
     
-    # Backblaze B2 endpoint (choose based on your region)
-    # Note: B2 uses S3-compatible API, but endpoint format is different
-    # The endpoint should NOT include the bucket name
-    AWS_S3_ENDPOINT_URL = 'https://s3.us-west-002.backblazeb2.com'  # US West
-    # Alternative regions:
-    # US West: s3.us-west-002.backblazeb2.com
-    # US East: s3.us-east-005.backblazeb2.com
-    # EU Central: s3.eu-central-003.backblazeb2.com
+    # Backblaze B2 endpoint configuration
+    # AWS_S3_ENDPOINT_URL should be the bucket endpoint (e.g., https://s3.us-west-002.backblazeb2.com)
+    AWS_S3_ENDPOINT_URL = B2_ENDPOINT_URL
     
-    # Optional: Use custom domain for CDN (for file URLs)
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.us-west-002.backblazeb2.com'
+    # AWS_S3_CUSTOM_DOMAIN format: bucket-name.bucket-endpoint
+    # Extract the bucket endpoint from the endpoint URL (remove https://)
+    bucket_endpoint = AWS_S3_ENDPOINT_URL.replace('https://', '').replace('http://', '')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.{bucket_endpoint}'
+    
+    print(f"✅ B2 Configuration:")
+    print(f"   Endpoint URL: {AWS_S3_ENDPOINT_URL}")
+    print(f"   Custom Domain: {AWS_S3_CUSTOM_DOMAIN}")
+    print(f"   Bucket: {AWS_STORAGE_BUCKET_NAME}")
     
     # B2-specific: Don't use virtual-hosted style addressing
     AWS_S3_USE_SSL = True
@@ -260,7 +435,7 @@ if USE_B2_STORAGE:
     # B2 requires signature version 4
     AWS_S3_SIGNATURE_VERSION = 's3v4'
     
-    # Disable addressing style (B2 uses path-style by default)
+    # B2 uses path-style addressing (not virtual-hosted)
     AWS_S3_ADDRESSING_STYLE = 'path'
     
     # Use B2 for media files with custom backend
