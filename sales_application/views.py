@@ -1,15 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+<<<<<<< HEAD
 from django.conf import settings
 import logging
 from .forms import SalesApplicationForm
 
 logger = logging.getLogger(__name__)
 
+=======
+from .forms import SalesApplicationForm
+
+>>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
 def sales_application_view(request):
     """View to handle sales application form submission"""
     if request.method == 'POST':
         form = SalesApplicationForm(request.POST, request.FILES)
+<<<<<<< HEAD
         
         # Log form data for debugging
         logger.info(f"Form submission received - POST data: {request.POST}")
@@ -52,6 +58,13 @@ def sales_application_view(request):
             logger.warning(f"Form non-field errors: {form.non_field_errors()}")
             for field, errors in form.errors.items():
                 logger.warning(f"Field '{field}' errors: {errors}")
+=======
+        if form.is_valid():
+            application = form.save()
+            messages.success(request, 'Your application has been submitted successfully!')
+            return redirect('application_success')
+        else:
+>>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
             messages.error(request, 'Please correct the errors below.')
     else:
         form = SalesApplicationForm()
