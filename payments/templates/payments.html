@@ -134,7 +134,6 @@
             margin: 2.5rem 0;
         }
 
-<<<<<<< HEAD
         .payment-type-selector {
             margin: 2.5rem 0;
         }
@@ -219,8 +218,6 @@
             border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
-=======
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
         .amount-selector h3 {
             font-size: 1.25rem;
             font-weight: 600;
@@ -229,67 +226,8 @@
             text-align: center;
         }
 
-<<<<<<< HEAD
         .custom-amount {
             margin-top: 0;
-=======
-        .amount-tabs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        .amount-tab {
-            text-align: center;
-            padding: 16px 12px;
-            border: 2px solid transparent;
-            border-radius: var(--border-radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            font-size: 16px;
-            font-family: inherit;
-            font-weight: 600;
-            color: var(--dark-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .amount-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .amount-tab:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px -8px rgba(99, 102, 241, 0.4);
-        }
-
-        .amount-tab.active {
-            background: var(--gradient-primary);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px -8px rgba(99, 102, 241, 0.5);
-        }
-
-        .amount-tab.active::before {
-            opacity: 1;
-        }
-
-        .custom-amount {
-            margin-top: 1.5rem;
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
         }
 
         .custom-amount input {
@@ -606,21 +544,6 @@
                 font-size: 1rem;
             }
             
-<<<<<<< HEAD
-=======
-            .amount-tabs {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .amount-tab {
-                padding: 14px 10px;
-                font-size: 0.95rem;
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: transparent;
-            }
-            
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
             .custom-amount input {
                 padding: 18px 16px;
                 font-size: 16px;
@@ -698,7 +621,6 @@
 
             <!-- Amount Selection Section -->
             <div class="amount-selector">
-<<<<<<< HEAD
                 <h3>Enter Payment Amount</h3>
                 <div class="custom-amount">
                     <input type="number" id="custom-amount" placeholder="Enter amount ($0.50 minimum)" min="0.50" step="0.01">
@@ -720,22 +642,6 @@
                 </div>
                 <p id="payment-type-description" class="payment-type-description">You'll be charged once for the selected amount.</p>
             </div>
-
-=======
-                <h3>Select Payment Amount</h3>
-                <div class="amount-tabs">
-                    <button type="button" class="amount-tab" onclick="setAmount(500, this)">$5.00</button>
-                    <button type="button" class="amount-tab" onclick="setAmount(1000, this)">$10.00</button>
-                    <button type="button" class="amount-tab" onclick="setAmount(2500, this)">$25.00</button>
-                    <button type="button" class="amount-tab" onclick="setAmount(5000, this)">$50.00</button>
-                    <button type="button" class="amount-tab" onclick="setAmount(10000, this)">$100.00</button>
-                </div>
-                <div class="custom-amount">
-                    <input type="number" id="custom-amount" placeholder="Or enter custom amount ($0.50 minimum)" min="0.50" step="0.01">
-                </div>
-            </div>
-
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
             <!-- Order Summary -->
             <div class="order-summary">
                 <h3>Order Summary</h3>
@@ -748,11 +654,7 @@
                     <span>$0.00</span>
                 </div>
                 <div class="summary-row total">
-<<<<<<< HEAD
                     <span id="total-label">Total:</span>
-=======
-                    <span>Total:</span>
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
                     <span id="total-price">$0.00</span>
                 </div>
             </div>
@@ -826,10 +728,7 @@
 
         // Set your total amount (in cents for precision)
         let totalAmount = 0;
-<<<<<<< HEAD
         let paymentType = 'one_time'; // 'one_time' or 'monthly'
-=======
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
         let paymentRequest;
         
         // Payment form elements
@@ -838,7 +737,6 @@
         const buttonText = document.getElementById('button-text');
         const loadingDiv = document.querySelector('.loading');
         
-<<<<<<< HEAD
         // Amount update function (called from custom input)
         function updateAmountFromInput(amount) {
             totalAmount = Math.round(amount * 100);
@@ -850,47 +748,11 @@
             
             if (subtotal) subtotal.textContent = displayAmount;
             if (total) total.textContent = displayAmount;
-=======
-                // Amount selection function
-        function setAmount(cents, clickedButton) {
-            totalAmount = cents;
-            
-            // Remove active class from all tabs
-            const allTabs = document.querySelectorAll('.amount-tab');
-            allTabs.forEach(t => t.classList.remove('active'));
-            
-            // Add active class to clicked button if provided
-            if (clickedButton) {
-                clickedButton.classList.add('active');
-            } else {
-                // Find button with matching amount and activate it
-                allTabs.forEach(tab => {
-                    if (tab.onclick && tab.onclick.toString().includes(cents.toString())) {
-                        tab.classList.add('active');
-                    }
-                });
-            }
-            
-            // Clear custom input
-            const customInput = document.getElementById('custom-amount');
-            if (customInput) {
-                customInput.value = '';
-            }
-            
-            // Update displays
-            const amount = '$' + (cents / 100).toFixed(2);
-            const subtotal = document.getElementById('subtotal-price');
-            const total = document.getElementById('total-price');
-            
-            if (subtotal) subtotal.textContent = amount;
-            if (total) total.textContent = amount;
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
             
             // Update button
             const payBtn = document.getElementById('pay-button');
             const btnText = document.getElementById('button-text');
             if (payBtn && btnText) {
-<<<<<<< HEAD
                 payBtn.disabled = totalAmount < 50;
                 if (totalAmount >= 50) {
                     updateButtonText(totalAmount, displayAmount);
@@ -936,10 +798,6 @@
                 } else {
                     btnText.textContent = `Pay ${amount}`;
                 }
-=======
-                payBtn.disabled = cents < 50;
-                btnText.textContent = cents >= 50 ? 'Pay ' + amount : 'Pay Now';
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
             }
         }
 
@@ -956,7 +814,6 @@
                 btnText.textContent = 'Select Amount';
             }
             
-<<<<<<< HEAD
             // Set initial active state for payment type (one-time is checked by default)
             const oneTimeRadio = document.querySelector('input[value="one_time"]');
             if (oneTimeRadio && oneTimeRadio.checked) {
@@ -964,13 +821,10 @@
                 if (oneTimeOption) oneTimeOption.classList.add('active');
             }
             
-=======
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
             // Setup custom amount input
             const customAmountInput = document.getElementById('custom-amount');
             if (customAmountInput) {
                 customAmountInput.addEventListener('input', function() {
-<<<<<<< HEAD
                     const amount = parseFloat(this.value) || 0;
                     updateAmountFromInput(amount);
                 });
@@ -980,30 +834,6 @@
                     const amount = parseFloat(this.value) || 0;
                     if (amount > 0) {
                         updateAmountFromInput(amount);
-=======
-                    // Remove active class from all tabs
-                    const allTabs = document.querySelectorAll('.amount-tab');
-                    allTabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Update total amount
-                    const amount = parseFloat(this.value) || 0;
-                    totalAmount = Math.round(amount * 100);
-                    
-                    // Update displays
-                    const displayAmount = '$' + (totalAmount / 100).toFixed(2);
-                    const subtotal = document.getElementById('subtotal-price');
-                    const total = document.getElementById('total-price');
-                    
-                    if (subtotal) subtotal.textContent = displayAmount;
-                    if (total) total.textContent = displayAmount;
-                    
-                    // Update button
-                    const payBtn = document.getElementById('pay-button');
-                    const btnText = document.getElementById('button-text');
-                    if (payBtn && btnText) {
-                        payBtn.disabled = totalAmount < 50;
-                        btnText.textContent = totalAmount >= 50 ? 'Pay ' + displayAmount : 'Pay Now';
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
                     }
                 });
             }
@@ -1084,12 +914,8 @@
                             'X-CSRFToken': getCookie('csrftoken')
                         },
                         body: JSON.stringify({
-<<<<<<< HEAD
                             amount: totalAmount / 100,
                             payment_type: paymentType
-=======
-                            amount: totalAmount / 100
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
                         })
                     });
 
@@ -1099,7 +925,6 @@
                         throw new Error(data.error || 'Payment failed');
                     }
 
-<<<<<<< HEAD
                     // Apple Pay only supports one-time payments, not subscriptions
                     if (data.payment_type === 'subscription') {
                         ev.complete('fail');
@@ -1107,8 +932,6 @@
                         return;
                     }
 
-=======
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
                     // Confirm payment with Stripe
                     const {error: confirmError} = await stripe.confirmCardPayment(
                         data.client_secret,
@@ -1152,12 +975,8 @@
                         'X-CSRFToken': getCookie('csrftoken')
                     },
                     body: JSON.stringify({
-<<<<<<< HEAD
                         amount: totalAmount / 100,
                         payment_type: paymentType
-=======
-                        amount: totalAmount / 100
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
                     })
                 });
 
@@ -1167,7 +986,6 @@
                     throw new Error(data.error || 'Payment failed');
                 }
 
-<<<<<<< HEAD
                 // Handle subscription vs one-time payment
                 if (data.payment_type === 'subscription') {
                     // Redirect to Stripe Checkout for subscription
@@ -1192,26 +1010,6 @@
                             window.location.href = `/payments/payment/success/?payment_intent=${result.paymentIntent.id}`;
                         }, 2000);
                     }
-=======
-                // Confirm payment with Stripe
-                const result = await stripe.confirmCardPayment(data.client_secret, {
-                    payment_method: {
-                        card: cardElement,
-                        billing_details: {
-                            name: 'Customer', // You can collect this from a form field
-                        }
-                    }
-                });
-
-                if (result.error) {
-                    showError(result.error.message);
-                } else {
-                    // Payment succeeded
-                    showSuccess('Payment successful! Redirecting...');
-                    setTimeout(() => {
-                        window.location.href = `/payments/payment/success/?payment_intent=${result.paymentIntent.id}`;
-                    }, 2000);
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
                 }
             } catch (error) {
                 showError(error.message);

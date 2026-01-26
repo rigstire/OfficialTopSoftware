@@ -27,18 +27,11 @@ def payments(request):
 @csrf_exempt
 @require_POST
 def create_payment_intent(request):
-<<<<<<< HEAD
     """Create a Stripe Payment Intent or Subscription with Apple Pay support."""
     try:
         data = json.loads(request.body)
         amount = float(data.get('amount', 0))
         payment_type = data.get('payment_type', 'one_time')  # 'one_time' or 'monthly'
-=======
-    """Create a Stripe Payment Intent with Apple Pay support."""
-    try:
-        data = json.loads(request.body)
-        amount = float(data.get('amount', 0))
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
         
         if amount < 0.50:  # Stripe minimum is $0.50
             return JsonResponse({'error': 'Amount must be at least $0.50'}, status=400)
@@ -46,7 +39,6 @@ def create_payment_intent(request):
         # Convert amount to cents for Stripe
         amount_cents = int(amount * 100)
 
-<<<<<<< HEAD
         if payment_type == 'monthly':
             # Create a subscription for monthly payments
             try:
@@ -103,25 +95,6 @@ def create_payment_intent(request):
                 'payment_intent_id': intent.id,
                 'payment_type': 'one_time'
             })
-=======
-        # Create Payment Intent with automatic payment methods (includes Apple Pay, Google Pay, etc.)
-        intent = stripe.PaymentIntent.create(
-            amount=amount_cents,
-            currency='usd',
-            automatic_payment_methods={
-                'enabled': True,
-            },
-            metadata={
-                'description': 'Payment for services'
-            }
-        )
-
-        logger.info(f"Stripe Payment Intent created successfully with Apple Pay support: {intent.id}")
-        return JsonResponse({
-            'client_secret': intent.client_secret,
-            'payment_intent_id': intent.id
-        })
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
 
     except stripe.error.CardError as e:
         logger.error(f"Stripe card error: {str(e)}")
@@ -159,14 +132,9 @@ def create_order(request):
 
 @csrf_exempt
 def payment_success(request):
-<<<<<<< HEAD
     """Handle successful payment or subscription."""
     payment_intent_id = request.GET.get('payment_intent')
     session_id = request.GET.get('session_id')
-=======
-    """Handle successful payment."""
-    payment_intent_id = request.GET.get('payment_intent')
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
     
     if payment_intent_id:
         try:
@@ -179,7 +147,6 @@ def payment_success(request):
         except Exception as e:
             logger.error(f"Error verifying payment intent: {str(e)}")
     
-<<<<<<< HEAD
     if session_id:
         try:
             # Verify the checkout session was successful (for subscriptions)
@@ -191,8 +158,6 @@ def payment_success(request):
         except Exception as e:
             logger.error(f"Error verifying checkout session: {str(e)}")
     
-=======
->>>>>>> f8516ee003eb6f4fcd03e5ed9e2fec5a6cda3a08
     return render(request, 'payments/success.html')
 
 @csrf_exempt
