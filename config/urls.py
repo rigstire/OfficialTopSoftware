@@ -26,6 +26,7 @@ urlpatterns = [
     path('portfolio/',include("portfolio.urls")),
     path('payments/',include("payments.urls")),
     path('sales/', include("sales_application.urls")),
+    path('faxflow/', include("faxflow.urls")),
 
 ]
 

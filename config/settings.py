@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'portfolio',
     'payments',
     'sales_application',
+    'faxflow',
 
     # Installed third-party apps
     'corsheaders',
@@ -112,6 +113,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'pricing', 'templates'),
             os.path.join(BASE_DIR, 'portfolio', 'templates'),
             os.path.join(BASE_DIR, 'payments', 'templates'),
+            os.path.join(BASE_DIR, 'faxflow', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -179,6 +181,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'pricing', 'static'),
     os.path.join(BASE_DIR, 'portfolio', 'static'),
     os.path.join(BASE_DIR, 'payments', 'static'),
+    os.path.join(BASE_DIR, 'faxflow', 'static'),
 ]
 
 STATIC_URL = 'static/'

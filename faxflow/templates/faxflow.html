@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16824006630"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-16824006630');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FaxFlow | AI Fax Sorting for Medical Offices | TopSoftware</title>
+  <meta name="description" content="FaxFlow uses AI to read, sort, and act on incoming medical faxes so your staff doesn't have to. Now accepting pilot partners." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FaxFlow — Stop sorting faxes by hand" />
+  <meta property="og:description" content="FaxFlow uses AI to read, sort, and act on incoming medical faxes so your staff doesn't have to. Now accepting pilot partners." />
+  <meta property="og:url" content="https://www.topsoftware.tech/faxflow/" />
+  <meta property="og:site_name" content="TopSoftware" />
+  <!-- TODO: Add og:image once a synthetic share image is available, e.g. faxflow-og-share.png -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FaxFlow — Stop sorting faxes by hand" />
+  <meta name="twitter:description" content="AI that reads, sorts, and acts on incoming medical faxes. Built with healthcare privacy requirements in mind. Now accepting pilot partners." />
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" />
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="{% static 'css/corestyles.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/modern-theme.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=4" />
+  <link rel="stylesheet" href="{% static 'faxflow.css' %}" />
+  <script src="{% static 'js/navbar.js' %}"></script>
+</head>
+<body>
+  {% include "navbar.html" %}
+
+  <!-- Hero -->
+  <section class="modern-hero" aria-labelledby="faxflow-hero-heading">
+    <span class="faxflow-badge">Now accepting pilot partners</span>
+    <h1 id="faxflow-hero-heading">Stop sorting faxes by hand.</h1>
+    <p>FaxFlow uses AI to read, sort, and act on incoming medical faxes so your staff doesn't have to.</p>
+    <div class="faxflow-hero-actions">
+      <a href="#demo" class="modern-btn">Watch the demo</a>
+      <a href="#pilot" class="modern-btn modern-btn-outline">Request a pilot</a>
+    </div>
+    <div class="faxflow-share">
+      <button type="button" class="faxflow-share-btn" id="faxflow-copy-link" aria-live="polite">
+        Copy link to share
+      </button>
+    </div>
+  </section>
+
+  <div class="modern-container">
+
+    <!-- The problem -->
+    <section class="glass-card faxflow-section mb-3" aria-labelledby="problem-heading">
+      <h2 id="problem-heading" class="modern-title">The problem</h2>
+      <p class="modern-text text-center" style="max-width: 42rem; margin-left: auto; margin-right: auto;">
+        Medical offices still receive referrals, lab results, insurance authorizations, and records requests by fax.
+        Staff read and sort each one by hand — which takes time, slows patients down, and makes it easy to miss something urgent.
+      </p>
+    </section>
+
+    <!-- How it works -->
+    <section class="glass-card faxflow-section mb-3" aria-labelledby="how-heading">
+      <h2 id="how-heading" class="modern-title">How it works</h2>
+      <p class="modern-subtitle">Four steps from fax in to appointment on the calendar</p>
+      <div class="modern-grid modern-grid-4">
+        <article class="feature-card">
+          <span class="faxflow-step-number" aria-hidden="true">1</span>
+          <h3>Fax arrives</h3>
+          <p>Incoming faxes land in FaxFlow the same way they reach your office today.</p>
+        </article>
+        <article class="feature-card">
+          <span class="faxflow-step-number" aria-hidden="true">2</span>
+          <h3>AI reads and classifies</h3>
+          <p>FaxFlow reads the document and labels it — referral, lab result, authorization, and more.</p>
+        </article>
+        <article class="feature-card">
+          <span class="faxflow-step-number" aria-hidden="true">3</span>
+          <h3>Details extracted</h3>
+          <p>Patient details are pulled out and urgent cases are flagged for faster review.</p>
+        </article>
+        <article class="feature-card">
+          <span class="faxflow-step-number" aria-hidden="true">4</span>
+          <h3>Staff review and schedule</h3>
+          <p>Your team works a clear queue — review, reach out, and schedule appointments.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="glass-card faxflow-section mb-3" aria-labelledby="features-heading">
+      <h2 id="features-heading" class="modern-title">Features</h2>
+      <p class="modern-subtitle">Built for busy front desks and clinical coordinators</p>
+      <div class="modern-grid modern-grid-3">
+        <article class="feature-card">
+          <h3>Automatic classification</h3>
+          <p>Sorts referrals, lab results, insurance authorizations, records requests, and more.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Patient data extraction</h3>
+          <p>Pulls name, date of birth, MRN, and referring physician from each fax.</p>
+        </article>
+        <article class="feature-card">
+          <h3>STAT / urgent flagging</h3>
+          <p>Highlights time-sensitive faxes so they don't sit in a stack.</p>
+        </article>
+        <article class="feature-card">
+          <h3>AI-drafted outreach</h3>
+          <p>Suggests patient outreach messages for referrals — your staff reviews before sending.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Patient matching</h3>
+          <p>Links related faxes for the same patient so nothing gets scattered.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Scheduling support</h3>
+          <p>Help schedule and cancel appointments from the same workflow.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Searchable dashboard</h3>
+          <p>Find faxes fast with a clear, searchable view of your queue.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Demo video -->
+    <section id="demo" class="glass-card faxflow-section mb-3" aria-labelledby="demo-heading">
+      <h2 id="demo-heading" class="modern-title">Watch the demo</h2>
+      <p class="modern-subtitle">See FaxFlow sort and act on sample faxes</p>
+      <div class="faxflow-video-wrap">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/ACt58JIdtZQ"
+          title="FaxFlow product demo — AI sorting of synthetic sample medical faxes"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+      <p class="faxflow-caption">This demo uses synthetic sample data only. No real patient information is shown.</p>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="glass-card faxflow-section mb-3" aria-labelledby="screenshots-heading">
+      <h2 id="screenshots-heading" class="modern-title">Product screenshots</h2>
+      <p class="modern-subtitle">Synthetic sample UI — final screenshots coming soon</p>
+      <!-- TODO: Replace placeholder SVGs with final synthetic product screenshots -->
+      <div class="modern-grid modern-grid-2">
+        <figure>
+          <div class="faxflow-screenshot">
+            <img
+              src="{% static 'images/faxflow-dashboard-placeholder.svg' %}"
+              alt="Placeholder for FaxFlow dashboard screenshot showing a searchable fax queue (synthetic sample UI)"
+              width="1280"
+              height="800"
+              loading="lazy"
+              decoding="async" />
+          </div>
+          <figcaption class="faxflow-screenshot-label">Dashboard</figcaption>
+        </figure>
+        <figure>
+          <div class="faxflow-screenshot">
+            <img
+              src="{% static 'images/faxflow-scheduling-placeholder.svg' %}"
+              alt="Placeholder for FaxFlow scheduling page screenshot (synthetic sample UI)"
+              width="1280"
+              height="800"
+              loading="lazy"
+              decoding="async" />
+          </div>
+          <figcaption class="faxflow-screenshot-label">Scheduling page</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Who it's for -->
+    <section class="glass-card faxflow-section mb-3" aria-labelledby="audience-heading">
+      <h2 id="audience-heading" class="modern-title">Who it's for</h2>
+      <p class="modern-text text-center" style="max-width: 42rem; margin-left: auto; margin-right: auto;">
+        FaxFlow is designed for small and mid-size practices, imaging centers, and specialty clinics —
+        especially offices that don't already have a fax workflow system in place.
+      </p>
+    </section>
+
+    <!-- Pilot / contact -->
+    <section id="pilot" class="glass-card faxflow-section mb-3" aria-labelledby="pilot-heading">
+      <h2 id="pilot-heading" class="modern-title">Request a pilot</h2>
+      <p class="modern-subtitle">
+        We're looking for offices to try FaxFlow. Built with healthcare privacy requirements in mind —
+        HIPAA-compliant infrastructure and Business Associate Agreements are part of onboarding before any real patient data is processed.
+      </p>
+
+      {% if messages %}
+        <div class="faxflow-messages" role="status">
+          {% for message in messages %}
+            <div class="faxflow-alert-success">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <p class="faxflow-privacy-note" role="note">
+        Do <strong>not</strong> include patient information in this form. Share only details about your office workflow.
+      </p>
+
+      <form class="modern-form" method="post" action="{% url 'faxflow' %}#pilot" novalidate>
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="id_name">Name</label>
+          <input required type="text" name="name" id="id_name" placeholder="Your name" autocomplete="name" value="{{ form.name.value|default:'' }}">
+          {% if form.name.errors %}<p class="modern-text" style="color: var(--error-color);">{{ form.name.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_practice_name">Practice name</label>
+          <input required type="text" name="practice_name" id="id_practice_name" placeholder="Practice or clinic name" autocomplete="organization" value="{{ form.practice_name.value|default:'' }}">
+          {% if form.practice_name.errors %}<p class="modern-text" style="color: var(--error-color);">{{ form.practice_name.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_email">Email</label>
+          <input required type="email" name="email" id="id_email" placeholder="Work email" autocomplete="email" value="{{ form.email.value|default:'' }}">
+          {% if form.email.errors %}<p class="modern-text" style="color: var(--error-color);">{{ form.email.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_phone">Phone</label>
+          <input required type="tel" name="phone" id="id_phone" placeholder="Phone number" autocomplete="tel" value="{{ form.phone.value|default:'' }}">
+          {% if form.phone.errors %}<p class="modern-text" style="color: var(--error-color);">{{ form.phone.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="id_workflow">Tell us about your fax workflow</label>
+          <textarea required name="workflow" id="id_workflow" rows="5" placeholder="How many faxes do you get? Who handles them today?">{{ form.workflow.value|default:'' }}</textarea>
+          {% if form.workflow.errors %}<p class="modern-text" style="color: var(--error-color);">{{ form.workflow.errors.0 }}</p>{% endif %}
+        </div>
+
+        <button class="modern-btn" type="submit" style="width: 100%;">Request a pilot</button>
+      </form>
+    </section>
+
+    <!-- FAQ -->
+    <section class="glass-card faxflow-section faxflow-faq mb-3" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="modern-title">FAQ</h2>
+      <div style="max-width: 48rem; margin: 0 auto;">
+        <details>
+          <summary>What is FaxFlow?</summary>
+          <p>FaxFlow is software that helps medical offices handle incoming faxes. It uses AI to read each fax, sort it by type, pull out key details, and help staff review and schedule from one queue.</p>
+        </details>
+        <details>
+          <summary>Does it replace our fax machine?</summary>
+          <p>No. FaxFlow works with the faxes your office already receives. It does not replace your fax line or fax machine — it helps your team process what comes in.</p>
+        </details>
+        <details>
+          <summary>Does it connect to our EHR?</summary>
+          <p>EHR connections are planned as part of pilot and onboarding discussions. What's available depends on your system and setup — we'll talk through that with each pilot partner.</p>
+        </details>
+        <details>
+          <summary>How is patient data handled?</summary>
+          <p>FaxFlow is a pilot-stage product built with healthcare privacy requirements in mind. HIPAA-compliant infrastructure and Business Associate Agreements are part of onboarding before any real patient data is processed.</p>
+        </details>
+        <details>
+          <summary>How do we get started?</summary>
+          <p>Use the pilot request form on this page. Tell us about your office and fax volume — without including patient information — and we'll follow up to discuss next steps.</p>
+        </details>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('faxflow-copy-link');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var url = window.location.href.split('#')[0];
+        function done() {
+          var original = btn.textContent;
+          btn.textContent = 'Link copied';
+          setTimeout(function () { btn.textContent = original; }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(done).catch(function () {
+            window.prompt('Copy this link:', url);
+          });
+        } else {
+          window.prompt('Copy this link:', url);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
